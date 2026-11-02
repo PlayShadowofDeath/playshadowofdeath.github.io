@@ -99,7 +99,7 @@
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
       ['#/members', 'Members', /^\/members/]];
     document.getElementById('nav').innerHTML = nav.map(([h, t, re]) => `<a href="${h}" class="${re.test(path) ? 'on' : ''}">${t}</a>`).join('')
-      + `<a href="${esc(cfg.downloadUrl)}" target="_blank" rel="noopener" class="play">Play now</a>`;
+      + `<a href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}" class="play">Play now</a>`;
     const box = document.getElementById('userbox');
     if (!S.me) {
       box.innerHTML = `<a href="#/login" class="btn ghost sm">Log in</a><a href="#/register" class="btn sm">Register</a>`;
@@ -154,7 +154,7 @@
           <h1>Shadow of Death</h1>
           <p>A 718 RuneScape private server. Bosses, raids, custom items and a community that plays together.</p>
           <div class="hero-btns">
-            <a class="btn lg" href="${esc(cfg.downloadUrl)}" target="_blank" rel="noopener">⚔ Play now</a>
+            <a class="btn lg" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">⚔ Play now</a>
             ${S.me ? '<a class="btn lg ghost" href="#/forums">Visit the forums</a>' : '<a class="btn lg ghost" href="#/register">Join the community</a>'}
             ${cfg.discordUrl ? `<a class="btn lg ghost" href="${esc(cfg.discordUrl)}" target="_blank" rel="noopener">Discord</a>` : ''}
           </div>
