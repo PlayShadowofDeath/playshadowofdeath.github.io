@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shadow of Death | Community</title>
+  <meta name="description" content="Shadow of Death: a 718 RuneScape private server. Forums, community posts and live chat with friends.">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="demo-banner" hidden>DEMO MODE: accounts, posts and messages are saved in this browser only. Follow <b>SETUP GUIDE.html</b> to go live.</div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#/" class="logo"><img src="img/favicon.svg" alt=""><span>Shadow <em>of</em> Death</span></a>
+      <nav id="nav"></nav>
+      <div id="userbox" class="userbox"></div>
+    </div>
+  </header>
+
+  <main id="view" class="container"><div class="loading"><span class="spinner"></span></div></main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div><b>Shadow of Death</b> · a 718 RuneScape private server</div>
+      <div class="footer-links"><a href="#/forums">Forums</a><a href="#/community">Community</a><a href="#/rules">Rules</a><a href="#/members">Members</a></div>
+      <div class="meta">© <span id="year"></span> Shadow of Death. Not affiliated with Jagex Ltd.</div>
+    </div>
+  </footer>
+
+  <div id="chatbar" class="chatbar"></div>
+  <div id="toasts" class="toasts"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/backend-supabase.js"></script>
+  <script src="js/backend-demo.js"></script>
+  <script src="js/messenger.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

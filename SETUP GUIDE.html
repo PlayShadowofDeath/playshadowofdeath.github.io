@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website Setup Guide</title>
+<style>
+  :root { --bg:#0b0b0d; --panel:#15151a; --border:#2a2a33; --text:#e9e6e1; --muted:#9a98a3; --red:#c8141e; --gold:#d4a63a; --green:#3ccf6e; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 80px; }
+  header { text-align:center; padding: 20px 0 10px; border-bottom: 2px solid var(--red); margin-bottom: 24px; }
+  h1 { font-family: Georgia, serif; letter-spacing:.06em; margin:0; color:#fff; }
+  h2 { font-family: Georgia, serif; color: var(--gold); margin: 34px 0 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  h3 { margin: 20px 0 6px; }
+  .card { background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin: 14px 0; }
+  .you { border-left: 4px solid var(--gold); }
+  .warn { border-left: 4px solid var(--red); }
+  .ok { border-left: 4px solid var(--green); }
+  ol li, ul li { margin: 6px 0; }
+  code, kbd { background:#000; border:1px solid var(--border); border-radius:4px; padding:1px 6px; font-family: Consolas, monospace; font-size:.92em; }
+  pre { background:#000; border:1px solid var(--border); border-radius:8px; padding:12px; overflow-x:auto; }
+  a { color: var(--gold); }
+  .tag { display:inline-block; font-size:12px; font-weight:700; padding:1px 8px; border-radius:4px; background:var(--red); color:#fff; vertical-align: middle; }
+  .muted { color: var(--muted); }
+  table { width:100%; border-collapse: collapse; }
+  td, th { border-bottom:1px solid var(--border); padding: 8px; text-align:left; vertical-align: top; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>SHADOW OF DEATH WEBSITE</h1>
+  <p class="muted">Setup guide &mdash; from "runs on my PC" to "live on the internet", free</p>
+</header>
+
+<div class="card ok">
+  <b>What's built:</b> a forum-style community site with sign-up and login, forums (categories, threads, replies, quotes,
+  pinned and locked threads, staff tools), public posts (a community feed plus a wall on every profile, with likes and comments),
+  friends (requests, accept, remove), and a <b>Facebook-style chat bar</b> at the bottom of the screen: friends list with
+  online dots and chat windows where messages appear instantly, with a "typing&hellip;" note and a sound. There's also a
+  Messages page (an RSPS-style inbox) with every conversation.
+</div>
+
+<h2>1. Try it on your PC (no setup needed)</h2>
+<ol>
+  <li>Open the folder <code>Shadow of Death Website</code> and double-click <b>Preview website.bat</b>.</li>
+  <li>Your browser opens <code>http://localhost:8085</code>. A black window stays open; closing it stops the preview.</li>
+  <li>The site starts in <b>DEMO MODE</b> (yellow stripe at the top). Fake accounts, posts and messages are saved only in your own browser.</li>
+  <li>Log in as <b>Maddog</b> (owner) or <b>Kagemaru</b> (admin), password <b>demo123</b>, or register a new account.</li>
+  <li><b>Test the chat:</b> open a second browser tab, log in as the other account, and message each other from the chat bar.
+    <b>ShadowBot</b> is always online and answers you too.</li>
+  <li>Settings &rarr; <b>Reset demo</b> wipes the demo data.</li>
+</ol>
+<p class="muted">Nobody else can see the preview; it only runs on this PC and opens no ports.</p>
+
+<h2>2. Why Supabase (the free "brain" behind the site)</h2>
+<p>GitHub Pages hosts the site for free, but it can only serve files: it can't store accounts, posts or chat. <b>Supabase</b>
+is a free service that gives the site real accounts (sign-up, login, password reset), a database for posts and messages,
+and live updates so chat messages and "who's online" appear instantly.</p>
+<table>
+  <tr><th>Free plan gives you (roughly)</th><th>Good to know</th></tr>
+  <tr><td>Up to 50,000 active users a month, a 500&nbsp;MB database, live chat connections for a couple hundred people at once</td>
+      <td>Far more than the server needs for a long time. No card needed.</td></tr>
+  <tr><td>Accounts, passwords and emails stored safely by Supabase</td>
+      <td>The site never sees passwords. Security rules in the database decide who can read and write what.</td></tr>
+  <tr><td>Projects that nobody uses for 7 days get <b>paused</b></td>
+      <td>Once people use the site this won't happen. If it does, press <b>Restore</b> in the Supabase dashboard.</td></tr>
+</table>
+<p>Moving to a paid domain or host later doesn't change any of this: the same Supabase project keeps working from any address.</p>
+
+<h2>3. Create the Supabase project <span class="tag">YOU</span></h2>
+<div class="card you">You create the account yourself (Claude can't make accounts or type passwords for you).</div>
+<ol>
+  <li>Go to <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> and click <b>Start your project</b>.</li>
+  <li>Choose <b>Continue with GitHub</b> and sign in with your GitHub account (tjsmith95). That way there's one less password.</li>
+  <li>If it asks for an organization, call it <code>Shadow of Death</code> and pick the <b>Free</b> plan.</li>
+  <li>Click <b>New project</b>:
+    <ul>
+      <li>Name: <code>shadow-of-death</code></li>
+      <li>Database password: click <b>Generate a password</b> and save it somewhere safe (you'll rarely need it).</li>
+      <li>Region: the one closest to you (for Texas pick an <b>East US</b> or <b>Central US</b> option).</li>
+    </ul></li>
+  <li>Click <b>Create new project</b> and wait a minute or two while it sets up.</li>
+</ol>
+
+<h2>4. Set up the database <span class="tag">YOU</span></h2>
+<ol>
+  <li>In the Supabase dashboard, open <b>SQL Editor</b> in the left menu and click <b>New query</b> (or the <b>+</b>).</li>
+  <li>On your PC, open <code>Shadow of Death Website\supabase\schema.sql</code> with Notepad, press <kbd>Ctrl</kbd>+<kbd>A</kbd>, then <kbd>Ctrl</kbd>+<kbd>C</kbd>.</li>
+  <li>Click into the SQL Editor, paste (<kbd>Ctrl</kbd>+<kbd>V</kbd>) and click <b>Run</b>.</li>
+  <li>You should see <b>"Success. No rows returned"</b>. If Supabase shows a warning about "destructive operations", click to run it anyway: the file only replaces its own rules, never your data.</li>
+</ol>
+<p class="muted">This makes the tables (profiles, forums, posts, likes, comments, friends, messages), the security rules,
+the anti-spam limits, the 13 starting forums and switches on live updates for chat.</p>
+
+<h2>5. Sign-up settings <span class="tag">YOU</span></h2>
+<ol>
+  <li>Left menu &rarr; <b>Authentication</b> &rarr; <b>Sign In / Providers</b> (sometimes just <b>Providers</b>) &rarr; <b>Email</b>.</li>
+  <li>Turn <b>Confirm email</b> <b>OFF</b> and click <b>Save</b>.
+    <div class="card warn">Why: Supabase's built-in email sender only delivers to your own team's addresses, so players would never
+      get the confirmation email and couldn't finish signing up. With it off, players can log in straight after registering.
+      Later we can add a free email sender (for example Resend) so confirmation and "forgot password" emails reach everyone.
+      Until then, <b>Forgot password</b> only works for your own email.</div></li>
+  <li>Go to <b>Authentication</b> &rarr; <b>URL Configuration</b>:
+    <ul>
+      <li><b>Site URL</b>: <code>https://playshadowofdeath.github.io/</code> (the address from step 7)</li>
+      <li><b>Redirect URLs</b> &rarr; <b>Add URL</b>: <code>https://playshadowofdeath.github.io/**</code> and <code>http://localhost:8085/**</code></li>
+    </ul></li>
+</ol>
+
+<h2>6. Connect the site to Supabase <span class="tag">YOU</span></h2>
+<ol>
+  <li>In Supabase, click the <b>Connect</b> button at the top (or <b>Project Settings</b> &rarr; <b>API Keys</b> / <b>Data API</b>).</li>
+  <li>Copy the <b>Project URL</b> (looks like <code>https://abcdefgh.supabase.co</code>).</li>
+  <li>Copy the <b>public</b> key: called <b>publishable</b> (starts with <code>sb_publishable_</code>) or <b>anon public</b> (a long key starting with <code>eyJ</code>). Either works.</li>
+  <li>Open <code>Shadow of Death Website\js\config.js</code> in Notepad and paste them between the quotes:
+<pre>supabaseUrl: 'https://abcdefgh.supabase.co',
+supabaseAnonKey: 'sb_publishable_xxxxxxxxxxxx',</pre></li>
+  <li>Save, then run <b>Preview website.bat</b> again. The yellow DEMO stripe is gone and the site is now using the real database.</li>
+</ol>
+<div class="card warn"><b>Never</b> paste the <b>secret</b> / <b>service_role</b> key into the site. That one can do anything and must stay private.
+The public key is <i>meant</i> to be public: the database's security rules keep people from editing other people's things.</div>
+
+<h3>Make yourself the owner</h3>
+<ol>
+  <li>Register your account on the site (for example <b>Maddog</b>).</li>
+  <li>In Supabase &rarr; <b>SQL Editor</b> &rarr; <b>New query</b>, paste this and click <b>Run</b>:
+<pre>update public.profiles set role = 'owner' where username = 'Maddog';</pre></li>
+  <li>Refresh the site. You now get the red <b>Owner</b> badge, can pin, lock and delete threads, ban members, and set other people's rank
+    from their profile page (Member, Moderator, Admin, Owner).</li>
+</ol>
+
+<h2>7. Put it on the internet with GitHub Pages <span class="tag">YOU</span></h2>
+<p>This gives the site the free address <b>https://playshadowofdeath.github.io/</b>.</p>
+<ol>
+  <li>Make the free organization: <a href="https://github.com/account/organizations/new?plan=free" target="_blank" rel="noopener">github.com/account/organizations/new?plan=free</a>.
+    Organization name <code>playshadowofdeath</code>, your email, "My personal account" (tjsmith95). Skip inviting people.</li>
+  <li>On <a href="https://github.com/new" target="_blank" rel="noopener">github.com/new</a> set <b>Owner</b> to <b>playshadowofdeath</b>, name the repository exactly
+    <code>playshadowofdeath.github.io</code>, set it to <b>Public</b>, and click <b>Create repository</b>.</li>
+  <li>On the new repo's page click <b>uploading an existing file</b>.</li>
+  <li>Open the <code>Shadow of Death Website</code> folder, select <b>everything inside it</b> (<kbd>Ctrl</kbd>+<kbd>A</kbd>; not the folder itself)
+    and drag it onto the GitHub page. Wait for the uploads to finish, then click <b>Commit changes</b>.</li>
+  <li>Go to the repo's <b>Settings</b> &rarr; <b>Pages</b>. Under <b>Build and deployment</b> pick <b>Deploy from a branch</b>,
+    branch <b>main</b>, folder <b>/ (root)</b>, and click <b>Save</b>.</li>
+  <li>After a minute or two, <b>https://playshadowofdeath.github.io/</b> is live. Share it with your players!</li>
+</ol>
+<p class="muted">The installer stays where it is (the Shadow-of-Death repo's Releases); the site's <b>Play now</b> button links to it.
+To update the site later, upload the changed files the same way (GitHub replaces the old ones).</p>
+
+<h2>Moving to your own domain or a paid host later</h2>
+<ul>
+  <li><b>Own domain</b> (about $10&ndash;15 a year, e.g. shadowofdeath.com): GitHub repo &rarr; Settings &rarr; Pages &rarr; <b>Custom domain</b>, then add the records GitHub shows at your domain seller.</li>
+  <li><b>Paid host / the Contabo VPS</b>: copy the same folder there. Nothing needs rewriting: every link is relative and all pages work from any address.</li>
+  <li>Either way, update the <b>Site URL</b> and <b>Redirect URLs</b> in step 5 to the new address.</li>
+</ul>
+
+<h2>Coming later: game account link</h2>
+<p>Accounts are already built for it. When the server moves to the VPS, the game server will make a forum account
+automatically when someone registers in-game (status "incomplete", linked to their game name). They then log in on the site with their
+game name and password and see <b>Finish your sign-up</b>, where they add their email. That needs the secret Supabase key on
+the game server only (never in the website), so it waits for the VPS.</p>
+
+<h2>Files in the folder</h2>
+<table>
+  <tr><td><code>index.html</code></td><td>The page itself (everything else is loaded from it).</td></tr>
+  <tr><td><code>js/config.js</code></td><td><b>The only file you edit</b>: Supabase keys, Download link, Discord link.</td></tr>
+  <tr><td><code>js/app.js</code></td><td>All the pages (home, forums, threads, community, profiles, friends, messages, settings).</td></tr>
+  <tr><td><code>js/messenger.js</code></td><td>The chat bar.</td></tr>
+  <tr><td><code>js/backend-supabase.js</code>, <code>js/backend-demo.js</code></td><td>Talking to Supabase, and the demo-mode fake version.</td></tr>
+  <tr><td><code>css/style.css</code></td><td>The red, black and gold look.</td></tr>
+  <tr><td><code>supabase/schema.sql</code></td><td>The database and its security rules (step 4).</td></tr>
+  <tr><td><code>Preview website.bat</code>, <code>tools/serve.ps1</code></td><td>The local preview (step 1).</td></tr>
+</table>
+</div>
+</body>
+</html>
