@@ -59,7 +59,15 @@ window.U = (() => {
     return `<span class="avatar" style="--s:${size}px;--c:${esc(p?.avatar_color || '#555')}">${esc(name[0].toUpperCase())}${
       online === undefined ? '' : `<i class="dot ${online ? 'on' : ''}" data-dot="${esc(p?.id || '')}"></i>`}</span>`;
   }
-  const userLink = (p) => p ? `<a class="user ${rank(p).cls}" href="#/u/${encodeURIComponent(p.username)}">${esc(p.username)}</a>` : '<span class="muted">[deleted]</span>';
+  // Donator rank from the game ("Death", "Reaper", ...) in that rank's in-game colour.
+  const donor = (p) => p?.game?.donator_rank
+    ? `<span class="donor" style="--d:#${esc(/^[0-9a-f]{6}$/i.test(p.game.donator_color) ? p.game.donator_color : 'd4a63a')}">${esc(p.game.donator_rank)}</span>` : '';
+  // The game server updates this every minute, so an old "online" means the server is down.
+  const serverUp = (s) => !!s && s.online && Date.now() - new Date(s.updated_at).getTime() < 3 * 60000;
+  const inGame = (p, s) => !!p?.game?.online && serverUp(s);
+  const played = (min) => min >= 60 ? `${Math.floor(min / 1440) ? Math.floor(min / 1440) + 'd ' : ''}${Math.floor(min / 60) % 24}h` : `${min || 0}m`;
+
+  const userLink =(p) => p ? `<a class="user ${rank(p).cls}" href="#/u/${encodeURIComponent(p.username)}">${esc(p.username)}</a>` : '<span class="muted">[deleted]</span>';
 
   function toast(msg, kind = 'info') {
     const box = document.getElementById('toasts');
@@ -73,5 +81,5 @@ window.U = (() => {
 
   const errText = (e) => (e && (e.message || e.error_description)) || String(e);
 
-  return { esc, fmt, ago, date, time, full, rank, badge, avatar, userLink, toast, errText };
+  return { esc, fmt, ago, date, time, full, rank, badge, donor, serverUp, inGame, played, avatar, userLink, toast, errText };
 })();

@@ -3,7 +3,7 @@
 // sees it. Open the site in two tabs, log in as two different accounts and
 // you can chat between them. "ShadowBot" is always online and replies.
 window.makeDemoBackend = () => {
-  const KEY = 'sod_demo_v2';
+  const KEY = 'sod_demo_v3';
   const bc = 'BroadcastChannel' in window ? new BroadcastChannel('sod_demo') : null;
   const tabId = Math.random().toString(36).slice(2);
   const BOT = 'bot-shadow';
@@ -42,7 +42,17 @@ window.makeDemoBackend = () => {
       ].map(([section, name, description, icon, staff_only], i) => ({ id: i + 1, section, name, description, icon, sort: (i + 1) * 10, staff_only })),
       threads: [], posts: [], wall: [], likes: [], comments: [], requests: [], messages: [],
     };
-    const thread = (cat, author, title, body, mins, replies = [], extra = {}) => {
+    // Pretend game data, like the game server sends on the live site.
+    const game = (id, staff, donor, color, cb, total, mins, online) => {
+      const user = db.users.find((x) => x.id === id);
+      user.game = { game_username: user.username.toLowerCase(), display_name: user.username, staff_rank: staff, donator_rank: donor,
+        donator_color: color, combat_level: cb, total_level: total, time_played_min: mins, online, last_seen: ago(online ? 1 : 300) };
+    };
+    game('u-shadow', 'owner', 'Death', 'e8c45c', 138, 2496, 5400, true);
+    game('u-kage', 'admin', 'Death', 'e8c45c', 126, 2210, 3900, false);
+    game('u-grim', 'player', '', '', 97, 1650, 1200, true);
+    game('u-lily', 'player', 'Wraith', '9ec9ff', 54, 1820, 2300, false);
+    const thread =(cat, author, title, body, mins, replies = [], extra = {}) => {
       const id = ++db.seq;
       db.threads.push({ id, category_id: cat, author_id: author, title, pinned: false, locked: false, view_count: 10 + replies.length * 7, created_at: ago(mins), ...extra });
       db.posts.push({ id: ++db.seq, thread_id: id, author_id: author, body, created_at: ago(mins), edited_at: null });
@@ -208,6 +218,11 @@ window.makeDemoBackend = () => {
       return page(rows, p, size);
     },
     async touch() {},
+
+    async usernameStatus(name) { return (await api.usernameAvailable(name)) ? 'free' : 'taken'; },
+    async linkGame() { throw new Error('Demo mode: linking a game account works on the live site.'); },
+    async unlinkGame() { throw new Error('Demo mode: linking a game account works on the live site.'); },
+    async serverStatus() { return { online: true, players: 3, uptime_min: 754, updated_at: now() }; },
 
     async forumIndex() {
       await delay(20);

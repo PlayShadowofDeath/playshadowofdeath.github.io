@@ -108,7 +108,7 @@ main.container { flex: 1; padding-top: 20px; padding-bottom: 90px; }
 .nowrap { white-space: nowrap; }
 .muted, .meta { color: var(--muted); }
 .meta { font-size: 13px; }
-.green { color: var(--green); } .red { color: #ff6b6b; }
+.green { color: var(--green); } .red { color: #ff6b6b; } .gold { color: var(--gold-hi); }
 .clip { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .crumbs { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
 .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
@@ -138,6 +138,16 @@ main.container { flex: 1; padding-top: 20px; padding-bottom: 90px; }
 .rank.admin { background: linear-gradient(#ffb347, #b86b0e); color: #1a0f00; }
 .rank.mod { background: linear-gradient(#5db6ff, #1f6fb8); color: #fff; }
 .rank.banned { background: #333; color: #aaa; }
+.donor { display: inline-block; font: 700 10.5px Inter, sans-serif; text-transform: uppercase; letter-spacing: .05em; padding: 1px 7px; border-radius: 4px; vertical-align: middle;
+  color: var(--d); border: 1px solid color-mix(in srgb, var(--d) 55%, transparent); background: color-mix(in srgb, var(--d) 12%, transparent); }
+.game-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.game-stats div { background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; text-align: center; min-width: 90px; }
+.game-stats b { display: block; font: 700 1.1rem Cinzel, serif; color: var(--gold-hi); }
+.game-stats span { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.ingame { color: var(--green); font-weight: 600; }
+.server-pill { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; border-radius: 20px; background: rgba(21, 21, 26, .85); border: 1px solid var(--border); font-size: 14px; margin-bottom: 14px; }
+.server-pill .dot { border-color: transparent; }
+.server-pill.down { color: var(--muted); }
 
 /* ---------- home ---------- */
 .hero { position: relative; margin: -20px -16px 22px; padding: 70px 16px 40px; text-align: center; overflow: hidden;

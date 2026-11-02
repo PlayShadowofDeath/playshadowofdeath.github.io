@@ -1,12 +1,13 @@
 // Shadow of Death website: pages + navigation.
 (async () => {
   const cfg = window.SOD_CONFIG;
-  const { esc, fmt, ago, date, full, badge, avatar, userLink, toast, errText } = window.U;
+  const { esc, fmt, ago, date, full, badge, donor, serverUp, inGame, played, avatar, userLink, toast, errText } = window.U;
   const view = document.getElementById('view');
   const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js';
 
   // ---------- pick the backend ----------
-  const isLive = !!(cfg.supabaseUrl && cfg.supabaseAnonKey);
+  // Adding ?demo to the address tries the site with pretend data, even when the keys are filled in.
+  const isLive = !!(cfg.supabaseUrl && cfg.supabaseAnonKey) && !/[?&]demo\b/.test(location.search);
   if (isLive) {
     try {
       await new Promise((ok, fail) => {
@@ -143,7 +144,9 @@
 
   views.home = async () => {
     setTitle('');
-    const [stats, cats, recent, feed] = await Promise.all([api.stats(), api.forumIndex(), api.recentThreads(7), api.feed({ size: 3 })]);
+    const [stats, cats, recent, feed, server] = await Promise.all([api.stats(), api.forumIndex(), api.recentThreads(7),
+      api.feed({ size: 3 }), api.serverStatus().catch(() => null)]);
+    const up = serverUp(server);
     const news = cats.find((c) => c.name === 'Announcements');
     const newsThreads = news ? await api.recentThreads(3, news.id) : [];
     const firstPosts = await Promise.all(newsThreads.map((t) => api.posts(t.id, 0, 1).then((r) => r.rows[0])));
@@ -151,6 +154,8 @@
     view.innerHTML = `
       <section class="hero">
         <div class="hero-inner">
+          ${server ? `<div class="server-pill ${up ? '' : 'down'}"><i class="dot ${up ? 'on' : ''}"></i>${up
+            ? `Server online · <b>${server.players}</b> playing now` : 'Server offline'}</div>` : ''}
           <h1>Shadow of Death</h1>
           <p>A 718 RuneScape private server. Bosses, raids, custom items and a community that plays together.</p>
           <div class="hero-btns">
@@ -162,7 +167,8 @@
             <div><b>${stats.members}</b><span>Members</span></div>
             <div><b>${stats.threads}</b><span>Threads</span></div>
             <div><b>${stats.posts}</b><span>Posts</span></div>
-            <div><b class="green" data-online-count>${S.online.size}</b><span>Online now</span></div>
+            ${server ? `<div><b class="${up ? 'green' : ''}">${up ? server.players : 0}</b><span>In game</span></div>` : ''}
+            <div><b class="green" data-online-count>${S.online.size}</b><span>On the site</span></div>
           </div>
         </div>
       </section>
@@ -307,8 +313,9 @@
         <article class="panel post" id="post-${x.id}">
           <aside class="post-author">
             ${avatar(x.author, 72, x.author ? S.online.has(x.author.id) : undefined)}
-            <div>${userLink(x.author)}</div>${badge(x.author)}
-            <dl><dt>Posts</dt><dd>${counts[x.author_id] || 0}</dd><dt>Joined</dt><dd>${x.author ? date(x.author.created_at) : ''}</dd></dl>
+            <div>${userLink(x.author)}</div>${badge(x.author)}${donor(x.author)}
+            <dl><dt>Posts</dt><dd>${counts[x.author_id] || 0}</dd><dt>Joined</dt><dd>${x.author ? date(x.author.created_at) : ''}</dd>
+              ${x.author?.game ? `<dt>Total lvl</dt><dd>${x.author.game.total_level ?? '–'}</dd><dt>Combat</dt><dd>${x.author.game.combat_level ?? '–'}</dd>` : ''}</dl>
           </aside>
           <div class="post-main">
             <div class="post-top meta"><span>${full(x.created_at)}${x.edited_at ? ` · <i>edited ${ago(x.edited_at)}</i>` : ''}</span><a href="#/thread/${t.id}/${p + 1}" class="muted">#${p * size + i + 1}</a></div>
@@ -442,8 +449,9 @@
     setTitle(p.username);
     const self = S.me?.id === p.id;
     const rel = S.me && !self ? await api.relation(p.id) : { state: 'self' };
-    const [threads, counts] = await Promise.all([api.threadsBy(p.id, 8), api.postCounts([p.id])]);
+    const [threads, counts, server] = await Promise.all([api.threadsBy(p.id, 8), api.postCounts([p.id]), api.serverStatus().catch(() => null)]);
     const onlineNow = S.online.has(p.id);
+    const g = p.game;
     let friendBtn = '';
     if (S.me && !self) friendBtn = {
       none: `<button class="btn" id="add-friend">+ Add friend</button>`,
@@ -457,10 +465,16 @@
       <div class="panel profile-head">
         ${avatar(p, 120, onlineNow)}
         <div class="grow">
-          <h1>${esc(p.username)} ${badge(p)}${p.status === 'banned' ? ' <span class="rank banned">Banned</span>' : ''}</h1>
+          <h1>${esc(p.username)} ${badge(p)} ${donor(p)}${p.status === 'banned' ? ' <span class="rank banned">Banned</span>' : ''}</h1>
           <div class="meta">${onlineNow ? '<span class="green">● Online now</span>' : `Last seen ${ago(p.last_seen)}`} · Joined ${date(p.created_at)} · ${counts[p.id] || 0} forum posts
-            ${p.game_username ? ` · In-game: <b>${esc(p.game_username)}</b>` : ''}</div>
+            ${g ? ` · In-game: <b>${esc(g.display_name || g.game_username)}</b> ${inGame(p, server) ? '<span class="ingame">⚔ In game now</span>' : ''}` : ''}</div>
           ${p.bio ? `<p class="bio">${fmt(p.bio)}</p>` : ''}
+          ${g ? `<div class="game-stats">
+            <div><b>${g.combat_level ?? '–'}</b><span>Combat</span></div>
+            <div><b>${g.total_level ?? '–'}</b><span>Total level</span></div>
+            <div><b>${g.time_played_min != null ? played(g.time_played_min) : '–'}</b><span>Time played</span></div>
+            ${g.donator_rank ? `<div><b style="color:#${esc(g.donator_color)}">${esc(g.donator_rank)}</b><span>Donator</span></div>` : ''}
+          </div>` : ''}
         </div>
         <div class="row">${friendBtn}${self ? '<a class="btn ghost" href="#/settings">Edit profile</a>' : ''}</div>
       </div>
@@ -634,6 +648,8 @@
         <p class="muted">Create your community account. Tip: use your in-game name.</p>
         <form id="f" class="form">
           <label>Username<input id="name" maxlength="12" required autocomplete="nickname" placeholder="3–12 letters, numbers, spaces"><small id="name-hint" class="meta"></small></label>
+          <label>Game code <span class="meta">(optional)</span><input id="code" maxlength="6" autocomplete="off" placeholder="Play Shadow of Death? Type ::forums in-game" style="text-transform:uppercase">
+            <small class="meta">Links your character: your forum profile shows your levels and donator rank, and staff get their rank here too.</small></label>
           <label>Email<input id="email" type="email" required autocomplete="email"></label>
           <label>Password<input id="pw" type="password" minlength="8" required autocomplete="new-password" placeholder="At least 8 characters"></label>
           <label>Confirm password<input id="pw2" type="password" required autocomplete="new-password"></label>
@@ -649,8 +665,10 @@
       if (!v) return hint.textContent = '';
       if (!NAME_RE.test(v)) { hint.textContent = '3–12 characters: letters, numbers, spaces, - and _'; hint.className = 'meta red'; return; }
       t = setTimeout(async () => {
-        const free = await api.usernameAvailable(v).catch(() => true);
-        hint.textContent = free ? '✓ Available' : '✕ Taken'; hint.className = 'meta ' + (free ? 'green' : 'red');
+        const status = await api.usernameStatus(v).catch(() => 'free');
+        hint.textContent = { free: '✓ Available', taken: '✕ Taken',
+          game: '⚔ This is a game name. If it\'s yours, type ::forums in-game and enter the code below.' }[status];
+        hint.className = 'meta ' + { free: 'green', taken: 'red', game: 'gold' }[status];
       }, 300);
     };
     $('#f').onsubmit = (e) => {
@@ -660,7 +678,7 @@
       if (password.length < 8) return toast('Passwords need at least 8 characters.', 'error');
       if (password !== $('#pw2').value) return toast('The passwords do not match.', 'error');
       busy(e.submitter, async () => {
-        const res = await api.signUp({ username, email, password });
+        const res = await api.signUp({ username, email, password, linkCode: $('#code').value });
         if (res.needsConfirm) {
           view.innerHTML = `<div class="auth panel center"><h1>Check your email</h1><p>We sent a link to <b>${esc(email)}</b>. Click it to finish making your account, then log in.</p></div>`;
           return;
@@ -723,6 +741,16 @@
           <button class="btn">Save profile</button>
         </form>
         <div>
+          <form class="panel pad form" id="game-f">
+            <h2>Game account</h2>
+            ${m.game ? `<p>Linked to <b>${esc(m.game.display_name || m.game.game_username)}</b> ${donor(m)}</p>
+              <p class="meta">Your levels, time played and donator rank show on your profile, and staff ranks come from the game.</p>
+              <button type="button" class="btn ghost" id="unlink">Unlink</button>`
+            : `<p class="meta">Link your Shadow of Death character: type <code>::forums</code> in-game, then enter the 6-letter code here.
+              Your profile then shows your levels and donator rank, and your game name is yours on the forums.</p>
+              <label>Game code<input id="link-code" maxlength="6" required autocomplete="off" style="text-transform:uppercase"></label>
+              <button class="btn">Link game account</button>`}
+          </form>
           <form class="panel pad form" id="email-f">
             <h2>Email</h2><p class="meta">Current: ${esc(m.email || '')}</p>
             <label>New email<input id="email" type="email" required></label><button class="btn ghost">Change email</button>
@@ -761,6 +789,17 @@
       busy(e.submitter, async () => { await api.changePassword($('#pw').value); e.target.reset(); toast('Password changed.', 'ok'); });
     };
     if ($('#reset')) $('#reset').onclick = () => { if (confirm('Reset all demo data?')) api.resetDemo(); };
+    $('#game-f').onsubmit = (e) => {
+      e.preventDefault();
+      busy(e.submitter, async () => {
+        const name = await api.linkGame($('#link-code').value);
+        S.me = api.me(); renderHeader(); toast(`Linked to your game account ${name}!`, 'ok'); route();
+      });
+    };
+    if ($('#unlink')) $('#unlink').onclick = (e) => {
+      if (confirm('Unlink your game account? Your levels and donator rank stop showing, and a game staff rank is removed.'))
+        busy(e.target, async () => { await api.unlinkGame(); S.me = api.me(); renderHeader(); toast('Game account unlinked.'); route(); });
+    };
   };
 
   views.rules = async () => {

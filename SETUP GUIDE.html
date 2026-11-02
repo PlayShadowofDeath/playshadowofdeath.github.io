@@ -155,11 +155,18 @@ To update the site later, upload the changed files the same way (GitHub replaces
   <li>Either way, update the <b>Site URL</b> and <b>Redirect URLs</b> in step 5 to the new address.</li>
 </ul>
 
-<h2>Coming later: game account link</h2>
-<p>Accounts are already built for it. When the server moves to the VPS, the game server will make a forum account
-automatically when someone registers in-game (status "incomplete", linked to their game name). They then log in on the site with their
-game name and password and see <b>Finish your sign-up</b>, where they add their email. That needs the secret Supabase key on
-the game server only (never in the website), so it waits for the VPS.</p>
+<h2>8. Link the game server to the forums <span class="tag">YOU</span></h2>
+<p>Players type <code>::forums</code> in-game for a one-time code and enter it on the site. Their profile then shows their levels,
+time played and donator rank, staff ranks follow the game, game names are held for their owners, and the home page shows the server status.</p>
+<ol>
+  <li>Supabase &rarr; <b>SQL Editor</b> &rarr; <b>New query</b>: paste all of <code>supabase\game-link.sql</code> and click <b>Run</b>.</li>
+  <li>Supabase &rarr; <b>Project Settings</b> &rarr; <b>API Keys</b> &rarr; <b>Secret keys</b>: copy the secret key (starts with <code>sb_secret_</code>; click the eye or <b>Copy</b>, or <b>Add new secret key</b> if there isn't one).</li>
+  <li>Open <code>718-Server\718-Server\forum-link.properties</code> in Notepad, replace <code>PASTE_SECRET_KEY_HERE</code> with the key, and save.
+    <div class="card warn">This key can do anything in the database. It lives only in that file on the server PC. Never paste it into the website, the chat or anywhere else.
+      If it ever leaks: Supabase &rarr; API Keys &rarr; delete that secret key, make a new one, and paste the new one in the file.</div></li>
+  <li>Restart the game server. The console shows <code>[ForumLink] On</code>.</li>
+</ol>
+<p class="muted">When the server moves to the VPS, copy <code>forum-link.properties</code> along with it.</p>
 
 <h2>Files in the folder</h2>
 <table>

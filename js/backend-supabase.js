@@ -4,7 +4,9 @@ window.makeSupabaseBackend = (cfg) => {
   const sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
     auth: { persistSession: true, autoRefreshToken: true },
   });
-  const P = 'id,username,avatar_color,bio,signature,role,status,game_username,created_at,last_seen';
+  const P = 'id,username,avatar_color,bio,signature,role,status,game_username,created_at,last_seen,'
+    + 'game:game_accounts!linked_profile(game_username,display_name,staff_rank,donator_rank,donator_color,combat_level,total_level,time_played_min,online,last_seen)';
+  const gameKey = (name) => name.trim().toLowerCase().replace(/ /g, '_');
   const GAME_DOMAIN = 'players.shadowofdeath.invalid';
   let me = null;           // my profile
   let live = null;         // realtime channel (presence + typing)
@@ -35,11 +37,25 @@ window.makeSupabaseBackend = (cfg) => {
       });
     },
     async usernameAvailable(name) {
-      return ok(await sb.rpc('username_available', { p_username: name }));
+      return (await api.usernameStatus(name)) === 'free';
     },
-    async signUp({ username, email, password }) {
-      if (!(await api.usernameAvailable(username))) throw new Error('That username is taken.');
-      const data = ok(await sb.auth.signUp({ email, password, options: { data: { username } } }));
+    // 'free', 'taken', or 'game' (held for the Shadow of Death player with that name)
+    async usernameStatus(name) {
+      return ok(await sb.rpc('username_status', { p_username: name }));
+    },
+    async signUp({ username, email, password, linkCode }) {
+      const status = await api.usernameStatus(username);
+      if (status === 'taken') throw new Error('That username is taken.');
+      const code = (linkCode || '').trim().toUpperCase();
+      if (status === 'game' && !code)
+        throw new Error('That name belongs to a Shadow of Death player. If it\'s you, type ::forums in-game and enter the code.');
+      if (code) {
+        const game = ok(await sb.rpc('check_link_code', { p_code: code }));
+        if (!game) throw new Error('That game code is wrong or has run out. Type ::forums in-game for a new one.');
+        if (status === 'game' && game !== gameKey(username)) throw new Error('That code is for a different game account.');
+      }
+      const meta = code ? { username, link_code: code } : { username };
+      const data = ok(await sb.auth.signUp({ email, password, options: { data: meta } }));
       if (!data.session) return { needsConfirm: true };
       await loadMe(data.session);
       return { needsConfirm: false };
@@ -92,6 +108,21 @@ window.makeSupabaseBackend = (cfg) => {
       if (error) throw error;
       return { rows: data, total: count };
     },
+    // ---------- game link ----------
+    async linkGame(code) {
+      const name = ok(await sb.rpc('link_game_account', { p_code: code.trim().toUpperCase() }));
+      await loadMe((await sb.auth.getSession()).data.session);
+      return name;
+    },
+    async unlinkGame() {
+      ok(await sb.rpc('unlink_game_account'));
+      await loadMe((await sb.auth.getSession()).data.session);
+    },
+    async serverStatus() {
+      const { data } = await sb.from('server_status').select('*').eq('id', 1).maybeSingle();
+      return data;
+    },
+
     async touch() { if (me) await sb.from('profiles').update({ last_seen: new Date().toISOString() }).eq('id', uid()); },
 
     // ---------- forums ----------
