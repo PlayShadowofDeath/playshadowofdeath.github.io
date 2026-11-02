@@ -3,7 +3,7 @@
 // sees it. Open the site in two tabs, log in as two different accounts and
 // you can chat between them. "ShadowBot" is always online and replies.
 window.makeDemoBackend = () => {
-  const KEY = 'sod_demo_v1';
+  const KEY = 'sod_demo_v2';
   const bc = 'BroadcastChannel' in window ? new BroadcastChannel('sod_demo') : null;
   const tabId = Math.random().toString(36).slice(2);
   const BOT = 'bot-shadow';
@@ -19,7 +19,7 @@ window.makeDemoBackend = () => {
     const db = {
       seq: 100,
       users: [
-        u('u-maddog', 'Maddog', 'owner', '#b3131b', 'Owner of Shadow of Death. Only donate to Maddog!', 60 * 24 * 30),
+        u('u-shadow', 'Shadow', 'owner', '#b3131b', 'Owner of Shadow of Death. Only donate to Shadow!', 60 * 24 * 30),
         u('u-kage', 'Kagemaru', 'admin', '#6b2fb3', 'Admin. Bossing all day.', 60 * 24 * 25),
         u(BOT, 'ShadowBot', 'moderator', '#d4a63a', 'I am the demo helper bot. Message me in the chat bar!', 60 * 24 * 20),
         u('u-grim', 'IronGrim', 'member', '#2f7bb3', 'Ironman. No trading, no problem.', 60 * 24 * 3),
@@ -48,10 +48,10 @@ window.makeDemoBackend = () => {
       db.posts.push({ id: ++db.seq, thread_id: id, author_id: author, body, created_at: ago(mins), edited_at: null });
       replies.forEach(([a, b, m]) => db.posts.push({ id: ++db.seq, thread_id: id, author_id: a, body: b, created_at: ago(m), edited_at: null }));
     };
-    thread(1, 'u-maddog', 'Welcome to the Shadow of Death forums!',
+    thread(1, 'u-shadow', 'Welcome to the Shadow of Death forums!',
       'Welcome everyone!\n\nThis is the new home of the **Shadow of Death** community. Make an account, say hi in *Introductions*, add your friends and use the chat bar at the bottom of the screen to talk instantly.\n\nPlease read the rules before posting. Have fun!',
       60 * 24 * 2, [['u-kage', 'Looks great, nice work!', 60 * 24], ['u-lily', 'Love the chat bar :D', 60 * 5]], { pinned: true });
-    thread(2, 'u-maddog', 'Update: Custom items, Quests panel and Blackjack',
+    thread(2, 'u-shadow', 'Update: Custom items, Quests panel and Blackjack',
       'Big update today:\n\n**NEW** Quests panel - `::quests`\n**NEW** Blackjack - `::blackjack name amount`\n**NEW** Custom items made in the Server Manager\n\nFull list in the patch notes.', 60 * 30);
     thread(4, 'u-grim', 'Best money making for ironmen?', 'What is everyone doing for money as an ironman? Skilling contracts seem good.',
       60 * 8, [['u-kage', '> Skilling contracts seem good.\nThey are! Elite contracts pay 10-35M each.', 60 * 3]]);
@@ -65,9 +65,9 @@ window.makeDemoBackend = () => {
       comments.forEach(([a, b, m]) => db.comments.push({ id: ++db.seq, post_id: id, author_id: a, body: b, created_at: ago(m) }));
     };
     wall('u-lily', 'u-lily', 'Just got a Legendary chest from the Halloween AFK tree!!! 🎃', 50, ['u-kage', 'u-grim'], [['u-grim', 'No way, gz!', 40]]);
-    wall('u-kage', 'u-kage', 'Double XP this weekend - who is grinding Slayer with me?', 60 * 6, ['u-maddog']);
-    wall('u-maddog', 'u-maddog', 'The new website is up. Tell your friends!', 60 * 26, ['u-kage', 'u-lily', 'u-grim']);
-    db.requests.push({ id: ++db.seq, from_id: 'u-maddog', to_id: 'u-kage', status: 'accepted', created_at: ago(9000), responded_at: ago(9000) });
+    wall('u-kage', 'u-kage', 'Double XP this weekend - who is grinding Slayer with me?', 60 * 6, ['u-shadow']);
+    wall('u-shadow', 'u-shadow', 'The new website is up. Tell your friends!', 60 * 26, ['u-kage', 'u-lily', 'u-grim']);
+    db.requests.push({ id: ++db.seq, from_id: 'u-shadow', to_id: 'u-kage', status: 'accepted', created_at: ago(9000), responded_at: ago(9000) });
     db.requests.push({ id: ++db.seq, from_id: 'u-grim', to_id: 'u-lily', status: 'accepted', created_at: ago(900), responded_at: ago(900) });
     return db;
   }

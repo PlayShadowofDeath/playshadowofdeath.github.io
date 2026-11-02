@@ -607,7 +607,7 @@
       <div class="auth panel">
         <h1>Welcome back</h1>
         <p class="muted">Log in to post, add friends and chat.</p>
-        ${api.mode === 'demo' ? '<div class="note">Demo mode: log in as <b>Maddog</b> (owner) or <b>Kagemaru</b> (admin), password <b>demo123</b>.</div>' : ''}
+        ${api.mode === 'demo' ? '<div class="note">Demo mode: log in as <b>Shadow</b> (owner) or <b>Kagemaru</b> (admin), password <b>demo123</b>.</div>' : ''}
         <form id="f" class="form">
           <label>Email<input id="login" autocomplete="username" required></label>
           <label>Password<input id="pw" type="password" autocomplete="current-password" required></label>
@@ -778,7 +778,7 @@
           <li><b>Don't share personal information</b>, yours or anyone else's.</li>
           <li><b>Never share your password.</b> Staff will never ask for it.</li>
           <li><b>Report bugs, don't abuse them.</b> Post them in Bug Reports.</li>
-          <li><b>Only donate to Maddog.</b></li>
+          <li><b>Only donate to Shadow.</b></li>
           <li>Staff decisions are final. Appeals go in the <b>Appeals</b> forum.</li>
         </ol>
       </div>`;

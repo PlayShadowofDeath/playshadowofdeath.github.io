@@ -47,7 +47,7 @@
   <li>Open the folder <code>Shadow of Death Website</code> and double-click <b>Preview website.bat</b>.</li>
   <li>Your browser opens <code>http://localhost:8085</code>. A black window stays open; closing it stops the preview.</li>
   <li>The site starts in <b>DEMO MODE</b> (yellow stripe at the top). Fake accounts, posts and messages are saved only in your own browser.</li>
-  <li>Log in as <b>Maddog</b> (owner) or <b>Kagemaru</b> (admin), password <b>demo123</b>, or register a new account.</li>
+  <li>Log in as <b>Shadow</b> (owner) or <b>Kagemaru</b> (admin), password <b>demo123</b>, or register a new account.</li>
   <li><b>Test the chat:</b> open a second browser tab, log in as the other account, and message each other from the chat bar.
     <b>ShadowBot</b> is always online and answers you too.</li>
   <li>Settings &rarr; <b>Reset demo</b> wipes the demo data.</li>
@@ -124,9 +124,9 @@ The public key is <i>meant</i> to be public: the database's security rules keep 
 
 <h3>Make yourself the owner</h3>
 <ol>
-  <li>Register your account on the site (for example <b>Maddog</b>).</li>
+  <li>Register your account on the site (for example <b>Shadow</b>).</li>
   <li>In Supabase &rarr; <b>SQL Editor</b> &rarr; <b>New query</b>, paste this and click <b>Run</b>:
-<pre>update public.profiles set role = 'owner' where username = 'Maddog';</pre></li>
+<pre>update public.profiles set role = 'owner' where username = 'Shadow';</pre></li>
   <li>Refresh the site. You now get the red <b>Owner</b> badge, can pin, lock and delete threads, ban members, and set other people's rank
     from their profile page (Member, Moderator, Admin, Owner).</li>
 </ol>
