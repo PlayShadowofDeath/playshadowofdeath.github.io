@@ -171,7 +171,50 @@ window.GUIDE_HTML = `
       <tr><td><b>Key chests</b></td><td>Reaper, Toxic, Crystal and Brimstone chests. Right-click <b>Loot table</b> to see what each one gives.</td></tr>
       <tr><td><b>Halloween AFK Tree</b> (west, by the Trading Post area)</td><td>Chop forever for candy and rare boxes. See <a href="#money">Making money</a>.</td></tr>
       <tr><td><b>Altars</b></td><td>Pray at any normal altar to switch between Normal Prayers and <b>Ancient Curses</b>.</td></tr>
+      <tr><td><b>Smithing corner</b> (north-west of spawn)</td><td>Furnace, anvil and the <b>Metal Bank</b> chest. See <a href="#smithing">Smithing corner</a> below.</td></tr>
     </table></div>
+  </div>
+
+  <div class="card" id="smithing">
+    <h3>Smithing corner: furnace, anvil &amp; Metal Bank</h3>
+    <p><b>Where it is:</b> from where you spawn, walk <b>north-west</b> past the well. Keep going past the slayer chests and the smithing corner is just north of them, about 15 steps from spawn. You'll see a <b>furnace</b>, an <b>anvil</b> and a steel chest called the <b>Metal Bank</b> standing together.</p>
+    <h3>The Metal Bank</h3>
+    <p>A second bank just for <b>ores and bars</b> (not Dungeoneering ones). It holds up to <b>30 different kinds</b>, as many of each as you like, and it's yours alone: other players see their own Metal Bank.</p>
+    <ol class="steps">
+      <li><b>Open it:</b> left-click the chest. Your ores and bars are on the left, your bag on the right.</li>
+      <li><b>Put things in:</b> right-click an item in your bag and pick <b>Deposit-1</b>, <b>-10</b>, <b>-All</b> or <b>-X</b> (type an amount). Noted ores and bars go in too.</li>
+      <li><b>Quick deposit:</b> right-click the chest and pick <b>Deposit-all</b>. Every ore and bar in your bag goes in, and so does everything in your <b>Ore box</b>, without opening the chest.</li>
+      <li><b>Take things out:</b> right-click an item in the chest and pick <b>Withdraw-1</b>, <b>-10</b>, <b>-All</b>, <b>-X</b> or <b>Withdraw-All-noted</b> (noted saves bag space when you want to sell). The button at the bottom takes everything out.</li>
+      <li><b>Using an ore, bar or your Ore box on the chest</b> does the same as Deposit-all.</li>
+    </ol>
+    <h3>Smelting &amp; smithing straight from the Metal Bank</h3>
+    <p>The <b>home furnace and anvil read the Metal Bank for you</b>, so you don't have to withdraw anything first.</p>
+    <ul>
+      <li><b>Furnace:</b> click it and pick a bar as normal. It uses ore from your bag first, then from the Metal Bank. Bars made from Metal Bank ore go <b>back into the Metal Bank</b> (or your bag if it's full).</li>
+      <li><b>Anvil:</b> you only need a <b>hammer</b> in your bag (or tool belt). Click the anvil and the smithing screen counts bars in your bag <i>and</i> your Metal Bank. What you make goes into your bag, so keep a free slot.</li>
+      <li>This only works at the home furnace and anvil. Anywhere else, the bars and ore need to be in your bag.</li>
+    </ul>
+    <div class="tip"><b>Fast smithing loop:</b> mine with an Ore box, teleport home, right-click the Metal Bank &gt; <b>Deposit-all</b>, then smelt and smith without ever opening your bank.</div>
+  </div>
+
+  <div class="card" id="oreboxes">
+    <h3>Ore box &amp; Wood box</h3>
+    <p>Carry up to <b>200</b> extra ore or logs in one bag slot.</p>
+    <div class="tbl"><table>
+      <tr><th>Box</th><th>Holds</th><th>Where to buy</th><th>Price</th></tr>
+      <tr><td><b>Ore box</b> (grey)</td><td>Any ore, coal or clay (not Dungeoneering ores)</td><td>Home <b>Mining</b> shop</td><td class="v">1M</td></tr>
+      <tr><td><b>Wood box</b> (brown)</td><td>Any logs</td><td>Home <b>Woodcutting</b> shop</td><td class="v">1M</td></tr>
+    </table></div>
+    <p>Right-click the box in your bag:</p>
+    <ul>
+      <li><b>Fill</b> moves the matching ore or logs from your bag into the box. A box holds <b>one kind at a time</b>, so empty it before switching from, say, coal to iron.</li>
+      <li><b>Inspect</b> tells you what's inside and how many.</li>
+      <li><b>Empty</b> takes the contents out into your bag (as many as you have free slots for).</li>
+      <li><b>Into your bank:</b> with your bank open, deposit the box as normal. It empties into your bank and the box stays in your bag.</li>
+      <li><b>Into the Metal Bank</b> (Ore box only): use <b>Deposit-all</b> on the chest, or deposit the box from the Metal Bank screen.</li>
+      <li><b>Destroy</b> asks first. Anything inside is sent to your bank, so nothing is lost.</li>
+    </ul>
+    <div class="warn"><b>Rules:</b> one of each box per person. You can't trade or drop them, and you keep them when you die (even in the Wilderness). Empty a box before banking it.</div>
   </div>
 </section>
 
@@ -203,9 +246,9 @@ window.GUIDE_HTML = `
     <h3>Skill-by-skill</h3>
     <table>
       <tr><th>Skill</th><th>How to train it</th><th>Money angle</th></tr>
-      <tr><td><b>Woodcutting</b></td><td>Seers' Village (yews, magics) via <code>::skilling</code>. Or the <b>Halloween AFK tree</b> at home, which never falls down.</td><td>Magic logs 60K, yews 15K each (Quick Sell)</td></tr>
-      <tr><td><b>Mining</b></td><td>Dwarf mine, coal, LRC, Lava flow and Gemstone rocks via <code>::skilling</code>.</td><td>Runite ore 150K</td></tr>
-      <tr><td><b>Smithing</b></td><td>Smelt and smith the bars you mined.</td><td>Rune bar 350K</td></tr>
+      <tr><td><b>Woodcutting</b></td><td>Seers' Village (yews, magics) via <code>::skilling</code>. Or the <b>Halloween AFK tree</b> at home, which never falls down. A <a href="#oreboxes">Wood box</a> carries 200 extra logs.</td><td>Magic logs 60K, yews 15K each (Quick Sell)</td></tr>
+      <tr><td><b>Mining</b></td><td>Dwarf mine, coal, LRC, Lava flow and Gemstone rocks via <code>::skilling</code>. An <a href="#oreboxes">Ore box</a> carries 200 extra ore.</td><td>Runite ore 150K</td></tr>
+      <tr><td><b>Smithing</b></td><td>Smelt and smith the bars you mined. The <a href="#smithing">smithing corner</a> at home uses ore and bars straight from your Metal Bank.</td><td>Rune bar 350K</td></tr>
       <tr><td><b>Fishing</b></td><td>Barbarian, Draynor or <b>Catherby</b> (best) via <code>::skilling</code>.</td><td>Rocktails 50K raw / 70K cooked, mantas 35K / 50K</td></tr>
       <tr><td><b>Cooking</b></td><td>Cook your catch on a range.</td><td>Cooked fish sell for more than raw</td></tr>
       <tr><td><b>Herblore</b></td><td>Clean herbs and make potions.</td><td>Torstol 120K, snapdragon 70K, ranarr 50K (clean)</td></tr>
