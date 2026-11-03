@@ -177,7 +177,7 @@ window.GUIDE_HTML = `
 
   <div class="card" id="smithing">
     <h3>Smithing corner: furnace, anvil &amp; Metal Bank</h3>
-    <p><b>Where it is:</b> from where you spawn, walk <b>north-west</b> past the well. Keep going past the slayer chests and the smithing corner is just north of them, about 15 steps from spawn. You'll see a <b>furnace</b>, an <b>anvil</b> and a steel chest called the <b>Metal Bank</b> standing together.</p>
+    <p><b>Where it is:</b> from where you spawn, walk <b>north-west</b> past the well. Keep going past the slayer chests and the smithing corner is just north of them, about 15 steps from spawn. You'll see a <b>furnace</b>, an <b>anvil</b> and a steel chest called the <b>Metal Bank</b> standing together on a raised <b>stone platform</b>. Just walk up onto it from any side.</p>
     <h3>The Metal Bank</h3>
     <p>A second bank just for <b>ores and bars</b> (not Dungeoneering ones). It holds up to <b>30 different kinds</b>, as many of each as you like, and it's yours alone: other players see their own Metal Bank.</p>
     <ol class="steps">
