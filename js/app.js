@@ -98,7 +98,7 @@
   function renderHeader() {
     const path = location.hash.slice(1) || '/';
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
-      ['#/members', 'Members', /^\/members/]];
+      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/]];
     document.getElementById('nav').innerHTML = nav.map(([h, t, re]) => `<a href="${h}" class="${re.test(path) ? 'on' : ''}">${t}</a>`).join('')
       + `<a href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}" class="play">Play now</a>`;
     const box = document.getElementById('userbox');
@@ -823,6 +823,39 @@
       </div>`;
   };
 
+  // The player guide (text in js/guide.js). #/guide/slayer opens it at a chapter.
+  views.guide = async (chapter) => {
+    setTitle('Player Guide');
+    view.innerHTML = `
+      <div class="crumbs"><a href="#/">Home</a> › Guide</div>
+      <div class="guide">
+        <header class="g-hero">
+          <div class="skull">☠</div>
+          <h1>The Player's Guide</h1>
+          <p>Everything you need, from your first login to Reaper tasks, raids and Torva. Use the contents to jump around.</p>
+        </header>
+        <div class="g-layout">
+          <nav class="toc"><b>Contents</b>${window.GUIDE_TOC || ''}</nav>
+          <div class="g-main">${window.GUIDE_HTML || '<p class="muted">The guide could not be loaded.</p>'}</div>
+        </div>
+      </div>`;
+    const jump = (id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.scrollIntoView({ behavior: 'smooth' });
+      history.replaceState(null, '', '#/guide/' + id);
+    };
+    // Chapter links are plain #ids; route links (#/...) are left alone.
+    $('.guide', view).addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a || a.getAttribute('href').startsWith('#/')) return;
+      e.preventDefault();
+      jump(a.getAttribute('href').slice(1));
+    });
+    // After the router's scroll-to-top; instant so the smooth scroll doesn't stop halfway.
+    if (chapter) setTimeout(() => document.getElementById(chapter)?.scrollIntoView({ behavior: 'instant' }), 50);
+  };
+
   function notFound(msg = 'That page does not exist.') {
     setTitle('Not found');
     view.innerHTML = `<div class="panel pad center narrow"><h1>Not found</h1><p class="muted">${esc(msg)}</p><a class="btn" href="#/">Go home</a></div>`;
@@ -846,6 +879,7 @@
     [/^\/finish$/, views.finish],
     [/^\/settings$/, views.settings],
     [/^\/rules$/, views.rules],
+    [/^\/guide(?:\/([\w-]+))?$/, views.guide],
   ];
   let routeToken = 0;
   async function route() {
