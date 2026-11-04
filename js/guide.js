@@ -269,7 +269,7 @@ window.GUIDE_HTML = `
       <tr><td><b>Firemaking</b></td><td>Burn the logs you cut.</td><td>&mdash;</td></tr>
       <tr><td><b>Construction</b></td><td>Build in your house.</td><td>&mdash;</td></tr>
       <tr><td><b>Slayer</b></td><td>Tasks from the slayer masters. See <a href="#slayer">Slayer</a>.</td><td>Coins per kill and per task</td></tr>
-      <tr><td><b>Dungeoneering</b></td><td>Teleport Manager &gt; Skilling &gt; Dungeoneering.</td><td>&mdash;</td></tr>
+      <tr><td><b>Dungeoneering</b></td><td>Teleport Manager &gt; Skilling &gt; Dungeoneering (or <code>::skilling</code>). Bank <b>everything</b>, worn items too, then click the <b>dungeon entrance</b>: it makes your party and gives you a Ring of kinship if you need one (the tutor by the entrance gives one too). Invite friends from the ring's party tab first if you want a group.</td><td>&mdash;</td></tr>
       <tr><td><b>Divination</b></td><td>Wisps.</td><td>&mdash;</td></tr>
     </table>
     <div class="tip"><b>Skilling points:</b> skilling earns points you can spend in the <b>Skilling points</b> shop (Shops panel &gt; Points). Skillcapes, hoods and master capes are in the Skilling tab.</div>
