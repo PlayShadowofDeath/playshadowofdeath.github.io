@@ -104,7 +104,7 @@ window.GUIDE_HTML = `
   <div class="card">
     <h3>Side tabs</h3>
     <ul>
-      <li><b>Player Info</b> (replaces the old Task tab): framed boxes for combat level, total level, total XP, daily tasks, achievements, slayer task and streak, boss kills, money pouch, time played and quests. <b>Click a box</b> to open its window.</li>
+      <li><b>Player Info</b> (replaces the old Task tab): framed boxes for combat level, total level, total XP, daily tasks, achievements, slayer task and streak, boss kills, money pouch, time played and quests, plus an <b>Item lookup</b> box. <b>Click a box</b> to open its window.</li>
       <li><b>Information</b> (blue "i" tab, where Notes used to be): all your stats in one list, including Reaper task, drop rate boost and more.</li>
       <li><b>Quests</b> (blue icon): opens the Quests panel.</li>
       <li><b>Equipment</b>: the <b>tool belt</b> button opens your Tool Belt (see <a href="#panels">panels</a>).</li>
@@ -140,7 +140,11 @@ window.GUIDE_HTML = `
     <div class="card"><h3>Drop tables <span class="how">::drops name</span></h3>
       <p>E.g. <code>::drops general graardor</code>, <code>::drops tob</code>, <code>::drops cox</code>. Shows every drop with its chance ("1/300"), sorted Common to Super Rare. Hover for the exact %.</p></div>
     <div class="card"><h3>Tool Belt <span class="how">::toolbelt</span></h3>
-      <p>Right-click any hatchet or pickaxe and choose <b>Add to tool belt</b>. Woodcutting and Mining then use it automatically, with no inventory slot needed. Adding a better one gives the old one back.</p></div>
+      <p>Right-click any hatchet or pickaxe and choose <b>Add to tool belt</b>. Woodcutting and Mining then use it automatically, with no inventory slot needed. Adding a better one gives the old one back. Every belt tool works like one in your bag: right-click logs for <b>Craft</b> (fletch with the belt knife) or <b>Light</b> (belt tinderbox), and uncut gems for <b>Craft</b> (belt chisel).</p></div>
+    <div class="card"><h3>Item lookup <span class="how">Player Info tab / ::whereget name</span></h3>
+      <p>Click <b>Item lookup</b> on the Player Info tab (or type <code>::whereget name</code> / <code>::find name</code>) and search any item to see <b>where to get it</b>: every monster that drops it (chance per kill and level) and every shop that sells it (price, and where it is in <code>::shops</code>). Click a monster for its drop table or a home shop to open it. If nothing in the game gives it, it says <b>Not obtainable right now</b>.</p></div>
+    <div class="card"><h3>Pin a task <span class="how">Pin task button</span></h3>
+      <p>The Reaper Task, Contracts and Daily Tasks windows have a <b>Pin task</b> button. The task then shows in the top-left of your screen with its progress (under the slayer counter) and updates as you go. One at a time; <b>Unpin</b> hides it.</p></div>
     <div class="card"><h3>Collection log <span class="how">::collections</span></h3>
       <p>Tracks the boss items you've collected.</p></div>
     <div class="card"><h3>Donator Panel <span class="how">::donator</span></h3>
@@ -162,7 +166,7 @@ window.GUIDE_HTML = `
     <div class="tbl"><table>
       <tr><th>What</th><th>What it's for</th></tr>
       <tr><td><b>Bank</b></td><td>Bank booths at home. Wraith donators and up can use <code>::bank</code> anywhere.</td></tr>
-      <tr><td><b>Shop Board</b> (by the well)</td><td>Opens the Shops panel. The shopkeepers themselves are around home too.</td></tr>
+      <tr><td><b>Shop Board</b> (by the Well of Shadows)</td><td>Opens the Shops panel. The shopkeepers themselves are around home too.</td></tr>
       <tr><td><b>Raid Board</b></td><td>Wooden sign near spawn: make or join raid parties.</td></tr>
       <tr><td><b>Trading Post booth</b></td><td>Player shops and Quick Sell.</td></tr>
       <tr><td><b>Slayer masters</b></td><td>Get slayer tasks.</td></tr>
@@ -170,6 +174,8 @@ window.GUIDE_HTML = `
       <tr><td><b>Smiddi</b></td><td>Legendary gear shop (Torva, Primal, godswords and more) <i>and</i> Dragon &amp; Barrows shop.</td></tr>
       <tr><td><b>Key chests</b></td><td>Reaper, Toxic, Crystal and Brimstone chests. Right-click <b>Loot table</b> to see what each one gives.</td></tr>
       <tr><td><b>Halloween AFK Tree</b> (west, by the Trading Post area)</td><td>Chop forever for candy and rare boxes. See <a href="#money">Making money</a>.</td></tr>
+      <tr><td><b>Well of Shadows</b></td><td>Sells the <b>global boosts</b> that help everyone online for an hour: Global xp boost <b>250M</b>, Global drop boost <b>500M</b>.</td></tr>
+      <tr><td><b>Shadow Portal</b></td><td>The home teleporter.</td></tr>
       <tr><td><b>Altars</b></td><td>Pray at any normal altar to switch between Normal Prayers and <b>Ancient Curses</b>.</td></tr>
       <tr><td><b>Smithing corner</b> (north-west of spawn)</td><td>Furnace, anvil and the <b>Metal Bank</b> chest. See <a href="#smithing">Smithing corner</a> below.</td></tr>
     </table></div>
@@ -247,7 +253,7 @@ window.GUIDE_HTML = `
     <table>
       <tr><th>Skill</th><th>How to train it</th><th>Money angle</th></tr>
       <tr><td><b>Woodcutting</b></td><td>Seers' Village (yews, magics) via <code>::skilling</code>. Or the <b>Halloween AFK tree</b> at home, which never falls down. A <a href="#oreboxes">Wood box</a> carries 200 extra logs.</td><td>Magic logs 60K, yews 15K each (Quick Sell)</td></tr>
-      <tr><td><b>Mining</b></td><td>Dwarf mine, coal, LRC, Lava flow and Gemstone rocks via <code>::skilling</code>. An <a href="#oreboxes">Ore box</a> carries 200 extra ore.</td><td>Runite ore 150K</td></tr>
+      <tr><td><b>Mining</b></td><td>Dwarf mine, coal, LRC, Lava flow and Gemstone rocks via <code>::skilling</code>. Rocks never run out. Mithril, adamant and rune are quick here (at 99 about 1,100 / 560 / 260 ore an hour). An <a href="#oreboxes">Ore box</a> carries 200 extra ore.</td><td>Runite ore 150K</td></tr>
       <tr><td><b>Smithing</b></td><td>Smelt and smith the bars you mined. The <a href="#smithing">smithing corner</a> at home uses ore and bars straight from your Metal Bank.</td><td>Rune bar 350K</td></tr>
       <tr><td><b>Fishing</b></td><td>Barbarian, Draynor or <b>Catherby</b> (best) via <code>::skilling</code>.</td><td>Rocktails 50K raw / 70K cooked, mantas 35K / 50K</td></tr>
       <tr><td><b>Cooking</b></td><td>Cook your catch on a range.</td><td>Cooked fish sell for more than raw</td></tr>
@@ -314,6 +320,7 @@ window.GUIDE_HTML = `
       <li>Bosses on your Reaper task drop <b>Reaper keys</b> (1 in 50 per kill).</li>
       <li>Use the key on the <b>Reaper chest</b> at home. Right-click it and pick <b>Loot table</b> to see the rewards.</li>
       <li>The chest's best rewards are the <b>Reaper scythe</b> and the <b>Reaper hand pet</b>, 1 in 1,202 each per key.</li>
+      <li>Press <b>Pin task</b> in the window to keep your progress on screen while you kill.</li>
     </ul>
     <p>Bosses that can be Reaper tasks include Nex, the four God Wars generals, Corporeal Beast, Cerberus, Abyssal Sire, Queen Black Dragon, King Black Dragon, Kalphite Queen, Kraken, Dagannoth Kings and more.</p>
     <div class="good"><b>Stack it up:</b> a Reaper task boss still counts for your <b>daily tasks</b>, still pays boss coins and still rolls boss boxes and tickets. One kill, four rewards.</div>
@@ -332,6 +339,7 @@ window.GUIDE_HTML = `
       <li><b>Every 10th contract gives a free Elite box.</b></li>
       <li>A top Elite contract is worth roughly <b>10&ndash;35M</b>.</li>
       <li>New offers appear every 5 minutes. Cancelling keeps what you were paid but loses the bonus.</li>
+      <li>Press <b>Pin task</b> to keep "Contract: 200 x Yew logs 50 / 200" on screen while you gather.</li>
     </ul>
   </div>
 </section>
@@ -345,6 +353,7 @@ window.GUIDE_HTML = `
       <li>Each pays <b>8M&ndash;30M</b>. Raid tasks also give an Elite box.</li>
       <li><b>Finish all three:</b> +10M and an <b>Elite box</b>.</li>
       <li>Boss kills count for <b>everyone who did 100+ damage</b>, so bossing with friends helps everyone's dailies.</li>
+      <li>Each unfinished task has a <b>Pin task</b> button to keep its progress on screen.</li>
     </ul>
   </div>
 </section>
@@ -493,6 +502,7 @@ window.GUIDE_HTML = `
       <tr><td><code>::contracts</code></td><td>Skilling Contracts</td></tr>
       <tr><td><code>::shops</code></td><td>Shops panel</td></tr>
       <tr><td><code>::drops name</code></td><td>Drop table for a monster, or <code>tob</code> / <code>cox</code></td></tr>
+      <tr><td><code>::whereget name</code> / <code>::find name</code></td><td>Item lookup: which monsters drop an item and which shops sell it</td></tr>
       <tr><td><code>::quests</code></td><td>Quests panel</td></tr>
       <tr><td><code>::toolbelt</code></td><td>Tool Belt</td></tr>
       <tr><td><code>::event</code></td><td>Teleport to the world event boss</td></tr>
