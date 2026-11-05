@@ -174,7 +174,7 @@ window.GUIDE_HTML = `
       <tr><td><b>Smiddi</b></td><td>Legendary gear shop (Torva, Primal, godswords and more) <i>and</i> Dragon &amp; Barrows shop.</td></tr>
       <tr><td><b>Key chests</b></td><td>Reaper, Toxic, Crystal and Brimstone chests. Right-click <b>Loot table</b> to see what each one gives.</td></tr>
       <tr><td><b>Halloween AFK Tree</b> (west, by the Trading Post area)</td><td>Chop forever for candy and rare boxes. See <a href="#money">Making money</a>.</td></tr>
-      <tr><td><b>Well of Shadows</b></td><td>Sells the <b>global boosts</b> that help everyone online for an hour: Global xp boost <b>250M</b>, Global drop boost <b>500M</b>.</td></tr>
+      <tr><td><b>Well of Shadows</b> (the swirling dark red well)</td><td>Sells the <b>global boosts</b> that help everyone online for an hour: Global xp boost <b>250M</b>, Global drop boost <b>500M</b>.</td></tr>
       <tr><td><b>Shadow Portal</b></td><td>The home teleporter.</td></tr>
       <tr><td><b>Altars</b></td><td>Pray at any normal altar to switch between Normal Prayers and <b>Ancient Curses</b>.</td></tr>
       <tr><td><b>Smithing corner</b> (north-west of spawn)</td><td>Furnace, anvil and the <b>Metal Bank</b> chest. See <a href="#smithing">Smithing corner</a> below.</td></tr>
