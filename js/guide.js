@@ -130,7 +130,7 @@ window.GUIDE_HTML = `
     <div class="card"><h3>Skilling Contracts <span class="how">::contracts</span></h3>
       <p>Pick one of three delivery jobs ("Deliver 150 Magic logs"). You get paid per item as you hand them in, plus a bonus at the end. See <a href="#contracts">Contracts</a>.</p></div>
     <div class="card"><h3>Shops panel <span class="how">::shops / Shop Board</span></h3>
-      <p>Every home shop in one window, in five tabs: <b>Combat, Supplies, Skilling, Points, Donator/Special</b>. Click a shop to open it.</p></div>
+      <p>Every home shop in one window, in five tabs: <b>Combat, Supplies, Skilling, Points, Donator/Special</b>. Click a shop to open it. New shops can appear in these tabs over time, and prices can change, so check the price in the shop window before you buy.</p></div>
     <div class="card"><h3>Raid Board <span class="how">board at home</span></h3>
       <p>Make or join a raid party (up to 5), pick Theatre of Blood or Chambers of Xeric, ready up and go in together. It also shows kill-time <b>Records</b>. See <a href="#raids">Raids</a>.</p></div>
     <div class="card"><h3>Trading Post <span class="how">booth at home</span></h3>
@@ -138,7 +138,7 @@ window.GUIDE_HTML = `
     <div class="card"><h3>Quests <span class="how">::quests / Quests tab</span></h3>
       <p>Tabs: All, To do, Started, Done, Other. Colours: <span style="color:#ff6b6b">red</span> = not started, <span style="color:#ffd84d">yellow</span> = started, <span style="color:var(--green)">green</span> = done. Click one for <b>View quest</b> (where it starts, what you need, the reward) or <b>Teleport to start</b>.</p></div>
     <div class="card"><h3>Drop tables <span class="how">::drops name</span></h3>
-      <p>E.g. <code>::drops general graardor</code>, <code>::drops tob</code>, <code>::drops cox</code>. Shows every drop with its chance ("1/300"), sorted Common to Super Rare. Hover for the exact %.</p></div>
+      <p>E.g. <code>::drops general graardor</code>, <code>::drops tob</code>, <code>::drops cox</code>. Shows every drop with its chance ("1/300"), sorted Common to Super Rare. Hover for the exact %. Drops can change over time, and this window always shows the current ones.</p></div>
     <div class="card"><h3>Tool Belt <span class="how">::toolbelt</span></h3>
       <p>Right-click any hatchet or pickaxe and choose <b>Add to tool belt</b>. Woodcutting and Mining then use it automatically, with no inventory slot needed. Adding a better one gives the old one back. Every belt tool works like one in your bag: right-click logs for <b>Craft</b> (fletch with the belt knife) or <b>Light</b> (belt tinderbox), and uncut gems for <b>Craft</b> (belt chisel).</p></div>
     <div class="card"><h3>Item lookup <span class="how">Player Info tab / ::whereget name</span></h3>
@@ -415,7 +415,7 @@ window.GUIDE_HTML = `
   <h2><span class="num">15</span>Boxes, keys &amp; tickets</h2>
   <div class="grid">
     <div class="card"><h3>Elite box &amp; Legendary chest</h3><p>Black-and-red Elite boxes and red-and-gold Legendary chests come from bosses, slayer, raids, contracts and daily tasks. They stack. Right-click <b>Check drops</b> to see every reward and its chance. The Legendary chest can give every piece of Torva and Primal.</p></div>
-    <div class="card"><h3>Other boxes</h3><p>Shadow Box, Mystery box, Toxic box, PvP box, Slayer caskets, H'ween box and more. All of them have <b>Check drops</b>.</p></div>
+    <div class="card"><h3>Other boxes</h3><p>Shadow Box, Mystery box, Toxic box, PvP box, Slayer caskets, H'ween box and more. All of them have <b>Check drops</b>. Some boxes have a moving background that swirls in your bag, bank and shops.</p></div>
     <div class="card"><h3>Cash tickets</h3><p><b>100m</b> and <b>1b</b> tickets. Right-click <b>Claim</b> (or Claim-all) to turn them into coins. You can also <i>buy</i> them from your money pouch, which is handy for trading big amounts.</p></div>
     <div class="card"><h3>Key chests</h3><p><b>Reaper</b> (Reaper keys), <b>Toxic</b>, <b>Crystal</b> and <b>Brimstone</b> chests at home, plus <b>Larran's chest</b> in the Wilderness. Right-click <b>Loot table</b> to see what each one gives.</p></div>
   </div>
