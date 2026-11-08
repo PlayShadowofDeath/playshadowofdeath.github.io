@@ -98,7 +98,8 @@
   function renderHeader() {
     const path = location.hash.slice(1) || '/';
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
-      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/]];
+      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/updates', 'New Updates', /^\/updates/]];
+    if (S.me?.role === 'owner') nav.push(['#/patches', 'Patches', /^\/patches/]);
     document.getElementById('nav').innerHTML = nav.map(([h, t, re]) => `<a href="${h}" class="${re.test(path) ? 'on' : ''}">${t}</a>`).join('')
       + `<a href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}" class="play">Play now</a>`;
     const box = document.getElementById('userbox');
@@ -856,6 +857,49 @@
     if (chapter) setTimeout(() => document.getElementById(chapter)?.scrollIntoView({ behavior: 'instant' }), 50);
   };
 
+  // New Updates: the big player-facing changes (text in js/updates.js, shown by js/patchbook.js).
+  views.updates = async () => {
+    setTitle('New Updates');
+    view.innerHTML = `
+      <div class="crumbs"><a href="#/">Home</a> › New Updates</div>
+      <div class="guide">
+        <header class="g-hero">
+          <div class="skull">☠</div>
+          <h1>New Updates</h1>
+          <p>The biggest additions and improvements to Shadow of Death, newest first. Pick an update, filter by type or search.</p>
+        </header>
+      </div>
+      <div id="pb-root"></div>`;
+    window.PatchBook.render($('#pb-root', view), window.UPDATES_HTML || '');
+  };
+
+  // Owner-only patch notes: every change, in the same format as the patch notes file. The text lives in the
+  // database (owner_docs), which only hands it to the owner's account, so it never appears in the site's files.
+  views.patches = async () => {
+    setTitle('Owner Patch Notes');
+    if (!S.me) return needLogin();
+    if (S.me.role !== 'owner') return notFound();
+    let doc = null;
+    try { doc = await api.ownerDoc('patch-notes'); }
+    catch (e) { console.warn('owner patch notes:', e); } // e.g. owner-patches.sql not run yet
+    view.innerHTML = `
+      <div class="crumbs"><a href="#/">Home</a> › Owner patch notes</div>
+      <div class="guide">
+        <header class="g-hero">
+          <div class="skull">♛</div>
+          <h1>Owner Patch Notes</h1>
+          <p>Private: only the owner account can see this page. Every change, owner tools and Server Manager included.</p>
+          ${doc?.updated_at ? `<p class="muted">Last updated ${esc(new Date(doc.updated_at).toLocaleString())}</p>` : ''}
+        </header>
+      </div>
+      <div id="pb-root"></div>`;
+    if (!doc) {
+      $('#pb-root', view).innerHTML = `<div class="panel pad center narrow muted">No owner patch notes yet${api.mode === 'demo' ? ' (demo mode only shows them on the live site)' : ''}.</div>`;
+      return;
+    }
+    window.PatchBook.render($('#pb-root', view), doc.html);
+  };
+
   function notFound(msg = 'That page does not exist.') {
     setTitle('Not found');
     view.innerHTML = `<div class="panel pad center narrow"><h1>Not found</h1><p class="muted">${esc(msg)}</p><a class="btn" href="#/">Go home</a></div>`;
@@ -880,6 +924,8 @@
     [/^\/settings$/, views.settings],
     [/^\/rules$/, views.rules],
     [/^\/guide(?:\/([\w-]+))?$/, views.guide],
+    [/^\/updates$/, views.updates],
+    [/^\/patches$/, views.patches],
   ];
   let routeToken = 0;
   async function route() {

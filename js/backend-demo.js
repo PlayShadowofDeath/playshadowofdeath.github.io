@@ -223,6 +223,8 @@ window.makeDemoBackend = () => {
     async linkGame() { throw new Error('Demo mode: linking a game account works on the live site.'); },
     async unlinkGame() { throw new Error('Demo mode: linking a game account works on the live site.'); },
     async serverStatus() { return { online: true, players: 3, uptime_min: 754, updated_at: now() }; },
+    // Demo mode has no owner patch notes: they only live in the real database.
+    async ownerDoc() { return null; },
 
     async forumIndex() {
       await delay(20);

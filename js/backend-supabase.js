@@ -122,6 +122,10 @@ window.makeSupabaseBackend = (cfg) => {
       const { data } = await sb.from('server_status').select('*').eq('id', 1).maybeSingle();
       return data;
     },
+    // Owner-only pages (supabase/owner-patches.sql): the database only hands them to the owner.
+    async ownerDoc(key) {
+      return ok(await sb.from('owner_docs').select('html, updated_at').eq('key', key).maybeSingle());
+    },
 
     async touch() { if (me) await sb.from('profiles').update({ last_seen: new Date().toISOString() }).eq('id', uid()); },
 
