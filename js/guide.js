@@ -162,28 +162,24 @@ window.GUIDE_HTML = `
 <section class="ch" id="home">
   <h2><span class="num">6</span>Around home</h2>
   <div class="card">
-    <p>Everyone spawns and respawns at home. <code>::home</code> takes you back from anywhere (normal teleport rules apply, so not in deep Wilderness or in combat).</p>
+    <p>Home is the <b>Shadow Home island</b>. Everyone spawns and respawns in the <b>Shadow plaza</b> in the middle. <code>::home</code> takes you back from anywhere (normal teleport rules apply, so not in deep Wilderness or in combat). Text at the top of the screen tells you which wing you're in, and pressing the <b>world map</b> at home opens a <b>Home map</b> showing every wing, you (flashing dot) and other players (yellow dots).</p>
     <div class="tbl"><table>
-      <tr><th>What</th><th>What it's for</th></tr>
-      <tr><td><b>Bank</b></td><td>Bank booths at home. Wraith donators and up can use <code>::bank</code> anywhere.</td></tr>
-      <tr><td><b>Shop Board</b> (by the Well of Shadows)</td><td>Opens the Shops panel. The shopkeepers themselves are around home too.</td></tr>
-      <tr><td><b>Raid Board</b></td><td>Wooden sign near spawn: make or join raid parties.</td></tr>
-      <tr><td><b>Trading Post booth</b></td><td>Player shops and Quick Sell.</td></tr>
-      <tr><td><b>Slayer masters</b></td><td>Get slayer tasks.</td></tr>
-      <tr><td><b>Death</b></td><td>Gives Reaper (boss) tasks.</td></tr>
-      <tr><td><b>Smiddi</b></td><td>Legendary gear shop (Torva, Primal, godswords and more) <i>and</i> Dragon &amp; Barrows shop.</td></tr>
-      <tr><td><b>Key chests</b></td><td>Reaper, Toxic, Crystal and Brimstone chests. Right-click <b>Loot table</b> to see what each one gives.</td></tr>
-      <tr><td><b>Halloween AFK Tree</b> (west, by the Trading Post area)</td><td>Chop forever for candy and rare boxes. See <a href="#money">Making money</a>.</td></tr>
-      <tr><td><b>Well of Shadows</b> (the swirling dark red well)</td><td>Sells the <b>global boosts</b> that help everyone online for an hour: Global xp boost <b>250M</b>, Global drop boost <b>500M</b>.</td></tr>
-      <tr><td><b>Shadow Portal</b></td><td>The home teleporter.</td></tr>
-      <tr><td><b>Altars</b></td><td>Pray at any normal altar to switch between Normal Prayers and <b>Ancient Curses</b>.</td></tr>
-      <tr><td><b>Smithing corner</b> (north-west of spawn)</td><td>Furnace, anvil and the <b>Metal Bank</b> chest. See <a href="#smithing">Smithing corner</a> below.</td></tr>
+      <tr><th>Where</th><th>What's there</th></tr>
+      <tr><td><b>Shadow plaza</b> (middle, spawn)</td><td>The <b>Well of Shadows</b> (global boosts: xp <b>250M</b>, drops <b>500M</b>), the <b>Shop Board</b> (opens the Shops panel), the <b>Raid Board</b> (make or join raid parties), <b>Death</b> (Reaper boss tasks) and a <b>prayer altar</b> (refill prayer; switch between Normal Prayers and <b>Ancient Curses</b>).</td></tr>
+      <tr><td><b>Bank</b> (north)</td><td>Bank booths, deposit boxes and Grand Exchange clerks. Wraith donators and up can use <code>::bank</code> anywhere.</td></tr>
+      <tr><td><b>Shops hall</b> (west)</td><td>The shopkeepers, <b>Smiddi</b> (legendary gear <i>and</i> Dragon &amp; Barrows shops) and the <b>Trading Post booth</b> (player shops and Quick Sell).</td></tr>
+      <tr><td><b>Slayer hall</b> (east)</td><td>All the slayer masters, Mandrith (Blood Money Exchange) and Max.</td></tr>
+      <tr><td><b>Portal hall</b> (south)</td><td>The <b>Shadow Portal</b> (home teleporter), the money-making portal and the house portal.</td></tr>
+      <tr><td><b>Services hall</b> (north-west, through the bank)</td><td>Make-over mage, estate agent, Xuan and the pet shop.</td></tr>
+      <tr><td><b>Reward chests hall</b> (north-east, through the bank)</td><td>Reaper, Toxic, Crystal and Brimstone chests. Right-click <b>Loot table</b> to see what each one gives.</td></tr>
+      <tr><td><b>Event garden</b> (south-west, through the portal hall)</td><td>The <b>Halloween AFK Tree</b>: chop forever for candy and rare boxes. See <a href="#money">Making money</a>.</td></tr>
+      <tr><td><b>Skilling hall</b> (south-east, through the portal hall)</td><td>Rocks from tin to runite, the <a href="#smithing">smithing corner</a> (furnace, anvils, <b>Metal Bank</b>), a range, workbenches, the Collector, thieving stalls, the tool leprechaun, the sawmill and net fishing spots.</td></tr>
     </table></div>
   </div>
 
   <div class="card" id="smithing">
     <h3>Smithing corner: furnace, anvil &amp; Metal Bank</h3>
-    <p><b>Where it is:</b> from where you spawn, walk <b>north-west</b> past the well. Keep going past the slayer chests and the smithing corner is just north of them, about 15 steps from spawn. You'll see a <b>furnace</b>, an <b>anvil</b> and a steel chest called the <b>Metal Bank</b> standing together on a raised <b>stone platform</b>. Just walk up onto it from any side.</p>
+    <p><b>Where it is:</b> in the <b>skilling hall</b> at home (south-east). From spawn, walk south into the portal hall and through the doorway in its east wall. The <b>furnace</b>, 2 <b>anvils</b> and a steel chest called the <b>Metal Bank</b> stand together near the rocks.</p>
     <h3>The Metal Bank</h3>
     <p>A second bank just for <b>ores and bars</b> (not Dungeoneering ones). It holds up to <b>30 different kinds</b>, as many of each as you like, and it's yours alone: other players see their own Metal Bank.</p>
     <ol class="steps">
@@ -265,7 +261,7 @@ window.GUIDE_HTML = `
       <tr><td><b>Runecrafting</b></td><td>Altars for Air through Astral via <code>::skilling</code>.</td><td>Runes for your Magic</td></tr>
       <tr><td><b>Hunter</b></td><td>Hunter areas, Puro-Puro (impling jars) and Falconry.</td><td>Contracts include Hunter</td></tr>
       <tr><td><b>Summoning</b></td><td>The Summoning area via <code>::skilling</code>. Make pouches.</td><td>Familiars help with bossing</td></tr>
-      <tr><td><b>Farming</b></td><td>Plant in patches. <code>::farmingstatus</code> shows your patches.</td><td>Herbs to sell</td></tr>
+      <tr><td><b>Farming</b></td><td>Plant in patches; your rake, dibber and spade work straight from the tool belt. Tool leprechauns by the patches sell tools and seeds (Exchange) and teleport you to other patches (Teleport). <code>::farmingstatus</code> shows your patches.</td><td>Herbs to sell</td></tr>
       <tr><td><b>Firemaking</b></td><td>Burn the logs you cut.</td><td>&mdash;</td></tr>
       <tr><td><b>Construction</b></td><td>Build in your house.</td><td>&mdash;</td></tr>
       <tr><td><b>Slayer</b></td><td>Tasks from the slayer masters. See <a href="#slayer">Slayer</a>.</td><td>Coins per kill and per task</td></tr>
@@ -415,7 +411,7 @@ window.GUIDE_HTML = `
   <h2><span class="num">15</span>Boxes, keys &amp; tickets</h2>
   <div class="grid">
     <div class="card"><h3>Elite box &amp; Legendary chest</h3><p>Black-and-red Elite boxes and red-and-gold Legendary chests come from bosses, slayer, raids, contracts and daily tasks. They stack. Right-click <b>Check drops</b> to see every reward and its chance. The Legendary chest can give every piece of Torva and Primal.</p></div>
-    <div class="card"><h3>Other boxes</h3><p>Shadow Box, Mystery box, Toxic box, PvP box, Slayer caskets, H'ween box and more. All of them have <b>Check drops</b>. Some boxes have a moving background that swirls in your bag, bank and shops.</p></div>
+    <div class="card"><h3>Other boxes</h3><p>Shadow Box, Mystery box, Toxic box, PvP box, Slayer caskets, H'ween box and more. All of them have <b>Check drops</b>. Some boxes have a moving background that swirls in your bag, bank and shops. Some custom items have repainted, moving textures and swirl in the same way.</p></div>
     <div class="card"><h3>Cash tickets</h3><p><b>100m</b> and <b>1b</b> tickets. Right-click <b>Claim</b> (or Claim-all) to turn them into coins. You can also <i>buy</i> them from your money pouch, which is handy for trading big amounts.</p></div>
     <div class="card"><h3>Key chests</h3><p><b>Reaper</b> (Reaper keys), <b>Toxic</b>, <b>Crystal</b> and <b>Brimstone</b> chests at home, plus <b>Larran's chest</b> in the Wilderness. Right-click <b>Loot table</b> to see what each one gives.</p></div>
   </div>
