@@ -31,6 +31,20 @@ window.UPDATES_HTML = `
       <li><span class="tag new">NEW</span> <b>Wing names</b>: the top of your screen says which wing you're in, and the minimap shows the wing names too.</li>
     </ul>
   </section>
+
+  <section id="fixes3">
+    <h3><span class="icon">&#9874;</span>Shops &amp; fixes</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Summoning Shop at home</b>: a Summoning shopkeeper in the Skilling hall sells gold, green, crimson and blue charms, spirit shards and pouches, and opens the Summoning ingredient shops. It's also under Skilling in <code>::shops</code>.</li>
+      <li><span class="tag new">NEW</span> <b>Noose wand</b> in the Hunting Shop (Emir, in the Shops hall).</li>
+      <li><span class="tag new">NEW</span> <b>Click the Home map to walk</b> there, like the minimap.</li>
+      <li><span class="tag changed">CHANGED</span> <b>Farming grows slower</b>: 5 minutes a stage for flowers, herbs, allotments and hops, 8 for bushes, 10 for trees. You also get 5 minutes to cure a diseased plant.</li>
+      <li><span class="tag fixed">FIXED</span> Dead farming patches can be cleared again (needs a spade, tool belt counts).</li>
+      <li><span class="tag fixed">FIXED</span> Gates and doors close when you click them again, like the Lumbridge cow field gate.</li>
+      <li><span class="tag fixed">FIXED</span> Lumbridge castle stairs no longer leave you stuck upstairs.</li>
+      <li><span class="tag fixed">FIXED</span> Capes no longer sink into the Bandos chestplate.</li>
+    </ul>
+  </section>
 </div>
 
 <div class="update">

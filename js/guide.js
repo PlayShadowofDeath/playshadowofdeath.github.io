@@ -259,9 +259,9 @@ window.GUIDE_HTML = `
       <tr><td><b>Thieving</b></td><td>Ardougne market stalls (Teleport Manager &gt; Skilling).</td><td>Coins and stall items</td></tr>
       <tr><td><b>Agility</b></td><td>Gnome course, then Barbarian Outpost, then the Agility Pyramid.</td><td>&mdash;</td></tr>
       <tr><td><b>Runecrafting</b></td><td>Altars for Air through Astral via <code>::skilling</code>.</td><td>Runes for your Magic</td></tr>
-      <tr><td><b>Hunter</b></td><td>Hunter areas, Puro-Puro (impling jars) and Falconry.</td><td>Contracts include Hunter</td></tr>
-      <tr><td><b>Summoning</b></td><td>The Summoning area via <code>::skilling</code>. Make pouches.</td><td>Familiars help with bossing</td></tr>
-      <tr><td><b>Farming</b></td><td>Plant in patches; your rake, dibber and spade work straight from the tool belt. Tool leprechauns by the patches sell tools and seeds (Exchange) and teleport you to other patches (Teleport). <code>::farmingstatus</code> shows your patches.</td><td>Herbs to sell</td></tr>
+      <tr><td><b>Hunter</b></td><td>Hunter areas, Puro-Puro (impling jars) and Falconry. The Hunting Shop (Emir, home Shops hall) sells traps and the noose wand.</td><td>Contracts include Hunter</td></tr>
+      <tr><td><b>Summoning</b></td><td>The Summoning area via <code>::skilling</code>. Make pouches. Charms, spirit shards and pouches are sold by the Summoning shopkeeper in the home Skilling hall.</td><td>Familiars help with bossing</td></tr>
+      <tr><td><b>Farming</b></td><td>Plant in patches; your rake, dibber and spade work straight from the tool belt. Each growth stage takes about 5 minutes (herbs are ready in about 20), 8 for bushes and 10 for trees. Clear dead plants with a spade. Tool leprechauns by the patches sell tools and seeds (Exchange) and teleport you to other patches (Teleport). <code>::farmingstatus</code> shows your patches.</td><td>Herbs to sell</td></tr>
       <tr><td><b>Firemaking</b></td><td>Burn the logs you cut.</td><td>&mdash;</td></tr>
       <tr><td><b>Construction</b></td><td>Build in your house.</td><td>&mdash;</td></tr>
       <tr><td><b>Slayer</b></td><td>Tasks from the slayer masters. See <a href="#slayer">Slayer</a>.</td><td>Coins per kill and per task</td></tr>
