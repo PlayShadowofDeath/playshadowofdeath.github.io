@@ -463,6 +463,7 @@ window.GUIDE_HTML = `
       <li><code>::bank</code> anywhere (Wraith+).</li>
       <li><b>Death</b> rank: a free <b>daily Elite box</b>, plus <b>Death Recap</b>, which shows where you died, what killed you, what you dropped and gives a one-time teleport back to your items. Reopen it with <code>::death</code>.</li>
       <li>Coloured yell tags: <code>::yell message</code>.</li>
+      <li>Ranks, their boosts and the perks each one unlocks can change and new ranks can be added, so <code>::donator</code> always has the current list. Some ranks announce you to the whole server when you log in.</li>
     </ul>
     <div class="warn"><b>Only donate to Shadow.</b> Anyone else asking for donations is scamming you.</div>
   </div>
