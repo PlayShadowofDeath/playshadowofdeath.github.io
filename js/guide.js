@@ -162,7 +162,7 @@ window.GUIDE_HTML = `
 <section class="ch" id="home">
   <h2><span class="num">6</span>Around home</h2>
   <div class="card">
-    <p>Home is the <b>Shadow Home island</b>. Everyone spawns and respawns in the <b>Shadow plaza</b> in the middle. <code>::home</code> takes you back from anywhere (normal teleport rules apply, so not in deep Wilderness or in combat). Text at the top of the screen tells you which wing you're in, and pressing the <b>world map</b> at home opens a <b>Home map</b> showing every wing, you (flashing dot) and other players (yellow dots). Drag its title to move it and its bottom-right corner to resize it. The minimap shows the wing names too.</p>
+    <p>Home is the <b>Shadow Home island</b>. Everyone spawns and respawns in the <b>Shadow plaza</b> in the middle. <code>::home</code> takes you back from anywhere (normal teleport rules apply, so not in deep Wilderness or in combat). Text at the top of the screen tells you which wing you're in, and pressing the <b>world map</b> at home opens a <b>Home map</b> showing every wing, you (flashing dot) and other players (yellow dots). Click anywhere on it to walk there, like the minimap. Drag its title to move it and its bottom-right corner to resize it. The minimap shows the wing names too.</p>
     <div class="tbl"><table>
       <tr><th>Where</th><th>What's there</th></tr>
       <tr><td><b>Shadow plaza</b> (middle, spawn)</td><td>The <b>Well of Shadows</b> (global boosts: xp <b>250M</b>, drops <b>500M</b>), the <b>Shop Board</b> (opens the Shops panel), the <b>Raid Board</b> (make or join raid parties), <b>Death</b> (Reaper boss tasks) and a <b>prayer altar</b> (refill prayer; switch between Normal Prayers and <b>Ancient Curses</b>).</td></tr>
