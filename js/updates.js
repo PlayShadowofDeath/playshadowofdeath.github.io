@@ -40,6 +40,7 @@ window.UPDATES_HTML = `
       <li><span class="tag new">NEW</span> <b>Click the Home map to walk</b> there, like the minimap.</li>
       <li><span class="tag changed">CHANGED</span> <b>Farming grows slower</b>: 5 minutes a stage for flowers, herbs, allotments and hops, 8 for bushes, 10 for trees. You also get 5 minutes to cure a diseased plant.</li>
       <li><span class="tag fixed">FIXED</span> Dead farming patches can be cleared again (needs a spade, tool belt counts).</li>
+      <li><span class="tag fixed">FIXED</span> Leather and dragonhides have a <b>Craft</b> option, so the needle on your tool belt works.</li>
       <li><span class="tag fixed">FIXED</span> Gates and doors close when you click them again, like the Lumbridge cow field gate.</li>
       <li><span class="tag fixed">FIXED</span> Lumbridge castle stairs no longer leave you stuck upstairs.</li>
       <li><span class="tag fixed">FIXED</span> Capes no longer sink into the Bandos chestplate.</li>
