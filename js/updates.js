@@ -40,6 +40,7 @@ window.UPDATES_HTML = `
   <section id="rewards4">
     <h3><span class="icon">$</span>Rewards &amp; items</h3>
     <ul>
+      <li><span class="tag new">NEW</span> <b>Warriors' Guild</b> in the Teleport Manager (Minigames). Earn guild points on the dummies, shot put, catapult, kegs and animated armour, then talk to Kamfreena on the top floor and fight cyclopes for <b>defenders</b>, bronze up to dragon, like RuneScape. The cyclops room now always uses the points shown on screen.</li>
       <li><span class="tag fixed">FIXED</span> <b>Fight Caves</b>: the top donator rank always gets <b>double Tokkul</b> for beating TzTok-Jad.</li>
       <li><span class="tag new">NEW</span> <b>Torva set</b> in the purple Torva platebody look.</li>
       <li><span class="tag fixed">FIXED</span> <b>TokHaar-Kal</b> can be worn.</li>
