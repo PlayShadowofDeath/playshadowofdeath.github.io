@@ -19,6 +19,13 @@ window.UPDATES_HTML = `
     </ul>
   </section>
 
+  <section id="raids4">
+    <h3><span class="icon">R</span>Raids</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Raid difficulty: Normal or Easy</b> for the Theatre of Blood and Chambers of Xeric. When the leader presses <b>Start</b> on the Raid Board (or you use a raid teleport) you pick <b>Normal</b>, the same hard fight with the full rewards, or <b>Easy</b>: half boss HP, 60% max hits, weaker and rarer specials, and a smaller chest (1 x 100m ticket, uniques 1 in 20, half-size loot, no Torva/Primal roll, no records). See it with <code>::drops tob easy</code> / <code>::drops cox easy</code>.</li>
+    </ul>
+  </section>
+
   <section id="skilling4">
     <h3><span class="icon">&#9874;</span>Skilling</h3>
     <ul>

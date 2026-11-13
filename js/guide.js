@@ -379,6 +379,7 @@ window.GUIDE_HTML = `
       <li>Big bosses drop an <b>Elite box</b> 1/25 and a <b>Legendary chest</b> 1/150 (fast bosses 1/50 and 1/300).</li>
       <li>Check any boss's drops first with <code>::drops boss name</code>.</li>
       <li><code>::bosskc</code> shows your boss kill counts.</li>
+      <li><b>Warriors' Guild</b> (Teleport Manager &gt; Minigames, needs 130 Attack + Strength combined): earn guild points on the dummies, shot put, catapult, kegs and animated armour, then talk to Kamfreena on the top floor to fight cyclopes. They drop the next <b>defender</b> up from your best (1 in 30), bronze to rune, then dragon. Keep your current defender on you.</li>
       <li><b>Fight Caves</b> (Teleport Manager &gt; Minigames): beat TzTok-Jad for a <b>fire cape</b> and Tokkul. <b>Phantom</b> rank and up can skip every wave and fight Jad straight away; the top rank gets double Tokkul.</li>
     </ul>
     <div class="tip"><b>Dragons:</b> Teleport Manager &gt; Monsters has green, blue, black, red, metal, frost and adamant/rune dragons. None of them are in the Wilderness.</div>
@@ -393,7 +394,7 @@ window.GUIDE_HTML = `
     <ol class="steps">
       <li>Go to the <b>Raid Board</b> at home and click <b>Create party</b> (you become the leader), or <b>Request</b> to join someone's party.</li>
       <li>The leader picks the raid and an optional minimum combat level, and accepts or kicks people. Up to 5 players.</li>
-      <li>Everyone presses <b>Ready</b>, the leader presses <b>Start</b>, and after 10 seconds the whole party goes in. Playing alone? Use <b>Start solo</b>.</li>
+      <li>Everyone presses <b>Ready</b>, the leader presses <b>Start</b> and picks <b>Normal</b> or <b>Easy</b>, and after 10 seconds the whole party goes in. Playing alone? Use <b>Start solo</b>, or the raid teleports (they ask Normal or Easy too).</li>
       <li>Kill the boss. Everyone alive who did 100+ damage opens <b>their own chest</b>.</li>
     </ol>
     <ul>
@@ -404,6 +405,24 @@ window.GUIDE_HTML = `
       <li><b>Bonus roll:</b> 1 in 30 chests also has a <b>Torva or Primal</b> piece.</li>
       <li>After a group kill you see the MVP and everyone's damage. The board's <b>Records</b> page shows the fastest kills.</li>
     </ul>
+  </div>
+  <div class="card">
+    <h3>Normal or Easy</h3>
+    <p><b>Normal</b> is the full, very hard fight with all the rewards above. <b>Easy</b> is for learning the fight or weaker teams:</p>
+    <table>
+      <tr><th></th><th>Normal</th><th>Easy</th></tr>
+      <tr><td>Boss HP</td><td>Full</td><td>Half</td></tr>
+      <tr><td>Boss hits</td><td>Full</td><td>60% max hit, less accurate, 75% defence</td></tr>
+      <tr><td>Specials</td><td>Full</td><td>Half damage and less often. Verzik's webs are shorter, her blood drain heals less and she doesn't speed up. The Olm gives an extra moment to dodge crystals and doesn't speed up.</td></tr>
+      <tr><td>100m tickets</td><td>1&ndash;3</td><td>1</td></tr>
+      <tr><td>Vials / thrownaxes</td><td>15&ndash;30 / 50&ndash;150</td><td>5&ndash;10 / 20&ndash;50</td></tr>
+      <tr><td>Uniques</td><td>1 in 5</td><td>1 in 20</td></tr>
+      <tr><td>Other loot</td><td>Full amounts</td><td>Half amounts, no 1b ticket or Legendary chest</td></tr>
+      <tr><td>Pet</td><td>1 in 250</td><td>1 in 1,000</td></tr>
+      <tr><td>Torva/Primal roll</td><td>1 in 30</td><td>None</td></tr>
+      <tr><td>Records</td><td>Yes</td><td>No</td></tr>
+    </table>
+    <p>Both modes count for the daily raid task. See each chest with <code>::drops tob</code>, <code>::drops cox</code>, <code>::drops tob easy</code> or <code>::drops cox easy</code>.</p>
   </div>
 </section>
 
