@@ -172,7 +172,7 @@ window.GUIDE_HTML = `
       <tr><td><b>Portal hall</b> (south)</td><td>The <b>Shadow Portal</b> (home teleporter), the money-making portal, and the house portal with the <b>estate agent</b> beside it.</td></tr>
       <tr><td><b>Services hall</b> (north-west, through the bank)</td><td>Make-over mage, Xuan and the pet shop.</td></tr>
       <tr><td><b>Reward chests hall</b> (north-east, through the bank)</td><td>Reaper, Toxic, Crystal and Brimstone chests. Right-click <b>Loot table</b> to see what each one gives.</td></tr>
-      <tr><td><b>Event garden</b> (south-west, through the portal hall)</td><td>The <b>Halloween AFK Tree</b>: chop forever for candy and rare boxes. See <a href="#money">Making money</a>.</td></tr>
+      <tr><td><b>Event garden</b> (south-west, through the portal hall)</td><td>The <b>AFK Tree</b> (Halloween or Thanksgiving look, depending on the season): chop forever for candy and rare boxes. See <a href="#money">Making money</a>.</td></tr>
       <tr><td><b>Skilling hall</b> (south-east, through the portal hall)</td><td>Rocks from tin to runite, the <a href="#smithing">smithing corner</a> (furnace, anvils, <b>Metal Bank</b>), a range, workbenches, the Collector, thieving stalls, the tool leprechaun, the sawmill and net fishing spots.</td></tr>
     </table></div>
   </div>
@@ -192,8 +192,8 @@ window.GUIDE_HTML = `
     <h3>Smelting &amp; smithing straight from the Metal Bank</h3>
     <p>The <b>home furnace and anvil read the Metal Bank for you</b>, so you don't have to withdraw anything first.</p>
     <ul>
-      <li><b>Furnace:</b> click it and pick a bar as normal. It uses ore from your bag first, then from the Metal Bank. Bars made from Metal Bank ore go <b>back into the Metal Bank</b> (or your bag if it's full).</li>
-      <li><b>Anvil:</b> you only need a <b>hammer</b> in your bag (or tool belt). Click the anvil and the smithing screen counts bars in your bag <i>and</i> your Metal Bank. What you make goes into your bag, so keep a free slot.</li>
+      <li><b>Furnace:</b> click it and pick a bar as normal. It uses ore from your bag first, then from the Metal Bank. Bars made from Metal Bank ore go <b>back into the Metal Bank</b> (or your bag if it's full). Pick <b>28</b> (the most) to smelt <b>all</b> of that ore.</li>
+      <li><b>Anvil:</b> you only need a <b>hammer</b> in your bag (or tool belt). Click the anvil and the smithing screen counts bars in your bag <i>and</i> your Metal Bank. What you make goes into your bag, so keep a free slot. With more than one kind of bar it asks <b>which metal</b> you want, and <b>Make All</b> keeps going until you run out of bars or your bag is full.</li>
       <li>This only works at the home furnace and anvil. Anywhere else, the bars and ore need to be in your bag.</li>
     </ul>
     <div class="tip"><b>Fast smithing loop:</b> mine with an Ore box, teleport home, right-click the Metal Bank &gt; <b>Deposit-all</b>, then smelt and smith without ever opening your bank.</div>
@@ -363,7 +363,7 @@ window.GUIDE_HTML = `
     <div class="card"><h3>Slayer</h3><p>Coins on every task kill, plus 500K&ndash;12M per finished task and box chances.</p></div>
     <div class="card"><h3>Daily tasks</h3><p>Up to about 100M a day with the bonus, plus Elite boxes.</p></div>
     <div class="card"><h3>Skilling + Contracts</h3><p>Skilling items sell well (magic logs 60K, rune bars 350K, rocktails 70K, torstols 120K). Contracts pay even more.</p></div>
-    <div class="card"><h3>Halloween AFK Tree</h3><p>At home. Every chop (2.4s) gives <b>1 Halloween candy</b> for the candy shop, and each chop can drop boxes: H'ween box 1/400, Mystery box 1/600, Slayer casket 1/1,200, Elite box 1/4,000, Legendary chest 1/10,000, 100m ticket 1/12,000 and more. Needs a hatchet. Great while you're AFK.</p></div>
+    <div class="card"><h3>AFK Tree (Halloween / Thanksgiving)</h3><p>At home, dressed for the season. Every chop (2.4s) gives <b>1 Halloween candy</b> for the candy shop, and each chop can drop boxes: H'ween box 1/400, Mystery box 1/600, Slayer casket 1/1,200, Elite box 1/4,000, Legendary chest 1/10,000, 100m ticket 1/12,000 and more. Needs a hatchet. Great while you're AFK.</p></div>
   </div>
   <div class="tip"><b>Quick Sell</b> at the Trading Post sells any tradeable item instantly for 40% of its fair price. It's handy for dumping loot, but selling to players in your own shop gets more.</div>
 </section>
@@ -379,6 +379,7 @@ window.GUIDE_HTML = `
       <li>Big bosses drop an <b>Elite box</b> 1/25 and a <b>Legendary chest</b> 1/150 (fast bosses 1/50 and 1/300).</li>
       <li>Check any boss's drops first with <code>::drops boss name</code>.</li>
       <li><code>::bosskc</code> shows your boss kill counts.</li>
+      <li><b>Fight Caves</b> (Teleport Manager &gt; Minigames): beat TzTok-Jad for a <b>fire cape</b> and Tokkul. <b>Phantom</b> rank and up can skip every wave and fight Jad straight away; the top rank gets double Tokkul.</li>
     </ul>
     <div class="tip"><b>Dragons:</b> Teleport Manager &gt; Monsters has green, blue, black, red, metal, frost and adamant/rune dragons. None of them are in the Wilderness.</div>
   </div>
@@ -461,6 +462,7 @@ window.GUIDE_HTML = `
     <ul>
       <li><b>Donator Zone</b> (Teleport Manager &gt; Minigames, or <code>::dhub</code>) with an altar for double Prayer XP.</li>
       <li><code>::bank</code> anywhere (Wraith+).</li>
+      <li><b>Skip to TzTok-Jad</b> in the Fight Caves (Phantom+).</li>
       <li><b>Death</b> rank: a free <b>daily Elite box</b>, plus <b>Death Recap</b>, which shows where you died, what killed you, what you dropped and gives a one-time teleport back to your items. Reopen it with <code>::death</code>.</li>
       <li>Coloured yell tags: <code>::yell message</code>.</li>
       <li>Ranks, their boosts and the perks each one unlocks can change and new ranks can be added, so <code>::donator</code> always has the current list. Some ranks announce you to the whole server when you log in.</li>

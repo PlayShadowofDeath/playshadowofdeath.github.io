@@ -8,6 +8,40 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Update 4 &mdash; Thanksgiving &amp; fixes</h2>
+  <div class="date">November 9 &ndash; 13, 2026</div>
+
+  <section id="thanksgiving">
+    <h3><span class="icon">&#127810;</span>Thanksgiving</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Thanksgiving AFK Tree</b>: the AFK tree at home has its autumn look, the same moving tree in warm orange, red and gold. Chop it forever for candy and rare boxes, same as before. (Get the new client: just open the launcher.)</li>
+      <li><span class="tag fixed">FIXED</span> <b>The AFK tree stops cutting</b>: closing a window (a level-up message, Esc) no longer stops you chopping.</li>
+    </ul>
+  </section>
+
+  <section id="skilling4">
+    <h3><span class="icon">&#9874;</span>Skilling</h3>
+    <ul>
+      <li><span class="tag fixed">FIXED</span> <b>Anvils always opened bronze</b>: with more than one kind of bar, the anvil asks <b>"Which metal do you want to smith?"</b>, best metal first.</li>
+      <li><span class="tag fixed">FIXED</span> <b>Smelting from the Metal Bank stopped after 28 bars</b>: at the home furnace, picking 28 now smelts <b>all</b> of that ore. <b>Make All</b> at the home anvil keeps going until you run out of bars or your bag is full.</li>
+      <li><span class="tag fixed">FIXED</span> <b>Farming with the tool belt</b>: the rake, seed dibber and spade on your tool belt work on farm patches. <b>Tool leprechauns</b>: Exchange opens the farming shops and Teleport works. New <b>Fruit/Wood Trees</b> seed shop.</li>
+      <li><span class="tag fixed">FIXED</span> <b>Summoning</b>: the spirit wolf pouch summons a wolf again (not a plant), as do the dreadfowl, spirit spider and granite crab. The <b>bull ant</b> and <b>void shifter</b> pouches work. The big obelisk's <b>Renew-points</b> refills your Summoning points.</li>
+      <li><span class="tag fixed">FIXED</span> <b>Mining with the basic tool belt</b>: new players can mine with the tool belt's bronze pickaxe.</li>
+    </ul>
+  </section>
+
+  <section id="rewards4">
+    <h3><span class="icon">$</span>Rewards &amp; items</h3>
+    <ul>
+      <li><span class="tag fixed">FIXED</span> <b>Fight Caves</b>: the top donator rank always gets <b>double Tokkul</b> for beating TzTok-Jad.</li>
+      <li><span class="tag new">NEW</span> <b>Torva set</b> in the purple Torva platebody look.</li>
+      <li><span class="tag fixed">FIXED</span> <b>TokHaar-Kal</b> can be worn.</li>
+      <li><span class="tag changed">CHANGED</span> <b>Well of Shadows</b>: the well is dark red, and prices show with commas.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Update 3 &mdash; The Shadow Home</h2>
   <div class="date">November 8, 2026</div>
 
