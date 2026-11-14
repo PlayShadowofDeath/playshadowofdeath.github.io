@@ -120,7 +120,7 @@ window.GUIDE_HTML = `
   <h2><span class="num">5</span>Every panel, explained</h2>
   <div class="grid">
     <div class="card"><h3>Money Making Guide <span class="how">::guide</span></h3>
-      <p>Tabs: <b>Bossing, Raids, Slayer, Skilling, Daily &amp; Events</b>. Each line shows what it pays, a short how-to and the best drops. Click a line to <b>teleport there</b> or <b>see its drop table</b>.</p></div>
+      <p>Tabs: <b>Bossing, Raids, Slayer, Skilling, Daily &amp; Events</b>. Each line shows what it pays, a short how-to and the best drops (hover a drop to see what it's worth). Click a line to <b>teleport there</b> or <b>see its drop table</b>.</p></div>
     <div class="card"><h3>Daily Tasks <span class="how">D button / ::daily</span></h3>
       <p>Three random tasks every day: kill bosses, a certain boss, monsters, slayer kills, slayer tasks or raids. Resets at midnight. See <a href="#daily">Daily tasks</a>.</p></div>
     <div class="card"><h3>Slayer Task <span class="how">::slayertask</span></h3>
