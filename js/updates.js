@@ -26,6 +26,15 @@ window.UPDATES_HTML = `
     </ul>
   </section>
 
+  <section id="prices4">
+    <h3><span class="icon">&#128176;</span>Prices &amp; trading</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>New prices for raid and boss rares</b>, based on how rare they are: Twisted bow 3b, Scythe of vitur 2b, Kodai wand 1.5b, Ancestral top 1.2b, Ghrazi rapier and Sanguinesti staff 900m, Hydra's claw 250m, third-age platebody 250m, Imbued heart 150m, and more. Easy mode raid items are worth the same as Normal. Quick Sell still pays 40%; selling to players earns up to 2.5x more.</li>
+      <li><span class="tag fixed">FIXED</span> <b>One price everywhere</b>: the Grand Exchange, Trading Post, price checker, trade window and items kept on death all show the same price now.</li>
+      <li><span class="tag fixed">FIXED</span> <b>More rares can be traded</b>: the Ghrazi rapier, Scythe of vitur, Hydra pieces, Kraken tentacle, tridents, Unsired, occult necklaces, Dark claw and wilderness rings can now be sold to other players.</li>
+    </ul>
+  </section>
+
   <section id="skilling4">
     <h3><span class="icon">&#9874;</span>Skilling</h3>
     <ul>

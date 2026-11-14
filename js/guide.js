@@ -141,6 +141,8 @@ window.GUIDE_HTML = `
       <p>E.g. <code>::drops general graardor</code>, <code>::drops tob</code>, <code>::drops cox</code>. Shows every drop with its chance ("1/300"), sorted Common to Super Rare. Hover for the exact %. Drops can change over time, and this window always shows the current ones.</p></div>
     <div class="card"><h3>Tool Belt <span class="how">::toolbelt</span></h3>
       <p>Right-click any hatchet or pickaxe and choose <b>Add to tool belt</b>. Woodcutting and Mining then use it automatically, with no inventory slot needed. Adding a better one gives the old one back. Every belt tool works like one in your bag: right-click logs for <b>Craft</b> (fletch with the belt knife) or <b>Light</b> (belt tinderbox), uncut gems for <b>Craft</b> (belt chisel), and leather or tanned dragonhide for <b>Craft</b> (belt needle).</p></div>
+    <div class="card"><h3>WASD walk (beta) <span class="how">Player Info tab</span></h3>
+      <p>Switch it on at the bottom of the <b>Player Info</b> tab. W, A, S, D then walk you around relative to the camera, and holding the <b>middle mouse button</b> while moving the mouse turns the camera. Press <b>End</b> to type in chat. Off by default; clicking to walk always still works.</p></div>
     <div class="card"><h3>Item lookup <span class="how">Player Info tab / ::whereget name</span></h3>
       <p>Click <b>Item lookup</b> on the Player Info tab (or type <code>::whereget</code>) and type in its <b>search box</b>: matching items show with their pictures as you type. Click one (or press Enter for the first) to see <b>where to get it</b>: every monster that drops it (chance per kill and level), every mystery box and key chest that can give it (chance per open), and every shop that sells it (price, and where it is in <code>::shops</code>). Click a box or chest to see where to get the box or its key. Click a monster for its drop table or a home shop to open it. If nothing in the game gives it, it says <b>Not obtainable right now</b>.</p></div>
     <div class="card"><h3>Pin a task <span class="how">Pin task button</span></h3>
@@ -447,6 +449,7 @@ window.GUIDE_HTML = `
       <li>Set up <b>your own shop</b> and sell to other players while you play.</li>
       <li><b>Market history</b> shows what things actually sell for.</li>
       <li><b>Quick Sell:</b> instant 40% of fair price.</li>
+      <li><b>One price everywhere:</b> the Trading Post price guide, Grand Exchange guide price, price checker, trade window and items kept on death all show the same price. Raid and boss rares are priced by how rare they are (Twisted bow 3b, Scythe of vitur 2b, Kodai wand 1.5b). Selling to players gets you up to 2.5x what Quick Sell pays.</li>
     </ul>
   </div>
   <div class="card">
