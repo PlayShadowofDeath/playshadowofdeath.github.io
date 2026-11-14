@@ -537,6 +537,7 @@ window.GUIDE_HTML = `
       <tr><td><code>::commands</code></td><td>Full in-game command list</td></tr>
     </table>
   </div>
+  <div class="tip"><b>Owner note &mdash; Edit Mode:</b> <code>::editmode</code> (owners only) opens a building panel. Search Objects or NPCs, click one, and a ghost of it follows your mouse (green = free spot, red = something's there); <kbd>R</kbd> turns it, click places it, <kbd>Esc</kbd> cancels. Select a tile to pick what's on it, then Move, Rotate or Delete (<kbd>Del</kbd>). Undo, Redo, Undo all and Save are on the toolbar, and unsaved changes save themselves when the server restarts. Only you see the ghost; players see the real thing once you click. On the NPCs tab a settings box sets the NPC&#39;s name, walking (still / 2-10 tiles / normal) and kind (Normal, Shop with a picked shop, Peaceful); <b>Apply to this NPC</b> changes one already there. The round <b>A</b> button opens the Admin Panel, which has Edit Mode under Tools.</div>
 </section>
 
 <!-- 20 -->
