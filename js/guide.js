@@ -398,7 +398,7 @@ window.GUIDE_HTML = `
       <li>Go to the <b>Raid Board</b> at home and click <b>Create party</b> (you become the leader), or <b>Request</b> to join someone's party.</li>
       <li>The leader picks the raid and an optional minimum combat level, and accepts or kicks people. Up to 5 players.</li>
       <li>Everyone presses <b>Ready</b>, the leader presses <b>Start</b> and picks <b>Normal</b> or <b>Easy</b>, and after 10 seconds the whole party goes in. Playing alone? Use <b>Start solo</b>, or the raid teleports (they ask Normal or Easy too).</li>
-      <li>Kill the boss. Everyone alive who did 100+ damage opens <b>their own chest</b>.</li>
+      <li>Kill the boss. Everyone alive who did 100+ damage opens <b>their own chest</b>. Hits from your combat pet or summoning familiar count as your damage.</li>
     </ol>
     <ul>
       <li><b>Dying in a raid is safe.</b> You keep everything and get sent home.</li>
