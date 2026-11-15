@@ -362,6 +362,7 @@ window.GUIDE_HTML = `
   <div class="grid">
     <div class="card"><h3>Bossing</h3><p>Every boss pays coins on each kill: <b>1.5M&ndash;3.5M</b> from big bosses, <b>300K&ndash;1M</b> from fast ones, plus drops, boxes and cash tickets. It's the best money in the game.</p></div>
     <div class="card"><h3>World event boss</h3><p>Every <b>3 hours</b> an Enraged Olm, Amethyst dragon or Pumpkin brute spawns and the whole server is told. Everyone who helps splits <b>150M</b> by damage (2M+ each). <code>::event</code> teleports you there.</p></div>
+    <div class="card"><h3>Ring of the gods</h3><p>Worth <b>10b</b>, imbued too (sell it on the Trading Post). Dropped by Vet'ion Reborn and Cursed Vet'ion (about 1/228). While you wear it (or the imbued one), every monster drop goes <b>straight to your bank</b>. If your bank is full, it drops on the floor.</p></div>
     <div class="card"><h3>Slayer</h3><p>Coins on every task kill, plus 500K&ndash;12M per finished task and box chances.</p></div>
     <div class="card"><h3>Daily tasks</h3><p>Up to about 100M a day with the bonus, plus Elite boxes.</p></div>
     <div class="card"><h3>Skilling + Contracts</h3><p>Skilling items sell well (magic logs 60K, rune bars 350K, rocktails 70K, torstols 120K). Contracts pay even more.</p></div>
@@ -403,7 +404,7 @@ window.GUIDE_HTML = `
       <li><b>Dying in a raid is safe.</b> You keep everything and get sent home.</li>
       <li>Bosses get +40% HP per extra player and switch targets between players.</li>
       <li><b>Theatre of Blood</b> (Verzik): 1&ndash;3 x 100m tickets every chest, uniques 1 in 5 (Scythe, Ghrazi rapier, Justiciar, Sanguinesti staff, Avernic hilt), Lil' Zik pet 1/250.</li>
-      <li><b>Chambers of Xeric</b> (Great Olm: kill both claws first, then the head): uniques 1 in 5 (Twisted bow, Kodai, Ancestral, Elder maul, DHCB, claws and more), Olmlet pet 1/250.</li>
+      <li><b>Chambers of Xeric</b> (Great Olm: kill both claws first, then the head; melee, ranged and magic all work): uniques 1 in 5 (Twisted bow, Kodai, Ancestral, Elder maul, DHCB, claws and more), Olmlet pet 1/250.</li>
       <li><b>Bonus roll:</b> 1 in 30 chests also has a <b>Torva or Primal</b> piece.</li>
       <li>After a group kill you see the MVP and everyone's damage. The board's <b>Records</b> page shows the fastest kills.</li>
     </ul>

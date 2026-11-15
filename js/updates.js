@@ -8,6 +8,20 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Ring of the gods &amp; Great Olm fix</h2>
+  <div class="date">November 14, 2026</div>
+
+  <section id="ring-of-gods">
+    <h3><span class="icon">R</span>Ring of the gods</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Loot straight to your bank</b>: while you wear the Ring of the gods (or the imbued one), every monster drop goes to your bank. If your bank is full, it drops on the floor as usual.</li>
+      <li><span class="tag changed">CHANGED</span> <b>Now worth 10b</b> (was 60m), the imbued ring too. Sell it on the Trading Post. Dropped by Vet'ion Reborn and Cursed Vet'ion (about 1/228).</li>
+      <li><span class="tag fixed">FIXED</span> <b>Great Olm melee</b>: you can now hit the Olm's claws and head with melee in the Chambers of Xeric.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Update 4 &mdash; Thanksgiving &amp; fixes</h2>
   <div class="date">November 9 &ndash; 13, 2026</div>
 
