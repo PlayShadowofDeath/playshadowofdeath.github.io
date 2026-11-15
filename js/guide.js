@@ -155,6 +155,8 @@ window.GUIDE_HTML = `
       <p>A small box shows "DOUBLE XP 1h 23m", "WEEKEND 2x XP" or "DOUBLE DROPS" while those are on. You also get a message about them at login.</p></div>
     <div class="card"><h3>Bank value <span class="how">bank title</span></h3>
       <p>The bank title shows your <b>bank value</b> and <b>total wealth</b> (bank, inventory, gear and pouch), priced at Trading Post fair prices.</p></div>
+<div class="card"><h3>Sort your bank <span class="how">bank ? button</span></h3>
+      <p>Click the <b>?</b> button in your bank. After a warning, it puts every item into tabs by type: Weapons, Armour, Runes &amp; ammo, Food &amp; potions, Skilling, Boxes &amp; tickets and Pets, most valuable first. Everything else goes in the main tab. It replaces your current tabs, but nothing is lost.</p></div>
     <div class="card"><h3>Forums link <span class="how">::forums</span></h3>
       <p>Gives a 6-letter code to link your game account on the website, <a href="https://playshadowofdeath.github.io">playshadowofdeath.github.io</a>. Your profile then shows your levels, rank and "In game now".</p></div>
   </div>
