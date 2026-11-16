@@ -109,7 +109,7 @@ window.GUIDE_HTML = `
       <li><b>Quests</b> (blue icon): opens the Quests panel.</li>
       <li><b>Equipment</b>: the <b>tool belt</b> button opens your Tool Belt (see <a href="#panels">panels</a>).</li>
       <li><b>Options</b> (spanner): <b>Stretched mode</b> ON/OFF makes the whole interface about 1.5x bigger in a large window.</li>
-      <li><b>Money pouch</b>: right-click for <b>Buy 100m ticket / Buy 1b ticket</b>, which turn coins into a tradeable ticket.</li>
+      <li><b>Money pouch</b>: right-click for <b>Buy 100m ticket / Buy 1b ticket</b>, which turn coins into a tradeable ticket. Amounts over 1B show to one decimal, e.g. <b>1.5B</b>.</li>
     </ul>
     <p><b>Zoom:</b> scroll the mouse wheel over the game. No Alt needed.</p>
   </div>
@@ -155,7 +155,9 @@ window.GUIDE_HTML = `
       <p>A small box shows "DOUBLE XP 1h 23m", "WEEKEND 2x XP" or "DOUBLE DROPS" while those are on. You also get a message about them at login.</p></div>
     <div class="card"><h3>Bank value <span class="how">bank title</span></h3>
       <p>The bank title shows your <b>bank value</b> and <b>total wealth</b> (bank, inventory, gear and pouch), priced at Trading Post fair prices.</p></div>
-<div class="card"><h3>Sort your bank <span class="how">bank ? button</span></h3>
+<div class="card"><h3>Examine shows the price <span class="how">Examine an item</span></h3>
+      <p>Examine any item in your inventory, bank, worn gear or a trade and you also see what it's worth, e.g. "Price: 15,000,000 coins". For a stack you see the price of one and the total. It's the same price the Grand Exchange and Trading Post use.</p></div>
+    <div class="card"><h3>Sort your bank <span class="how">bank ? button</span></h3>
       <p>Click the <b>?</b> button in your bank. After a warning, it puts every item into tabs by type: Weapons, Armour, Runes &amp; ammo, Food &amp; potions, Skilling, Boxes &amp; tickets and Pets, most valuable first. Everything else goes in the main tab. It replaces your current tabs, but nothing is lost.</p></div>
     <div class="card"><h3>Forums link <span class="how">::forums</span></h3>
       <p>Gives a 6-letter code to link your game account on the website, <a href="https://playshadowofdeath.github.io">playshadowofdeath.github.io</a>. Your profile then shows your levels, rank and "In game now".</p></div>
@@ -306,6 +308,16 @@ window.GUIDE_HTML = `
     </ul>
     <div class="tip"><b>Slayer dungeons</b> (Teleport Manager &gt; Slayer): Kuradal's Dungeon, Fremennik Dungeon, Slayer Tower, Catacombs of Kourend, Edgeville dungeon, Glacor Cave and Jadinko Lair. A few tasks have no teleport yet. The window tells you when that happens.</div>
   </div>
+  <div class="card">
+    <h3>Slayer duo (do Slayer with a friend)</h3>
+    <ol class="steps">
+      <li><b>Right-click your friend</b> and pick <b>Slayer duo</b>. They get a Yes/No popup (or right-click you back and pick Slayer duo).</li>
+      <li><b>Your tasks never change.</b> Each of you keeps your own task. A kill counts for whoever's task it is, so helping a friend on their task makes it go about twice as fast. Same task? It counts for both of you.</li>
+      <li>The one whose task it isn't still gets <b>Slayer XP</b> for their damage. When a task is finished, the helper gets <b>half the slayer points</b>.</li>
+      <li>If you both have no task, the first one to get a task gives the other the <b>same task</b>.</li>
+      <li>Stay within <b>16 squares</b> of each other for kills to count. Right-click your partner again to see both tasks, <b>teleport to their task</b> or <b>leave</b>. No task of your own? <b>Teleport to task</b> takes you to your partner's task. Logging out ends the duo; your tasks stay the same.</li>
+    </ol>
+  </div>
 </section>
 
 <!-- 9 -->
@@ -453,6 +465,7 @@ window.GUIDE_HTML = `
       <li><b>Market history</b> shows what things actually sell for.</li>
       <li><b>Quick Sell:</b> instant 40% of fair price.</li>
       <li><b>One price everywhere:</b> the Trading Post price guide, Grand Exchange guide price, price checker, trade window and items kept on death all show the same price. Raid and boss rares are priced by how rare they are (Twisted bow 3b, Scythe of vitur 2b, Kodai wand 1.5b). Selling to players gets you up to 2.5x what Quick Sell pays.</li>
+      <li><b>Rares</b> (party hats, h'ween masks, Santa hats, crackers) can't be Quick Sold; sell them to players on the Trading Post. Prices by how hard they are to get: Black partyhat 5b; dyed partyhats (Lava, Rainbow, Shadow, Camo, Toxic) 2.5b; Yellow, Green, Purple and custom colours (Lime, Pink, Cyan, Aqua...) 1.5b; Red, White, Blue 1b; Christmas cracker 1b; dyed masks and Santa hats 750m; h'ween masks 500m; Santa hat 100m.</li>
     </ul>
   </div>
   <div class="card">

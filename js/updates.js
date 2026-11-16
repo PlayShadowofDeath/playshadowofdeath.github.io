@@ -8,6 +8,31 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Slayer duo, examine prices &amp; fixes</h2>
+  <div class="date">November 15, 2026</div>
+
+  <section id="slayer-duo">
+    <h3><span class="icon">S</span>Slayer duo</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Do Slayer with a friend</b>: right-click them and pick <b>Slayer duo</b>. Your tasks never change. A kill counts for whoever's task it is, so helping a friend makes their task go about twice as fast. The helper gets Slayer XP and half the slayer points. Both have no task? The first to get one gives the other the same task. Stay within 16 squares of each other. Right-click your partner to teleport to their task.</li>
+    </ul>
+  </section>
+
+  <section id="nov15-more">
+    <h3><span class="icon">+</span>More</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Examine shows the price</b> of items in your bag, bank, worn gear and trades (and the total for a stack).</li>
+      <li><span class="tag changed">CHANGED</span> <b>Rare prices</b>: party hats, h'ween masks and Santa hats were worth only a few coins. Now Red/White/Blue partyhats are 1b, Yellow/Green/Purple and custom colours 1.5b, dyed partyhats 2.5b, Black partyhat 5b, masks 500m, Santa hat 100m. Rares can't be Quick Sold.</li>
+      <li><span class="tag changed">CHANGED</span> <b>Money pouch shows 1.5B</b>, 2.3B and so on, instead of rounding down to 1B, 2B.</li>
+      <li><span class="tag new">NEW</span> <b>Sort your bank</b> with the bank's <b>?</b> button: tabs by type, most valuable first.</li>
+      <li><span class="tag new">NEW</span> <b>Vet'ion teleport</b> in Teleport Manager &gt; Bosses (Wilderness, with a warning).</li>
+      <li><span class="tag fixed">FIXED</span> <b>Dreadfowl</b> pouch now summons, and the obelisk can make <b>Spirit mosquito</b> pouches.</li>
+      <li><span class="tag fixed">FIXED</span> Pets now count toward your raid damage, and burying bones at the altar no longer walks you away.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Ring of the gods &amp; Great Olm fix</h2>
   <div class="date">November 14, 2026</div>
 
