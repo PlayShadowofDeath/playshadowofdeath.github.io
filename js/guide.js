@@ -99,8 +99,9 @@ window.GUIDE_HTML = `
     <div class="card"><h3><span class="btn-ico">T</span> Teleport Manager</h3><p>Teleports to bosses, monsters, dragons, slayer dungeons, skilling spots, minigames, raids and the world event boss. Also <code>::tpmanager</code>.</p></div>
     <div class="card"><h3><span class="btn-ico">D</span> Daily Tasks</h3><p>Your three tasks for today, with progress bars and rewards. Shortcut buttons go to Slayer, Reaper task, Contracts and the Money guide.</p></div>
     <div class="card"><h3><span class="btn-ico">M</span> Menu / Welcome</h3><p>Reopens the Welcome window with everything going on right now.</p></div>
+    <div class="card"><h3><span class="btn-ico">!</span> Report a bug</h3><p>Opens the bug report form: pick what kind of bug, say what happened and where (<b>Right here</b> or a place / coordinates), and which item, monster or NPC. Your spot, gear and recent clicks are added for you. <b>My reports</b> shows every report you sent and its status. When a bug you reported is <b>Fixed</b> you get <b>1M coins</b> in your bank.</p></div>
   </div>
-  <div class="tip"><b>Move things around:</b> hold <kbd>Shift</kbd> and drag the T / D / M buttons, the event countdown, the saved account cards, the Blackjack table and most Shadow of Death windows. They remember where you put them.</div>
+  <div class="tip"><b>Move things around:</b> hold <kbd>Shift</kbd> and drag the T / D / M / ! buttons, the event countdown, the saved account cards, the Blackjack table and most Shadow of Death windows. They remember where you put them.</div>
   <div class="card">
     <h3>Side tabs</h3>
     <ul>
@@ -582,7 +583,7 @@ window.GUIDE_HTML = `
       <li>A few items have a blank or wrong inventory picture (Divine spirit shield, fire cape icon).</li>
       <li>A handful of slayer tasks have no teleport yet.</li>
     </ul>
-    <p>Found a bug? Tell Shadow in game or post it in the <b>Support</b> forum on the website.</p>
+    <p>Found a bug? Press the round <b>!</b> button (or <b>Report a bug</b> in the Welcome window) and fill in the form. You get <b>1M coins</b> when it's fixed. Check <b>My reports</b> to see how it's going.</p>
   </div>
 </section>
 

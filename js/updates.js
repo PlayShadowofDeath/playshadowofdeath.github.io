@@ -18,6 +18,13 @@ window.UPDATES_HTML = `
     </ul>
   </section>
 
+  <section id="bug-reports">
+    <h3><span class="icon">!</span>Report a bug in game</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Report a bug</b> with the new round <b>!</b> button (or in the Welcome window): pick what kind of bug, say what happened and where, and which item or monster. Your spot, gear and recent clicks are added for you. <b>My reports</b> shows how each one is going, and when a bug you reported is fixed you get <b>1M coins</b> in your bank.</li>
+    </ul>
+  </section>
+
   <section id="nov15-more">
     <h3><span class="icon">+</span>More</h3>
     <ul>
