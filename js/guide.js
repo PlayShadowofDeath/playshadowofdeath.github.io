@@ -399,6 +399,7 @@ window.GUIDE_HTML = `
       <li><code>::bosskc</code> shows your boss kill counts.</li>
       <li><b>Warriors' Guild</b> (Teleport Manager &gt; Minigames, needs 130 Attack + Strength combined): earn guild points on the dummies, shot put, catapult, kegs and animated armour, then talk to Kamfreena on the top floor to fight cyclopes. They drop the next <b>defender</b> up from your best (1 in 30), bronze to rune, then dragon. Keep your current defender on you.</li>
       <li><b>Fight Caves</b> (Teleport Manager &gt; Minigames): beat TzTok-Jad for a <b>fire cape</b> and Tokkul. <b>Phantom</b> rank and up can skip every wave and fight Jad straight away; the top rank gets double Tokkul.</li>
+      <li><b>Fight Kiln</b>: beat it for a <b>TokHaar-Kal</b>. Right-click it &gt; <b>Exchange</b> to swap it for the melee, mage or range version, or <b>sacrifice it for an Infernal cape</b> (the only way to get one; it can't be undone).</li>
     </ul>
     <div class="tip"><b>Dragons:</b> Teleport Manager &gt; Monsters has green, blue, black, red, metal, frost and adamant/rune dragons. None of them are in the Wilderness.</div>
   </div>

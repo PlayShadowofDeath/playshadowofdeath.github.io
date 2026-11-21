@@ -8,6 +8,20 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Infernal cape &amp; cape fixes</h2>
+  <div class="date">November 20, 2026</div>
+
+  <section id="capes">
+    <h3><span class="icon">C</span>Capes</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Infernal cape</b>: beat the Fight Kiln, right-click your <b>TokHaar-Kal &gt; Exchange</b> and sacrifice it for an Infernal cape.</li>
+      <li><span class="tag fixed">FIXED</span> The <b>Fire cape</b> and <b>TokHaar-Kal</b> now sit properly on your back with the whole cape showing, and the TokHaar-Kal no longer waves side to side.</li>
+      <li><span class="tag fixed">FIXED</span> The bottom of the <b>prayer tab</b> no longer has stray lines.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Slayer duo, examine prices &amp; fixes</h2>
   <div class="date">November 15, 2026</div>
 
