@@ -23,6 +23,14 @@ window.UPDATES_HTML = `
     </ul>
   </section>
 
+  <section id="menu-hub-favourites">
+    <h3><span class="icon">&#9733;</span>Favourites, Recent and glow badges</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> Click the small <b>&#9733;</b> on any hub tile to make it a favourite (up to 6). Favourites show first on <b>Home</b>, then the last 4 tiles you opened.</li>
+      <li><span class="tag new">NEW</span> A pulsing <b>gold dot</b> on a tile or tab means something is waiting: daily tasks left, no slayer or boss task, a donator box to claim, or a bug reward. Hover the tile to see what.</li>
+    </ul>
+  </section>
+
   <section id="menu-hub-settings">
     <h3><span class="icon">&#9881;</span>Settings pages</h3>
     <ul>
