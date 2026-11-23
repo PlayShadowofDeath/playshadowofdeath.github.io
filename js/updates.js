@@ -23,6 +23,16 @@ window.UPDATES_HTML = `
     </ul>
   </section>
 
+  <section id="menu-hub-settings">
+    <h3><span class="icon">&#9881;</span>Settings pages</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> Menu Hub &rsaquo; Settings now has pages along the top: <b>Widgets, Display, Chat, Loot, Hub</b> and <b>Donator</b>. Everything is a big ON/Off square, saved on your account.</li>
+      <li><span class="tag new">NEW</span> Turn off <b>loot beams</b> or other players' <b>drop broadcasts</b>, and get a <b>Low HP warning</b> (a red flash round the screen) when your health drops under 25%.</li>
+      <li><span class="tag new">NEW</span> Hub &amp; accessibility: stop the hub opening at login, turn off the glow, use <b>bigger tiles</b> or <b>high contrast</b>, and put every button back in its starting spot.</li>
+      <li><span class="tag new">NEW</span> Donators: pick your <b>title, shadow, yell and chat colours</b> by clicking colour squares, with a live preview, plus custom title, display name and more (only what your rank unlocks).</li>
+    </ul>
+  </section>
+
   <section id="menu-hub-search">
     <h3><span class="icon">&#128269;</span>Hub search</h3>
     <ul>
