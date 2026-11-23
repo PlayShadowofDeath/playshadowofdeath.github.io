@@ -8,6 +8,36 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Login Streak, Profiles &amp; Hub colours</h2>
+  <div class="date">November 23, 2026</div>
+
+  <section id="login-streak">
+    <h3><span class="icon">&#128197;</span>Login Streak</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Menu Hub &rsaquo; Tasks &rsaquo; Login Streak</b> (<code>::streak</code>): a reward every day you log in. Day 1 is 10M coins, +2M a day, up to 60M a day from day 26.</li>
+      <li><span class="tag new">NEW</span> Bonus boxes: Elite box on days 7 and 14, 2 Elite boxes on day 21, and a Legendary chest + 100M cash ticket on day 30. Then it starts again.</li>
+      <li><span class="tag new">NEW</span> One missed day a week is free. Miss more and it goes back to day 1.</li>
+    </ul>
+  </section>
+
+  <section id="profile-card">
+    <h3><span class="icon">&#128100;</span>Profile card</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>My Account &rsaquo; Profile</b> or right-click a player &rsaquo; <b>View Profile</b>: rank, levels, play time, joined date, login streak, top boss kills, collection log %, Slayer, raids, Reaper tasks, Death Zone prestige and best drop.</li>
+      <li><span class="tag changed">CHANGED</span> "View Stats" on players is now "View Profile".</li>
+    </ul>
+  </section>
+
+  <section id="hub-colours">
+    <h3><span class="icon">&#127912;</span>Hub colours &amp; What's New</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Settings &rsaquo; Hub &rsaquo; Hub colour</b>: Green, Red, Purple and Ice for everyone; Gold, Blue, Rose, Inferno and Silver for donators. Back to default any time.</li>
+      <li><span class="tag new">NEW</span> <b>Help &rsaquo; What's New</b> shows these update notes in game, with a gold dot when there's a new one.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>New shops, Inbox &amp; player reports</h2>
   <div class="date">November 23, 2026</div>
 
