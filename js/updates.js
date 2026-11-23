@@ -8,6 +8,59 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Death's Contracts, fishing contracts &amp; the Death satchel</h2>
+  <div class="date">November 22, 2026</div>
+
+  <section id="death-contracts">
+    <h3><span class="icon">&#9760;</span>Death's Contracts</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Contract points</b>: 3 per contract, 5 for the boss. Do all 3 on a board for a <b>clean sweep</b>: 100M, an Elite mystery box, +5 points and a <b>Superior contract</b> (the board's boss with 2x HP, just for you, for 350M and a rare drop roll).</li>
+      <li><span class="tag new">NEW</span> <b>Sweep streaks</b>: keep sweeping within 24 hours for a toolkit roll every 3rd sweep, a <b>Reaper's hand</b> pet roll every 7th and the <b>the Contractor</b> title at 10.</li>
+      <li><span class="tag new">NEW</span> <b>Contract Store</b>: 2x drop scroll, pen-time token, the Death satchel, Satchel upgrades and the Reaper's hand pet, all for Contract points.</li>
+      <li><span class="tag new">NEW</span> New boards are announced to everyone, with 3, 2 and 1 hour warnings, and you see the current contracts when you log in. A weekly <b>Most clean sweeps</b> board pays out on Sundays.</li>
+    </ul>
+  </section>
+
+  <section id="fishing-contracts">
+    <h3><span class="icon">&#127907;</span>Fishing contracts</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> Talk to <b>Death's Angler</b> on the Death Zone fishing dock: 3 fishing contracts a day (easy, medium, hard). Fish you catch in the Death Zone count by themselves. Each pays coins + Contract points, and all 3 add 25M, 5 points and a 1 in 25 shot at the <b>Heron pet</b>.</li>
+      <li><span class="tag new">NEW</span> <b>Death's Angler Store</b>: fishing outfit, <b>Dragon harpoon</b> (works as a harpoon, 20% faster), Heron pet, the Death satchel and Satchel upgrades.</li>
+      <li><span class="tag new">NEW</span> Fishing spots in the Death Zone show what they catch when you hover them, and the shark spots are Harpoon only.</li>
+    </ul>
+  </section>
+
+  <section id="death-satchel">
+    <h3><span class="icon">&#128188;</span>Death satchel</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Death satchel</b> (Death rank, 300 Contract points): 28 extra slots in a bank-style window. Loot you pick up, and fish, ore and logs you gather, go into it when your inventory is full. Kept on death, empties into your bank, not usable in the Wilderness.</li>
+      <li><span class="tag new">NEW</span> <b>Satchel upgrades</b> (150 points each, up to 2): +14 slots each, 56 in all. Use any item on the satchel to put it in.</li>
+      <li><span class="tag new">NEW</span> Death Zone ranges have a <b>Cook</b> option: you cook one fish at a time, your inventory first, then on into the satchel.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
+  <h2>The Death Zone</h2>
+  <div class="date">November 21, 2026</div>
+
+  <section id="death-zone">
+    <h3><span class="icon">&#9760;</span>Death Zone (Death rank)</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>A zone of its own for the Death rank</b> (and staff), just east of home, all black and gold. Teleport Manager &gt; Minigames &gt; <b>Death Zone</b>, or the portal at home.</li>
+      <li><span class="tag new">NEW</span> <b>Skilling heaven</b>: every ore and tree, a forge with the Metal Bank, a fishing dock and a workshop. 1.25x XP, a <b>skill of the day</b> at 1.5x, trees that never fall, spots that never move, no bait, no burnt food, unlimited run and no prayer drain.</li>
+      <li><span class="tag new">NEW</span> <b>Golden spots</b>: a rock, tree and fishing spot with double XP and bonus resources, moving every 15 minutes.</li>
+      <li><span class="tag new">NEW</span> <b>Dark crab</b> and <b>deep sea fishing</b> (dark crab, manta ray, sea turtle).</li>
+      <li><span class="tag new">NEW</span> <b>Reaper's toolkit</b>: every skilling tool in one, with Auto-bank, Auto-smelt, Auto-cook and Bank everything.</li>
+      <li><span class="tag new">NEW</span> <b>Monster pens</b> with safe deaths, drops to your bank, their own slayer master, and rare <b>Superior</b> monsters with triple loot.</li>
+      <li><span class="tag new">NEW</span> <b>The plaza</b>: rejuvenation pool, potion fountain, Death Shop, daily Death chest, teleport hub, fast garden, pet garden, Hall of Death, trophy room and a weekly giveaway wheel.</li>
+      <li><span class="tag new">NEW</span> <b>Weekly boards</b>: top killers and top skillers win coins every Sunday.</li>
+      <li><span class="tag new">NEW</span> <b>Death outfit</b> and a gold <b>Aura of Death</b>, plus fireworks for everyone who reaches the Death rank. Death players can bring a friend with a 30 minute <b>guest pass</b>.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Infernal cape &amp; cape fixes</h2>
   <div class="date">November 20, 2026</div>
 
