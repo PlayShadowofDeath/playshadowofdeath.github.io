@@ -98,7 +98,7 @@
   function renderHeader() {
     const path = location.hash.slice(1) || '/';
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
-      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/updates', 'New Updates', /^\/updates/]];
+      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],['#/updates', 'New Updates', /^\/updates/]];
     if (S.me?.role === 'owner') nav.push(['#/patches', 'Patches', /^\/patches/]);
     document.getElementById('nav').innerHTML = nav.map(([h, t, re]) => `<a href="${h}" class="${re.test(path) ? 'on' : ''}">${t}</a>`).join('')
       + `<a href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}" class="play">Play now</a>`;
@@ -857,6 +857,33 @@
     if (chapter) setTimeout(() => document.getElementById(chapter)?.scrollIntoView({ behavior: 'instant' }), 50);
   };
 
+  // Donate (text in js/donate.js): ranks, how to get them, every perk by group. #/donate/d-slayer opens a section.
+  views.donate = async (section) => {
+    setTitle('Donate');
+    view.innerHTML = `
+      <div class="crumbs"><a href="#/">Home</a> › Donate</div>
+      <div class="guide donate">
+        <header class="g-hero">
+          <div class="skull">👑</div>
+          <h1>Donator Ranks</h1>
+          <p>Every rank, what it costs, how to get it without spending a penny, and every perk sorted by type.</p>
+        </header>
+        <div class="g-layout">
+          <nav class="toc"><b>Contents</b>${window.DONATE_TOC || ''}</nav>
+          <div class="g-main">${window.DONATE_HTML || '<p class="muted">This page could not be loaded.</p>'}</div>
+        </div>
+      </div>`;
+    $('.guide', view).addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a || a.getAttribute('href').startsWith('#/')) return;
+      e.preventDefault();
+      const id = a.getAttribute('href').slice(1);
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      history.replaceState(null, '', '#/donate/' + id);
+    });
+    if (section) setTimeout(() => document.getElementById(section)?.scrollIntoView({ behavior: 'instant' }), 50);
+  };
+
   // New Updates: the big player-facing changes (text in js/updates.js, shown by js/patchbook.js).
   views.updates = async () => {
     setTitle('New Updates');
@@ -924,6 +951,7 @@
     [/^\/settings$/, views.settings],
     [/^\/rules$/, views.rules],
     [/^\/guide(?:\/([\w-]+))?$/, views.guide],
+    [/^\/donate(?:\/([\w-]+))?$/, views.donate],
     [/^\/updates$/, views.updates],
     [/^\/patches$/, views.patches],
   ];

@@ -8,6 +8,25 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>New donator ranks: Eternal &amp; Oblivion</h2>
+  <div class="date">November 23, 2026</div>
+
+  <section id="ranks-eternal-oblivion">
+    <h3><span class="icon">&#9813;</span>Donator ranks</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> Two new top ranks: <b>Eternal ($2,500)</b> and <b>Oblivion ($5,000)</b>, with animated name glows (white-cyan and void purple). See everything on the new <a href="#/donate">Donate</a> page.</li>
+      <li><span class="tag new">NEW</span> <b>Eternal</b>: prayer never drains, a daily Legendary chest and free Reaper's Elixir, 2x special restore, double Contract points, the full bond drop chance, coins straight to your pouch and <code>::picktask</code>.</li>
+      <li><span class="tag new">NEW</span> <b>Oblivion</b>: all of Eternal, plus your own private island (<code>::myisland</code>), a weekly hour of Death Zone double drops (<code>::zoneevent</code>) and a login entrance.</li>
+      <li><span class="tag changed">CHANGED</span> New rank amounts: Lost Soul $25, Wraith $50, Phantom $100, Shade $200, Revenant $350, Reaper $600, Death $1,000. Everyone's donated total is <b>multiplied by 5</b> at their next login, so nobody loses a rank.</li>
+      <li><span class="tag changed">CHANGED</span> Perk shuffle: Revenant gets longer potions, slower prayer drain, double minigame points and better familiars; vote perks move to Shade+, ammo saver to Death, blood money to bank to Phantom+, the cheap Slayer skip to Shade+.</li>
+      <li><span class="tag changed">CHANGED</span> Bonds are worth <b>150M coins per $1</b> and can only be sold to other players (trade or Trading Post player shops).</li>
+      <li><span class="tag new">NEW</span> <b>Special Edition</b> <code>::donator</code> panels for Death, Eternal and Oblivion with one-click buttons, including a Death Zone teleport.</li>
+      <li><span class="tag new">NEW</span> <b>Donation guide</b>: <code>::donateguide</code> in game shows every rank, every perk by type and every way to get bonds. <code>::rank</code> now shows your progress from your rank to the next.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Earn bonds in game</h2>
   <div class="date">November 23, 2026</div>
 

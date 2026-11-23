@@ -489,7 +489,7 @@ window.GUIDE_HTML = `
 <section class="ch" id="donator">
   <h2><span class="num">17</span>Donator ranks</h2>
   <div class="card">
-    <p>Reaper-themed ranks, lowest to highest. Each has its own chat icon and name colour, plus XP and drop boosts. See them all in <code>::donator</code>.</p>
+    <p>Reaper-themed ranks, lowest to highest, by how much you've donated in total (bonds count). Each has its own chat icon and name colour, plus XP and drop boosts, and every perk of the ranks below it. <code>::donateguide</code> (or the website's <a href="#/donate">Donate</a> page) lists every rank, every perk by type and how to get them; <code>::donator</code> shows your own perks.</p>
     <p>
       <span class="rank" style="color:#bbb">Lost Soul</span>
       <span class="rank" style="color:#9fd0ff">Wraith</span>
@@ -498,21 +498,27 @@ window.GUIDE_HTML = `
       <span class="rank" style="color:#ff7a2e">Revenant</span>
       <span class="rank" style="color:#ff3b3b">Reaper</span>
       <span class="rank" style="color:#e8c45c">Death</span>
+      <span class="rank" style="color:#b8f4ff">Eternal</span>
+      <span class="rank" style="color:#a66bff">Oblivion</span>
     </p>
+    <table><tr><th>Rank</th><th>Donated</th><th>XP / drops</th></tr><tr><td>Lost Soul</td><td>$25</td><td>+10% / +0.5%</td></tr><tr><td>Wraith</td><td>$50</td><td>+20% / +1%</td></tr><tr><td>Phantom</td><td>$100</td><td>+30% / +1.5%</td></tr><tr><td>Shade</td><td>$200</td><td>+40% / +2%</td></tr><tr><td>Revenant</td><td>$350</td><td>+50% / +2.5%</td></tr><tr><td>Reaper</td><td>$600</td><td>+60% / +3%</td></tr><tr><td>Death</td><td>$1,000</td><td>+70% / +3.5%</td></tr><tr><td>Eternal</td><td>$2,500</td><td>+70% / +3.5% + own perks</td></tr><tr><td>Oblivion</td><td>$5,000</td><td>+70% / +3.5% + own perks</td></tr></table>
     <ul>
       <li><b>Donator Zone</b> (Teleport Manager &gt; Minigames, or <code>::dhub</code>) with an altar for double Prayer XP.</li>
       <li><code>::bank</code> anywhere (Wraith+).</li>
       <li><b>Skip to TzTok-Jad</b> in the Fight Caves (Phantom+).</li>
       <li><b>Death</b> rank: the <b>Death Zone</b> (below), a free <b>daily Elite box</b>, plus <b>Death Recap</b>, which shows where you died, what killed you, what you dropped and gives a one-time teleport back to your items. Reopen it with <code>::death</code>.</li>
+      <li><b>Eternal</b>: prayer never drains, a daily Legendary chest and free Reaper's Elixir, 2x special restore, double Contract points, the full bond drop chance, coins straight to your pouch, <code>::picktask</code> and a white-cyan name glow.</li>
+      <li><b>Oblivion</b>: everything Eternal has, a void purple glow, a private island (<code>::myisland</code>), a weekly hour of Death Zone double drops (<code>::zoneevent</code>) and a login entrance.</li>
+      <li>Death, Eternal and Oblivion get a <b>Special Edition</b> <code>::donator</code> panel with one-click buttons, including <b>Teleport: Death Zone</b>.</li>
       <li>Coloured yell tags: <code>::yell message</code>.</li>
       <li>Ranks, their boosts and the perks each one unlocks can change and new ranks can be added, so <code>::donator</code> always has the current list. Some ranks announce you to the whole server when you log in.</li>
     </ul>
     <div class="warn"><b>Only donate to Shadow.</b> Anyone else asking for donations is scamming you.</div>
   </div>
   <div class="card"><h3>Bonds <span class="how">::rank</span></h3>
-    <p><b>Bonds</b> ($5, $10, $20, $30, $50, $100) raise your donator rank. Right-click one and <b>Redeem</b>: <b>Rank + Credits</b>, <b>Rank only</b> or <b>Credits only</b> (twice the Credits). Every claim also gives <b>+10% drop rate for 1 hour</b>. Bonds can be traded and sold on the Trading Post. <code>::rank</code> shows how far you are from the next rank.</p>
+    <p><b>Bonds</b> ($5, $10, $20, $30, $50, $100) raise your donator rank. Right-click one and <b>Redeem</b>: <b>Rank + Credits</b>, <b>Rank only</b> or <b>Credits only</b> (twice the Credits). Every claim also gives <b>+10% drop rate for 1 hour</b>. Bonds are worth <b>150M coins per $1</b> ($5 = 750M) and can only be sold to players (trade or Trading Post player shops), not stores, the GE or Quick Sell. <code>::rank</code> shows how far you are from your rank to the next one.</p>
     <ul>
-      <li><b>Boss drops</b> (very rare): $5, $10 or $20 bonds and the super rare <b>Lucky bond chest</b> ($5 to $100). Lower ranks are luckier; Death rank gets half the chance.</li>
+      <li><b>Boss drops</b> (very rare): $5, $10 or $20 bonds and the super rare <b>Lucky bond chest</b> ($5 to $100). Lower ranks are luckier; Death rank gets half the chance, Eternal and Oblivion the full chance.</li>
       <li><b>Milestones</b> (once each, not on Easy mode): first 99 $5, total level 2,000 $5, every skill 99 $20, Completionist Cape $10. Every 250 Slayer tasks $5, every 150 Elite Slayer tasks $10.</li>
       <li><b>Raids</b> on normal mode and <b>events</b> (event boss top damage, the Death giveaway wheel, trivia): a rare $5 or $10 bond.</li>
       <li><b>Weekly bond hunt</b>: every Saturday from 6pm a chest with a $5 bond is hidden in a town. Solve the riddle and be the first to open it.</li>
