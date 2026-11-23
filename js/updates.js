@@ -8,6 +8,23 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>The Menu Hub</h2>
+  <div class="date">November 23, 2026</div>
+
+  <section id="menu-hub">
+    <h3><span class="icon">&#9776;</span>Menu Hub</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>One window for everything.</b> Tabs down the left (Home, Teleports, Tasks, Shops &amp; Money, My Account, Donator, Fun &amp; Events, Help, Settings) and big picture tiles on the right. Click a tile to open it, and <b>&lt; Hub</b> takes you back.</li>
+      <li><span class="tag new">NEW</span> Open it with the green <b>hub button</b> under the minimap, <b>F1</b> or <code>::hub</code>. It also opens when you log in.</li>
+      <li><span class="tag new">NEW</span> <b>Settings &rsaquo; Widgets</b>: turn each button (T, D, M, !) and on-screen box (event timer, slayer counter, pinned task, Death's Contract, potion timers, boss health bar) on or off. Saved on your account.</li>
+      <li><span class="tag changed">CHANGED</span> Everyone starts with just the hub button, so the screen is clean. Turn your old buttons back on in Widgets.</li>
+      <li><span class="tag changed">CHANGED</span> Donator tiles only show if you have the rank.</li>
+      <li><span class="tag changed">CHANGED</span> The glowing windows now have a dark green background instead of brown.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Glowing Teleport Manager</h2>
   <div class="date">November 23, 2026</div>
 

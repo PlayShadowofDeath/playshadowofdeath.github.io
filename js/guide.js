@@ -96,12 +96,14 @@ window.GUIDE_HTML = `
 <section class="ch" id="buttons">
   <h2><span class="num">4</span>Buttons &amp; tabs</h2>
   <div class="grid">
+    <div class="card"><h3><span class="btn-ico">&#9776;</span> Menu Hub</h3><p>Everything in one window: tabs down the left (Home, Teleports, Tasks, Shops &amp; Money, My Account, Donator, Fun &amp; Events, Help, Settings), big tiles on the right. Click a tile to open it; panels opened from a tile have a <b>&lt; Hub</b> button to go back. Open it with the green <b>hub button</b> under the minimap, <kbd>F1</kbd> or <code>::hub</code>. It also opens when you log in. Donator tiles only show if you have the rank.</p></div>
+    <div class="card"><h3><span class="btn-ico">&#9881;</span> Settings &rsaquo; Widgets</h3><p>Only the hub button is on at first. In <b>Menu Hub &rsaquo; Settings &rsaquo; Widgets</b> click a square to turn on the T / D / M / ! buttons, the event countdown, slayer counter, pinned task, Death's Contract box, potion timers or boss health bar. Your choices are saved on your account. <b>Reset</b> puts a moved one back.</p></div>
     <div class="card"><h3><span class="btn-ico">T</span> Teleport Manager</h3><p>Teleports to bosses, monsters, dragons, slayer dungeons, skilling spots, minigames, raids and the world event boss. Tabs on the left, teleports in the middle, your Favourites on the right: press <b>+ Fav</b> on a teleport to save it (up to 8) and <b>X</b> to remove one. Also <code>::tpmanager</code>.</p></div>
     <div class="card"><h3><span class="btn-ico">D</span> Daily Tasks</h3><p>Your three tasks for today, with progress bars and rewards. Shortcut buttons go to Slayer, Reaper task, Contracts and the Money guide.</p></div>
     <div class="card"><h3><span class="btn-ico">M</span> Menu / Welcome</h3><p>Reopens the Welcome window with everything going on right now.</p></div>
     <div class="card"><h3><span class="btn-ico">!</span> Report a bug</h3><p>Opens the bug report form: pick what kind of bug, say what happened and where (<b>Right here</b> or a place / coordinates), and which item, monster or NPC. Your spot, gear and recent clicks are added for you. <b>My reports</b> shows every report you sent and its status. When a bug you reported is <b>Fixed</b> you get <b>1M coins</b> in your bank.</p></div>
   </div>
-  <div class="tip"><b>Move things around:</b> hold <kbd>Shift</kbd> and drag the T / D / M / ! buttons, the event countdown, the saved account cards, the Blackjack table and most Shadow of Death windows. They remember where you put them.</div>
+  <div class="tip"><b>Move things around:</b> hold <kbd>Shift</kbd> and drag the hub and T / D / M / ! buttons, the event countdown, the saved account cards, the Blackjack table and most Shadow of Death windows. They remember where you put them.</div>
   <div class="card">
     <h3>Side tabs</h3>
     <ul>
