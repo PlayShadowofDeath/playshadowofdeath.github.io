@@ -8,6 +8,20 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Glowing Teleport Manager</h2>
+  <div class="date">November 23, 2026</div>
+
+  <section id="teleport-glow">
+    <h3><span class="icon">T</span>Teleport Manager</h3>
+    <ul>
+      <li><span class="tag changed">CHANGED</span> The Teleport Manager (<b>T</b> button or <code>::tpmanager</code>) has the new green glow look, and it's bigger with easier-to-read text. Same layout: tabs on the left, teleports in the middle, Favourites on the right.</li>
+      <li><span class="tag new">NEW</span> <b>+ Fav</b> saves a teleport to your Favourites (up to 8) and <b>X</b> removes one. Your old favourites are still there.</li>
+      <li><span class="tag changed">CHANGED</span> Raids and Dragons open their own lists, with <b>&lt; Back</b> to return. The window closes by itself when you teleport.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>New donator ranks: Eternal &amp; Oblivion</h2>
   <div class="date">November 23, 2026</div>
 

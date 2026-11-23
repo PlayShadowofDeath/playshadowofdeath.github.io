@@ -96,7 +96,7 @@ window.GUIDE_HTML = `
 <section class="ch" id="buttons">
   <h2><span class="num">4</span>Buttons &amp; tabs</h2>
   <div class="grid">
-    <div class="card"><h3><span class="btn-ico">T</span> Teleport Manager</h3><p>Teleports to bosses, monsters, dragons, slayer dungeons, skilling spots, minigames, raids and the world event boss. Also <code>::tpmanager</code>.</p></div>
+    <div class="card"><h3><span class="btn-ico">T</span> Teleport Manager</h3><p>Teleports to bosses, monsters, dragons, slayer dungeons, skilling spots, minigames, raids and the world event boss. Tabs on the left, teleports in the middle, your Favourites on the right: press <b>+ Fav</b> on a teleport to save it (up to 8) and <b>X</b> to remove one. Also <code>::tpmanager</code>.</p></div>
     <div class="card"><h3><span class="btn-ico">D</span> Daily Tasks</h3><p>Your three tasks for today, with progress bars and rewards. Shortcut buttons go to Slayer, Reaper task, Contracts and the Money guide.</p></div>
     <div class="card"><h3><span class="btn-ico">M</span> Menu / Welcome</h3><p>Reopens the Welcome window with everything going on right now.</p></div>
     <div class="card"><h3><span class="btn-ico">!</span> Report a bug</h3><p>Opens the bug report form: pick what kind of bug, say what happened and where (<b>Right here</b> or a place / coordinates), and which item, monster or NPC. Your spot, gear and recent clicks are added for you. <b>My reports</b> shows every report you sent and its status. When a bug you reported is <b>Fixed</b> you get <b>1M coins</b> in your bank.</p></div>
