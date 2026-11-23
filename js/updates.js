@@ -8,6 +8,22 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Reaper's Elixir &amp; Death Zone improvements</h2>
+  <div class="date">November 23, 2026</div>
+
+  <section id="reapers-elixir">
+    <h3><span class="icon">&#9883;</span>Reaper's Elixir</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Reaper's Elixir</b>: a swirling red and purple super overload from the Death Shop (Death's Merchant, 500M). For 20 minutes Attack, Strength, Defence, Magic and Ranged go up by 15 + 48%, with no life point cost. It also protects you from dragonfire and poison, restores Prayer, heals 2% of your life points every 6 seconds and stays on when you die. Not usable in the Wilderness.</li>
+      <li><span class="tag changed">CHANGED</span> The Death Zone <b>potion fountain</b> overload now lasts 20 minutes (still every 30 minutes).</li>
+      <li><span class="tag changed">CHANGED</span> Donator <b>anti-fire</b> and <b>super anti-fire</b> perks never run out and show an infinity timer.</li>
+      <li><span class="tag fixed">FIXED</span> Fishing spots no longer stop you short with "You can't reach that".</li>
+      <li><span class="tag fixed">FIXED</span> Korasi's sword, coloured whips and coloured dark bows examined far too cheap. Rare Legendary chest gear (spirit shields, Primal, Nex bodies, Zaryte bow) is now worth more than the common cash tickets.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Death's Contracts, fishing contracts &amp; the Death satchel</h2>
   <div class="date">November 22, 2026</div>
 
