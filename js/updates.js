@@ -8,6 +8,47 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>New shops, Inbox &amp; player reports</h2>
+  <div class="date">November 23, 2026</div>
+
+  <section id="hub-shops">
+    <h3><span class="icon">&#128722;</span>Shops</h3>
+    <ul>
+      <li><span class="tag changed">CHANGED</span> Every shop now opens in the same glowing window as the Menu Hub, with each item's picture, name and price. Click to buy one, or use <b>Buy X</b>. General stores have a <b>Sell</b> tab.</li>
+      <li><span class="tag changed">CHANGED</span> Every shop on the Shops page has a picture that fits it.</li>
+    </ul>
+  </section>
+
+  <section id="inbox">
+    <h3><span class="icon">&#9993;</span>Inbox</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> An <b>envelope</b> on the Menu Hub with a red number for unread notes. It keeps what you missed: Trading Post sales, fixed bug reports, rare drops, finished Death's Contracts, events starting and messages from staff.</li>
+    </ul>
+  </section>
+
+  <section id="player-reports">
+    <h3><span class="icon">&#9888;</span>Report a player</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Help &rsaquo; Report a Player</b> or <code>::report name</code>: pick the rule, say what happened and add a proof link. Staff see it straight away, and you get an Inbox note when it's handled.</li>
+    </ul>
+  </section>
+
+  <section id="donator-reset">
+    <h3><span class="icon">&#8634;</span>Donators</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Settings &rsaquo; Donator &rsaquo; Reset look</b> puts your title, colours, display name and skin back to your rank's normal look.</li>
+    </ul>
+  </section>
+
+  <section id="nov23-fixes">
+    <h3><span class="icon">&#128295;</span>Fixes</h3>
+    <ul>
+      <li><span class="tag fixed">FIXED</span> The New Player Guide's grey text is no longer cut short.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>The Menu Hub</h2>
   <div class="date">November 23, 2026</div>
 
