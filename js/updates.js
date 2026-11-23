@@ -23,6 +23,15 @@ window.UPDATES_HTML = `
     </ul>
   </section>
 
+  <section id="menu-hub-account">
+    <h3><span class="icon">&#128273;</span>Change password + New Player Guide</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Settings &rsaquo; Account</b>: change your password in the Menu Hub. Type your current password, the new one and the new one again. It shows as stars and never goes in the chat. 5 to 15 characters, no spaces, capitals count.</li>
+      <li><span class="tag changed">CHANGED</span> The Help tab's Welcome tile is now <b>New Player Guide</b> (the same window as the M button).</li>
+      <li><span class="tag changed">CHANGED</span> The Money guide (<code>::guide</code>) has a Menu Hub line, and <code>::changepass</code> now takes you to Settings &rsaquo; Account.</li>
+    </ul>
+  </section>
+
   <section id="menu-hub-favourites">
     <h3><span class="icon">&#9733;</span>Favourites, Recent and glow badges</h3>
     <ul>
