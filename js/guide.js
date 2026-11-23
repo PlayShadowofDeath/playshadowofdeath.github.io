@@ -489,7 +489,7 @@ window.GUIDE_HTML = `
 <section class="ch" id="donator">
   <h2><span class="num">17</span>Donator ranks</h2>
   <div class="card">
-    <p>Reaper-themed ranks, lowest to highest, by how much you've donated in total (bonds count). Each has its own chat icon and name colour, plus XP and drop boosts, and every perk of the ranks below it. <code>::donateguide</code> (or the website's <a href="#/donate">Donate</a> page) lists every rank, every perk by type and how to get them; <code>::donator</code> shows your own perks.</p>
+    <p>Reaper-themed ranks, lowest to highest, by how much you've donated in total (bonds count). Each has its own chat icon and name colour, plus XP and drop boosts, and every perk of the ranks below it. <code>::donateguide</code> (also the <b>Donation guide</b> button in the <b>M</b> Welcome menu, or the website's <a href="#/donate">Donate</a> page) lists every rank, every perk by type and how to get them; <code>::donator</code> shows your own perks.</p>
     <p>
       <span class="rank" style="color:#bbb">Lost Soul</span>
       <span class="rank" style="color:#9fd0ff">Wraith</span>
