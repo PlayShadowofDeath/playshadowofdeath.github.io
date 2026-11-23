@@ -23,6 +23,7 @@ window.UPDATES_HTML = `
     <h3><span class="icon">&#9993;</span>Inbox</h3>
     <ul>
       <li><span class="tag new">NEW</span> An <b>envelope</b> on the Menu Hub with a red number for unread notes. It keeps what you missed: Trading Post sales, fixed bug reports, rare drops, finished Death's Contracts, events starting and messages from staff.</li>
+      <li><span class="tag new">NEW</span> Some messages from staff say <b>REPLY (click)</b>: click to type an answer, and it goes straight to their Inbox.</li>
     </ul>
   </section>
 
