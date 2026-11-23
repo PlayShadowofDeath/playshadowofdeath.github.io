@@ -509,6 +509,15 @@ window.GUIDE_HTML = `
     </ul>
     <div class="warn"><b>Only donate to Shadow.</b> Anyone else asking for donations is scamming you.</div>
   </div>
+  <div class="card"><h3>Bonds <span class="how">::rank</span></h3>
+    <p><b>Bonds</b> ($5, $10, $20, $30, $50, $100) raise your donator rank. Right-click one and <b>Redeem</b>: <b>Rank + Credits</b>, <b>Rank only</b> or <b>Credits only</b> (twice the Credits). Every claim also gives <b>+10% drop rate for 1 hour</b>. Bonds can be traded and sold on the Trading Post. <code>::rank</code> shows how far you are from the next rank.</p>
+    <ul>
+      <li><b>Boss drops</b> (very rare): $5, $10 or $20 bonds and the super rare <b>Lucky bond chest</b> ($5 to $100). Lower ranks are luckier; Death rank gets half the chance.</li>
+      <li><b>Milestones</b> (once each, not on Easy mode): first 99 $5, total level 2,000 $5, every skill 99 $20, Completionist Cape $10. Every 250 Slayer tasks $5, every 150 Elite Slayer tasks $10.</li>
+      <li><b>Raids</b> on normal mode and <b>events</b> (event boss top damage, the Death giveaway wheel, trivia): a rare $5 or $10 bond.</li>
+      <li><b>Weekly bond hunt</b>: every Saturday from 6pm a chest with a $5 bond is hidden in a town. Solve the riddle and be the first to open it.</li>
+      <li><b>Bond Exchange</b> (Death Plaza): combine your bonds into bigger ones, or split one into two smaller ones.</li>
+    </ul></div>
   <div class="card">
     <h3>The Death Zone (Death rank)</h3>
     <p>Death-rank players and staff get their own black and gold zone just east of home. Go there with <b>Teleport Manager &gt; Minigames &gt; Death Zone</b> or the portal at home. Death players can bring one friend a day with a 30 minute <b>guest pass</b> (on the Death board). The minimap names each area, a label at the top says where you are, and the world map button opens a Death Zone map you can click to walk. The owner picks the monsters in the five pens, and pen monsters can have their own special drops. The plaza objects are named for what they do: <b>Death board</b>, <b>Hall of Death</b>, <b>Trophy case</b>, <b>Boss pen pedestal</b>, <b>Teleport hub</b>, <b>Potion fountain</b>, <b>Restore pool</b>, <b>Daily Death chest</b>, <b>Top donor statue</b>, <b>Weekly boards</b>, <b>Pet garden sign</b> and <b>Portal home</b>.</p>

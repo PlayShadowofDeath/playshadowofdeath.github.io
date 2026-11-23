@@ -8,6 +8,23 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Earn bonds in game</h2>
+  <div class="date">November 23, 2026</div>
+
+  <section id="bonds">
+    <h3><span class="icon">&#36;</span>Bonds</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>Bonds drop from bosses</b>: very rare $5, $10 and $20 bonds, and the super rare <b>Lucky bond chest</b> ($5 to $100). Lower ranks are luckier. Bonds can be traded and sold on the Trading Post.</li>
+      <li><span class="tag new">NEW</span> <b>Milestone bonds</b>: first 99, total level 2,000, every 99, the Completionist Cape, every 250 Slayer tasks and every 150 Elite Slayer tasks (not on Easy mode).</li>
+      <li><span class="tag new">NEW</span> Rare bonds from <b>normal-mode raids</b> and <b>events</b> (event boss top damage, the Death giveaway wheel, trivia).</li>
+      <li><span class="tag new">NEW</span> <b>Weekly bond hunt</b>: every Saturday from 6pm a chest with a $5 bond is hidden in a town. Solve the riddle and open it first.</li>
+      <li><span class="tag new">NEW</span> <b>Redeem choices</b>: rank + Credits, rank only, or Credits only (2x). Every claim gives +10% drop rate for an hour. <code>::rank</code> shows your progress to the next rank.</li>
+      <li><span class="tag new">NEW</span> <b>Bond Exchange</b> in the Death Plaza: combine bonds into bigger ones or split one into two.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Reaper's Elixir &amp; Death Zone improvements</h2>
   <div class="date">November 23, 2026</div>
 
