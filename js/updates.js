@@ -23,6 +23,14 @@ window.UPDATES_HTML = `
     </ul>
   </section>
 
+  <section id="menu-hub-rightnow">
+    <h3><span class="icon">&#9889;</span>Right now strip</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> The top of the Menu Hub's <b>Home</b> page shows what's on right now: <b>Double XP</b>, <b>Double drops</b>, the <b>World boss</b> and players <b>Online</b>. Anything ON glows, with the time left.</li>
+      <li><span class="tag new">NEW</span> When a world boss is up, click its box to go straight there.</li>
+    </ul>
+  </section>
+
   <section id="menu-hub-account">
     <h3><span class="icon">&#128273;</span>Change password + New Player Guide</h3>
     <ul>
