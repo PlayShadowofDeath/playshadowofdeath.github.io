@@ -22,6 +22,15 @@ window.UPDATES_HTML = `
       <li><span class="tag changed">CHANGED</span> The glowing windows now have a dark green background instead of brown.</li>
     </ul>
   </section>
+
+  <section id="menu-hub-search">
+    <h3><span class="icon">&#128269;</span>Hub search</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> Click <b>Search everything...</b> at the top right of the Menu Hub and type. It finds panels ("money", "ge", "drops"), every teleport by name or nickname ("zulrah", "gwd", "jad": click one to go straight there), commands ("bank", "lock xp") and settings ("hide buttons").</li>
+      <li><span class="tag new">NEW</span> Small typos are fine: "slyer" still finds Slayer. <b>Enter</b> opens the best match, <b>Esc</b> clears the box.</li>
+      <li><span class="tag new">NEW</span> The last tile, <b>Find "..."</b>, looks your words up as an item and shows which monsters drop it and which shops sell it.</li>
+    </ul>
+  </section>
 </div>
 
 <div class="update">
