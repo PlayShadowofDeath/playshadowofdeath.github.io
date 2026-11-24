@@ -33,6 +33,9 @@ window.UPDATES_HTML = `
     <ul>
       <li><span class="tag new">NEW</span> <b>Settings &rsaquo; Hub &rsaquo; Hub colour</b>: Green, Red, Purple and Ice for everyone; Gold, Blue, Rose, Inferno and Silver for donators. Back to default any time.</li>
       <li><span class="tag new">NEW</span> <b>Help &rsaquo; What's New</b> shows these update notes in game, with a gold dot when there's a new one.</li>
+      <li><span class="tag new">NEW</span> Donator colours glow with moving bands and rising sparks. Donators can tick <b>Sparkle</b> to get it on any colour, even green.</li>
+      <li><span class="tag new">NEW</span> <b>Settings &rsaquo; Hub &rsaquo; Colour effects</b> turns the glow and sparks off if you just want the plain colour.</li>
+      <li><span class="tag fixed">FIXED</span> What's New text no longer gets cut off, and its tabs use short names.</li>
     </ul>
   </section>
 </div>
