@@ -97,6 +97,8 @@
   // ---------- header ----------
   function renderHeader() {
     const path = location.hash.slice(1) || '/';
+    view.classList.toggle('home-view', path === '/');
+    view.classList.toggle('donation-view', /^\/donate(?:\/|$)/.test(path));
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
       ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],['#/updates', 'New Updates', /^\/updates/]];
     if (S.me?.role === 'owner') nav.push(['#/patches', 'Patches', /^\/patches/]);
@@ -155,15 +157,26 @@
     view.innerHTML = `
       <section class="hero">
         <div class="hero-inner">
-          ${server ? `<div class="server-pill ${up ? '' : 'down'}"><i class="dot ${up ? 'on' : ''}"></i>${up
-            ? `Server online · <b>${server.players}</b> playing now` : 'Server offline'}</div>` : ''}
-          <h1>Shadow of Death</h1>
+          <p class="hero-kicker">The darkness awaits</p>
+          <h1><img src="img/cinematic/wordmark.webp" alt="Shadow of Death" fetchpriority="high"></h1>
+          <p class="hero-kicker">Death is only the beginning</p>
+          <a class="btn lg hero-play" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">Play now</a>
+        </div>
+      </section>
+      <nav class="feature-links" aria-label="Explore Shadow of Death">
+        <a href="#/guide/bossing"><img src="img/cinematic/bossing.webp" alt=""><span>Epic Bossing</span></a>
+        <a href="#/guide"><img src="img/cinematic/progression.webp" alt=""><span>Progression</span></a>
+        <a href="#/donate"><img src="img/cinematic/donator-ranks.webp" alt=""><span>Donator Ranks</span></a>
+        <a href="#/updates"><img src="img/cinematic/new-content.webp" alt=""><span>New Content</span></a>
+      </nav>
+      <div class="home-details">
           <p>A 718 RuneScape private server. Bosses, raids, custom items and a community that plays together.</p>
           <div class="hero-btns">
-            <a class="btn lg" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">⚔ Play now</a>
             ${S.me ? '<a class="btn lg ghost" href="#/forums">Visit the forums</a>' : '<a class="btn lg ghost" href="#/register">Join the community</a>'}
             ${cfg.discordUrl ? `<a class="btn lg ghost" href="${esc(cfg.discordUrl)}" target="_blank" rel="noopener">Discord</a>` : ''}
           </div>
+          ${server ? `<div class="server-pill ${up ? '' : 'down'}"><i class="dot ${up ? 'on' : ''}"></i>${up
+            ? `Server online · <b>${server.players}</b> playing now` : 'Server offline'}</div>` : ''}
           <div class="hero-stats">
             <div><b>${stats.members}</b><span>Members</span></div>
             <div><b>${stats.threads}</b><span>Threads</span></div>
@@ -171,8 +184,7 @@
             ${server ? `<div><b class="${up ? 'green' : ''}">${up ? server.players : 0}</b><span>In game</span></div>` : ''}
             <div><b class="green" data-online-count>${S.online.size}</b><span>On the site</span></div>
           </div>
-        </div>
-      </section>
+      </div>
       <div class="cols">
         <div class="main-col">
           <div class="panel">
@@ -864,10 +876,10 @@
       <div class="crumbs"><a href="#/">Home</a> › Donate</div>
       <div class="guide donate">
         <header class="g-hero">
-          <div class="skull">👑</div>
-          <h1>Donator Ranks</h1>
-          <p>Every rank, what it costs, how to get it without spending a penny, and every perk sorted by type.</p>
+          <h1>Donate</h1>
+          <p>Support the realm · Explore donator ranks and rewards</p>
         </header>
+        ${window.DONATE_RANKS || ''}
         <div class="g-layout">
           <nav class="toc"><b>Contents</b>${window.DONATE_TOC || ''}</nav>
           <div class="g-main">${window.DONATE_HTML || '<p class="muted">This page could not be loaded.</p>'}</div>

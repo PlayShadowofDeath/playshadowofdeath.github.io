@@ -109,18 +109,20 @@
   const coins = (n) => n >= 1e9 ? (n / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B' : Math.round(n / 1e6) + 'M';
 
   const rankCards = RANKS.map(([n, d, xp, dr, c], i) => `
-    <div class="d-rank" style="--rc:${c}">
+    <article class="d-rank" style="--rc:${c}">
+      <img class="rank-emblem" src="img/cinematic/rank-${n.toLowerCase().replace(/ /g, '-')}.webp" alt="" width="320" height="320">
       <div class="d-rname">${n}</div>
       <div class="d-amt">$${d.toLocaleString()}</div>
       <div class="d-boost">+${xp}% XP · +${dr}% drops</div>
       <div class="d-coins">${coins(d * COINS_PER_DOLLAR)} coins in bonds</div>
       ${i >= 7 ? '<div class="d-tag">Perks only</div>' : ''}
-    </div>`).join('');
+      <a class="btn sm" href="#d-perks">View perks</a>
+    </article>`).join('');
 
   const head = '<tr><th>Perk</th>' + RANKS.map(([n, , , , c]) => `<th class="d-c" style="color:${c}" title="${n}">${n}</th>`).join('') + '</tr>';
-  const groups = GROUPS.map(([icon, name, perks]) => `
+  const groups = GROUPS.map(([, name, perks]) => `
     <section class="ch" id="d-${name.toLowerCase().replace(/[^a-z]+/g, '-')}">
-      <h2><span class="num">${icon}</span>${name}</h2>
+      <h2>${name}</h2>
       <div class="d-scroll"><table class="d-table">${head}${perks.map(([what, from, how]) => `
         <tr><td><b>${what}</b>${how ? `<div class="muted small">${how}</div>` : ''}</td>${RANKS.map((r, i) =>
           `<td class="d-c">${i >= from ? '<span class="d-yes">✔</span>' : '<span class="d-no">·</span>'}</td>`).join('')}</tr>`).join('')}
@@ -131,20 +133,23 @@
     + GROUPS.map(([, n]) => `<a href="#d-${n.toLowerCase().replace(/[^a-z]+/g, '-')}">${n}</a>`).join('')
     + `<a href="#d-zone">The Death Zone</a>`;
 
-  window.DONATE_HTML = `
-    <div class="warn"><b>Only donate to Shadow.</b> Anyone else asking for donations is scamming you. In game, type <code>::donateguide</code> for this page, <code>::rank</code> for your progress and <code>::donator</code> for your perks.</div>
+  window.DONATE_RANKS = `
     <section class="ch" id="d-ranks">
-      <h2><span class="num">👑</span>The ranks</h2>
+      <h2>The ranks</h2>
       <p>Your rank goes by how much you've donated in total (bonds count too). Each rank has every perk of the ranks below it. Eternal and Oblivion keep Death's boosts and add their own perks.</p>
       <div class="d-ranks">${rankCards}</div>
     </section>
+  `;
+
+  window.DONATE_HTML = `
+    <div class="warn"><b>Only donate to Shadow.</b> Anyone else asking for donations is scamming you. In game, type <code>::donateguide</code> for this page, <code>::rank</code> for your progress and <code>::donator</code> for your perks.</div>
     <section class="ch" id="d-earn">
-      <h2><span class="num">🎟️</span>How to get them</h2>
-      <div class="grid">${EARN.map(([i, t, p]) => `<div class="card"><h3>${i} ${t}</h3><p>${p}</p></div>`).join('')}</div>
+      <h2>How to get them</h2>
+      <div class="grid">${EARN.map(([, t, p]) => `<div class="card"><h3>${t}</h3><p>${p}</p></div>`).join('')}</div>
     </section>
-    ${groups}
+    <div id="d-perks">${groups}</div>
     <section class="ch" id="d-zone">
-      <h2><span class="num">☠</span>The Death Zone <span class="muted small">Death, Eternal and Oblivion</span></h2>
+      <h2>The Death Zone <span class="muted small">Death, Eternal and Oblivion</span></h2>
       <p>The top ranks' own island. Get there with the <b>Teleport: Death Zone</b> button in <code>::donator</code>, the portal at home or the Teleports menu.</p>
       <div class="grid">${DEATH_ZONE.map(([t, p]) => `<div class="card"><h3>${t}</h3><p>${p}</p></div>`).join('')}</div>
     </section>`;
