@@ -58,7 +58,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   display: block;
   width: 100%;
   height: auto;
-  mask-image: linear-gradient(#000 75%, transparent 100%);
+  filter: brightness(1.16) contrast(1.04);
+  mask-image: linear-gradient(#000 82%, #000a 91%, transparent 100%);
 }
 
 .footer-wordmark {
