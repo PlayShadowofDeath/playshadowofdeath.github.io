@@ -735,9 +735,19 @@ body:has(.donation-view) .topbar {
   min-width: 0;
   padding: clamp(30px, 2.8vw, 42px) 12px clamp(48px, 4.3vw, 64px);
   border: 0;
+  background: transparent;
+  isolation: isolate;
+}
+
+.donate .d-rank::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 5.5% 5%;
+  border-radius: 8px;
   background: radial-gradient(ellipse at 50% 35%, color-mix(in srgb, var(--rc) 18%, #130b0e), transparent 61%),
     linear-gradient(#1c1213, #0c0809 58%, #281012);
-  clip-path: var(--bevel);
+  pointer-events: none;
 }
 
 .donate .d-rank::before {
