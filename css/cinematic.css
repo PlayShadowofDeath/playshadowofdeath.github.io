@@ -774,6 +774,12 @@ main.home-view, main.donation-view {
 }
 .member-search .search { width: 100%; border-color: #a57360; background: #1c111ce8; }
 .member-card.realm-panel:is(:hover, :focus-visible) { border-color: #d09172; }
+.avatar .avatar-image {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
 .avatar .avatar-icon {
   position: absolute;
   inset: 0;
@@ -788,6 +794,8 @@ main.home-view, main.donation-view {
 .avatar .avatar-icon-citadel { object-position: 76% center; }
 .avatar .avatar-icon-portal { object-position: 66% center; }
 .avatar .avatar-icon-donator { object-fit: contain; background: #1f151d; }
+.avatar .avatar-closeup-wraith .avatar-icon { transform: scale(1.82); transform-origin: 50% 33%; }
+.avatar .avatar-closeup-death .avatar-icon { transform: scale(1.65); transform-origin: 50% 28%; }
 .donor {
   display: inline-flex;
   align-items: center;
@@ -795,6 +803,11 @@ main.home-view, main.donation-view {
   max-width: 100%;
 }
 .donor img { width: 20px; height: 20px; object-fit: contain; flex: none; }
+.member-badges .donor, .profile-head .donor { gap: 6px; padding: 2px 8px 2px 4px; }
+.member-badges .donor img { width: 34px; height: 34px; }
+.profile-head .donor img { width: 42px; height: 42px; }
+.avatar-previews { display: flex; align-items: flex-end; gap: 22px; }
+.avatar-previews > div { display: grid; justify-items: center; gap: 5px; }
 .member-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 3px 0; }
 .profile-cover {
   background:

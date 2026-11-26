@@ -82,7 +82,11 @@ window.U = (() => {
     const testRank = p?.id === 'u-shadow' && icon?.startsWith('test-') && donorRanks.has(icon.slice(5)) ? icon.slice(5) : '';
     const rankArt = testRank ? `rank-${testRank}-reforged.png` : icon === 'donator' ? donorArt(p) : '';
     const art = rankArt || (Object.hasOwn(avatarArt, icon) ? avatarArt[icon] : '');
-    const face = art ? `<img class="avatar-icon avatar-icon-${rankArt ? 'donator' : icon}" src="img/cinematic/${art}" alt="">` : esc(name[0].toUpperCase());
+    const closeup = size <= 48 && (rankArt === 'rank-wraith-reforged.png' || rankArt === 'rank-death-reforged.png')
+      ? ` avatar-closeup-${rankArt.split('-')[1]}` : '';
+    const face = art
+      ? `<span class="avatar-image${closeup}"><img class="avatar-icon avatar-icon-${rankArt ? 'donator' : icon}" src="img/cinematic/${art}" alt=""></span>`
+      : esc(name[0].toUpperCase());
     return `<span class="avatar" style="--s:${size}px;--c:${esc(p?.avatar_color || '#555')}">${face}${
       online === undefined ? '' : `<i class="dot ${online ? 'on' : ''}" data-dot="${esc(p?.id || '')}"></i>`}</span>`;
   }

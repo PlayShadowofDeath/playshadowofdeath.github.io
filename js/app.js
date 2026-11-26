@@ -761,6 +761,9 @@
       iconOptions.push(...window.U.demoRankIcons(m).map(([key, label]) => [key, `${label} (test)`]));
     }
     const savedIcon = iconOptions.some(([key]) => key === m.avatar_icon) ? m.avatar_icon : 'initials';
+    const iconPreview = (p) => `
+      <div><span class="meta">Profile</span>${avatar(p, 84)}</div>
+      <div><span class="meta">Chat</span>${avatar(p, 32)}</div>`;
     const colors = ['#b3131b', '#e0561b', '#d4a63a', '#2fb37a', '#2f7bb3', '#6b2fb3', '#b32f8c', '#555555'];
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Settings</div>
@@ -768,7 +771,8 @@
       <div class="cols even">
         <form class="panel pad form" id="prof">
           <h2>Profile</h2>
-          <div class="row"><div id="avatar-preview">${avatar(m, 64)}</div><div class="swatches" role="group" aria-label="Profile icon color">${colors.map((c) => `<button type="button" data-color="${c}" style="--c:${c}" class="${c === m.avatar_color ? 'on' : ''}" aria-label="Color ${c}" aria-pressed="${c === m.avatar_color}"></button>`).join('')}</div></div>
+          <div id="avatar-preview" class="avatar-previews">${iconPreview(m)}</div>
+          <div class="swatches" role="group" aria-label="Profile icon color">${colors.map((c) => `<button type="button" data-color="${c}" style="--c:${c}" class="${c === m.avatar_color ? 'on' : ''}" aria-label="Color ${c}" aria-pressed="${c === m.avatar_color}"></button>`).join('')}</div>
           ${iconsAvailable ? `<label>Profile icon<select id="avatar-icon">${iconOptions.map(([key, label]) => `<option value="${key}"${key === savedIcon ? ' selected' : ''}>${esc(label)}</option>`).join('')}</select></label>` : ''}
           <label>Username<input id="name" maxlength="12" value="${esc(m.username)}"></label>
           <label>About me<textarea id="bio" rows="4" maxlength="500">${esc(m.bio)}</textarea></label>
@@ -803,7 +807,7 @@
     let color = m.avatar_color;
     const iconPicker = $('#avatar-icon');
     const previewAvatar = () => {
-      $('#avatar-preview').innerHTML = avatar({ ...m, avatar_color: color, avatar_icon: iconPicker?.value ?? savedIcon }, 64);
+      $('#avatar-preview').innerHTML = iconPreview({ ...m, avatar_color: color, avatar_icon: iconPicker?.value ?? savedIcon });
     };
     iconPicker?.addEventListener('change', previewAvatar);
     $$('[data-color]').forEach((b) => b.onclick = () => {
