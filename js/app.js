@@ -136,7 +136,7 @@
   const views = {};
 
   const onlineHtml = (profiles) => profiles.map((p) =>
-    `<a href="#/u/${encodeURIComponent(p.username)}" title="${esc(p.username)}">${avatar(p, 34, true)}</a>`).join('')
+    `<a class="online-member" href="#/u/${encodeURIComponent(p.username)}">${avatar(p, 30, true)}<span>${esc(p.username)}</span></a>`).join('')
     || '<span class="muted">Nobody right now.</span>';
   // Keep "who's online" on the home page up to date.
   bus.on('presence', async () => {
@@ -218,11 +218,11 @@
             <div class="panel-head"><h3>Who's online</h3><span class="muted" data-online-count>${S.online.size}</span></div>
             <div class="pad online-list" id="online-list">${onlineHtml(onlineProfiles)}</div>
           </div>
-          ${stats.newest ? `<div class="panel"><div class="panel-head"><h3>Newest member</h3></div>
-            <div class="pad row">${avatar(stats.newest, 40)}<div>${userLink(stats.newest)}<div class="meta">joined ${ago(stats.newest.created_at)}</div></div></div></div>` : ''}
+          ${stats.newest ? `<div class="panel home-newest"><div class="panel-head"><h3>Newest member</h3></div>
+            <div class="pad row">${avatar(stats.newest, 44)}<div>${userLink(stats.newest)}<div class="meta">Joined ${ago(stats.newest.created_at)}</div></div></div></div>` : ''}
           <div class="panel">
             <div class="panel-head"><h3>Community posts</h3><a href="#/community">All →</a></div>
-            ${feed.map((p) => `<div class="mini-post">${avatar(p.author, 28)}<div><div>${userLink(p.author)} <span class="meta">${ago(p.created_at)}</span></div>
+            ${feed.map((p) => `<div class="mini-post">${avatar(p.author, 28)}<div class="mini-copy"><div class="mini-byline">${userLink(p.author)} <span class="meta">${ago(p.created_at)}</span></div>
               <div class="mini-body">${fmt(p.body.slice(0, 140))}</div></div></div>`).join('') || '<p class="pad muted">No posts yet.</p>'}
           </div>
         </aside>
