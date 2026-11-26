@@ -48,7 +48,7 @@ window.makeDemoBackend = () => {
       user.game = { game_username: user.username.toLowerCase(), display_name: user.username, staff_rank: staff, donator_rank: donor,
         donator_color: color, combat_level: cb, total_level: total, time_played_min: mins, online, last_seen: ago(online ? 1 : 300) };
     };
-    game('u-shadow', 'owner', 'Death', 'e8c45c', 138, 2496, 5400, true);
+    game('u-shadow', 'owner', '', '', 138, 2496, 5400, true);
     game('u-kage', 'admin', 'Death', 'e8c45c', 126, 2210, 3900, false);
     game('u-grim', 'player', '', '', 97, 1650, 1200, true);
     game('u-lily', 'player', 'Wraith', '9ec9ff', 54, 1820, 2300, false);
@@ -92,9 +92,16 @@ window.makeDemoBackend = () => {
     ['death', 'Death', 'DeathDemo', 'e8c45c'],
     ['eternal', 'Eternal', 'EternalDemo', 'b8f4ff'],
     ['oblivion', 'Oblivion', 'OblivionDemo', 'a66bff'],
+    ['death-veteran', 'Death', 'CinderKnight', 'e8c45c'],
   ];
 
   function withRankProfiles(data) {
+    const owner = data.users.find((user) => user.id === 'u-shadow');
+    if (owner?.game?.donator_rank) {
+      owner.game.donator_rank = '';
+      owner.game.donator_color = '';
+      if (owner.avatar_icon === 'donator' || owner.avatar_icon?.startsWith('test-')) owner.avatar_icon = 'initials';
+    }
     const ids = new Set(data.users.map((user) => user.id));
     const names = new Set(data.users.map((user) => user.username.toLowerCase()));
     rankExamples.forEach(([key, rank, preferredName, color], index) => {

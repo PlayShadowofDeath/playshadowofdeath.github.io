@@ -794,6 +794,10 @@ main.home-view, main.donation-view {
 .avatar .avatar-icon-citadel { object-position: 76% center; }
 .avatar .avatar-icon-portal { object-position: 66% center; }
 .avatar .avatar-icon-donator { object-fit: contain; background: #1f151d; }
+.avatar .avatar-icon-owner { object-fit: contain; background: radial-gradient(#422353, #211422 74%); }
+.rank.owner:has(.owner-emblem) { display: inline-flex; align-items: center; gap: 4px; }
+.rank .owner-emblem { width: 21px; height: 21px; object-fit: contain; }
+.member-name .owner-emblem, .profile-head .owner-emblem { width: 24px; height: 24px; }
 .avatar-closeup .avatar-icon {
   transform: scale(var(--avatar-zoom));
   transform-origin: 50% var(--avatar-focus);

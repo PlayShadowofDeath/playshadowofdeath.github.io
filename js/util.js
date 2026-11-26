@@ -52,7 +52,9 @@ window.U = (() => {
     member: { label: 'Member', cls: 'member' },
   };
   const rank = (p) => RANKS[p?.role] || RANKS.member;
-  const badge = (p) => p && p.role !== 'member' ? `<span class="rank ${rank(p).cls}">${rank(p).label}</span>` : '';
+  const ownerEmblem = 'owner-crowned-skull.png';
+  const badge = (p) => p && p.role !== 'member'
+    ? `<span class="rank ${rank(p).cls}">${p.role === 'owner' ? `<img class="owner-emblem" src="img/cinematic/${ownerEmblem}" alt="">` : ''}${rank(p).label}</span>` : '';
 
   const avatarIcons = Object.freeze({
     initials: 'Initials',
@@ -86,7 +88,9 @@ window.U = (() => {
       ? ` avatar-closeup avatar-closeup-${rankArt.slice(5, -'-reforged.png'.length)}` : '';
     const face = art
       ? `<span class="avatar-image${closeup}"><img class="avatar-icon avatar-icon-${rankArt ? 'donator' : icon}" src="img/cinematic/${art}" alt=""></span>`
-      : esc(name[0].toUpperCase());
+      : p?.role === 'owner'
+        ? `<span class="avatar-image"><img class="avatar-icon avatar-icon-owner" src="img/cinematic/${ownerEmblem}" alt=""></span>`
+        : esc(name[0].toUpperCase());
     return `<span class="avatar" style="--s:${size}px;--c:${esc(p?.avatar_color || '#555')}">${face}${
       online === undefined ? '' : `<i class="dot ${online ? 'on' : ''}" data-dot="${esc(p?.id || '')}"></i>`}</span>`;
   }
