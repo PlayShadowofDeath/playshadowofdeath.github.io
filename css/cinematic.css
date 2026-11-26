@@ -697,10 +697,22 @@ body:has(.donation-view) .topbar {
 }
 
 .donate {
+  position: relative;
   background: linear-gradient(180deg, transparent 480px, #090809 970px),
     url('../img/cinematic/donation-hall.webp') center top / auto 850px no-repeat;
-  border-inline: 3px double #4f3430;
+  border-inline: 3px solid transparent;
   padding-inline: clamp(10px, 3vw, 44px);
+  padding-block-end: 20px;
+}
+
+.donate::before {
+  content: '';
+  position: absolute;
+  inset: 0 -3px;
+  border: 1px solid transparent;
+  border-image: url('../img/cinematic/rank-frame.webp') 88 56 /
+    clamp(24px, 3.1vw, 44px) clamp(13px, 2vw, 30px) round;
+  pointer-events: none;
 }
 
 .donate .g-hero { padding: 26px 8px 15px; }
