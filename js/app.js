@@ -908,7 +908,7 @@
       <div class="crumbs"><a href="#/">Home</a> › New Updates</div>
       <div class="guide">
         <header class="g-hero">
-          <img class="updates-crest" src="img/cinematic/rank-death.webp" alt="" width="104" height="104">
+          <img class="updates-crest" src="img/cinematic/updates-crest.png" alt="" width="156" height="156">
           <h1>New Updates</h1>
           <p>The biggest additions and improvements to Shadow of Death, newest first. Pick an update, filter by type or search.</p>
         </header>

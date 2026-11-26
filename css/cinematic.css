@@ -72,12 +72,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 
 .updates-crest {
   display: block;
-  width: 104px;
-  height: 104px;
+  width: clamp(120px, 15vw, 156px);
+  height: auto;
   margin: 0 auto 10px;
   object-fit: contain;
-  mix-blend-mode: screen;
-  filter: contrast(1.08);
 }
 
 main.container.login-view {
