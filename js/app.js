@@ -555,8 +555,12 @@
       $('#list').innerHTML = rows.map((p) => `
         <a class="panel member-card realm-panel" href="#/u/${encodeURIComponent(p.username)}">
           ${avatar(p, 56, S.online.has(p.id))}
-          <div><b class="user ${window.U.rank(p).cls}">${esc(p.username)}</b><div class="member-badges">${badge(p)}${donor(p) || (p.role === 'member' ? '<span class="meta">Member</span>' : '')}</div>
-          <div class="meta">Joined ${date(p.created_at)}</div></div></a>`).join('') || '<p class="muted">Nobody found.</p>';
+          <div class="member-info">
+            <div class="member-name"><b class="user ${window.U.rank(p).cls}">${esc(p.username)}</b>${badge(p)}</div>
+            <div class="meta">Joined ${date(p.created_at)}</div>
+            ${donor(p)}
+          </div>
+        </a>`).join('') || '<p class="muted">Nobody found.</p>';
       const pages = Math.ceil(total / 30);
       $('#pg').innerHTML = pages > 1 ? `<nav class="pager">${Array.from({ length: pages }, (_, i) => `<a href="javascript:void 0" data-pg="${i}" class="${i === pageNo ? 'on' : ''}">${i + 1}</a>`).join('')}</nav>` : '';
       $$('[data-pg]').forEach((a) => a.onclick = () => { pageNo = +a.dataset.pg; load(); });

@@ -803,12 +803,25 @@ main.home-view, main.donation-view {
   max-width: 100%;
 }
 .donor img { width: 20px; height: 20px; object-fit: contain; flex: none; }
-.member-badges .donor, .profile-head .donor { gap: 6px; padding: 2px 8px 2px 4px; }
-.member-badges .donor img { width: 34px; height: 34px; }
+.profile-head .donor { gap: 6px; padding: 2px 8px 2px 4px; }
 .profile-head .donor img { width: 42px; height: 42px; }
 .avatar-previews { display: flex; align-items: flex-end; gap: 22px; }
 .avatar-previews > div { display: grid; justify-items: center; gap: 5px; }
-.member-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 3px 0; }
+.member-info { display: grid; justify-items: start; gap: 3px; min-width: 0; }
+.member-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 7px; }
+.member-name .user { overflow-wrap: anywhere; }
+.member-name .rank { margin: 0; }
+.member-info .donor {
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--cinematic-lettering);
+  font-size: .84rem;
+  letter-spacing: .01em;
+  text-transform: none;
+}
+.member-info .donor img { width: 29px; height: 29px; }
 .profile-cover {
   background:
     linear-gradient(0deg, var(--bg), transparent 66%),
