@@ -29,22 +29,25 @@
   <footer class="footer">
     <div class="container footer-inner">
       <a class="footer-brand" href="#/">
-        <img class="footer-knight" src="img/cinematic/footer-shadow-knight.png" alt="" width="1427" height="1102" loading="lazy">
+        <img class="footer-knight" src="img/cinematic/footer-shadow-knight.png"
+          srcset="img/cinematic/footer-shadow-knight.png 1427w, img/cinematic/footer-shadow-knight-4k.png 3840w"
+          sizes="(max-width: 700px) min(92vw, 420px), min(45vw, 520px)"
+          alt="" width="1427" height="1102" loading="lazy">
         <img class="footer-wordmark" src="img/cinematic/wordmark.webp" alt="Shadow of Death" loading="lazy">
       </a>
-      <nav class="footer-nav" aria-label="Game links">
-        <h2>The Game</h2>
-        <a id="footer-play" class="footer-feature" download>Play Now</a>
-        <a href="#/updates" class="footer-feature">New Updates</a>
-        <a href="#/guide">Guide</a>
-        <a href="#/donate">Donate</a>
-      </nav>
-      <nav class="footer-nav" aria-label="Community links">
-        <h2>Community</h2>
-        <a href="#/forums">Forums</a>
-        <a href="#/community">Community Posts</a>
-        <a href="#/members">Members</a>
-        <a href="#/rules">Rules</a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <div class="footer-actions">
+          <a id="footer-play" download>Play Now <span aria-hidden="true">↓</span></a>
+          <a href="#/forums">Forums <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="footer-directory">
+          <a href="#/updates">New Updates</a>
+          <a href="#/community">Community Posts</a>
+          <a href="#/guide">Guide</a>
+          <a href="#/members">Members</a>
+          <a href="#/donate">Donate</a>
+          <a href="#/rules">Rules</a>
+        </div>
       </nav>
     </div>
     <div class="container footer-bottom">
