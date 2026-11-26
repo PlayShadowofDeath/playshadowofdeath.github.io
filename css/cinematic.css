@@ -715,6 +715,25 @@ main.home-view, main.donation-view {
 .realm-banner p { color: #edcfc8; }
 .community-banner { --realm-art: url('../img/cinematic/shadow-knight-citadel.webp'); }
 .members-banner, .guide-banner { --realm-art: url('../img/cinematic/progression.webp'); }
+.rules-banner { --realm-art: url('../img/cinematic/shadow-knight-citadel.webp'); min-height: 164px; }
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 278px), 1fr));
+  gap: 16px;
+}
+.rules-grid .panel { margin: 0; }
+.rules-grid .panel-head {
+  background: linear-gradient(90deg, #44212b, #311d28c9),
+    url('../img/cinematic/donation-hall.webp') right 47% / cover no-repeat;
+  border-bottom-color: #916351;
+}
+.rules-grid .panel-head h2 { color: #ffe3c8; font: 800 1.18rem/1.25 var(--cinematic-lettering); }
+.rules-grid ul { margin: 0; padding: 4px 18px; list-style: none; }
+.rules-grid li { padding: 12px 0; color: #e5d0d1; }
+.rules-grid li + li { border-top: 1px solid #65414b; }
+.rules-grid li strong { display: block; margin-bottom: 2px; color: #ffdfc2; }
+.rules-grid a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+.rules-action { padding: 2px 18px 15px; }
 
 .realm-panel,
 .community-layout :is(.composer, .feed-post),
@@ -1082,6 +1101,71 @@ body:has(.donation-view) .topbar {
 .pb-feature .btn { min-height: 40px; }
 .pb:has(.pb-feature) .pb-sec > h3 { scroll-margin-top: 150px; }
 
+.update-intro .g-hero {
+  margin-bottom: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #86544a;
+  background:
+    radial-gradient(ellipse at center, #381820aa, #1a111c00 73%),
+    linear-gradient(0deg, #181117bb, transparent 60%);
+}
+.update-intro .g-hero h1 { color: #ffe5cb; text-shadow: 0 2px 2px #130811, 0 0 19px #d15353a0; }
+.owner-update-intro .g-hero h1 { text-shadow: 0 2px 2px #130811, 0 0 19px #ad5dbfa0; }
+.pb :is(.pb-bar, .pb-toc, .pb-sec) {
+  border: 1px solid #76504e;
+  border-radius: 5px;
+  background: linear-gradient(140deg, #2d1c25, #1a121b 70%);
+  box-shadow: inset 0 0 0 2px #130c14, 0 6px 17px #0a050983;
+}
+.pb .pb-bar { top: 78px; padding: 11px; }
+.pb .pb-updates button {
+  max-width: min(420px, 75vw);
+  border-color: #6e4950;
+  border-radius: 4px;
+  background: #261922;
+}
+.pb .pb-updates button b { font-family: var(--cinematic-lettering); color: #f4d4b8; }
+.pb .pb-updates button.on {
+  border-color: #bd8867;
+  background: linear-gradient(100deg, #53303a, #31202d);
+  box-shadow: inset 0 2px #ad7355;
+}
+.pb .pb-tags button, .pb .pb-search {
+  border-radius: 4px;
+  border-color: #76505a;
+  background: #201621;
+}
+.pb .pb-tags button.on { border-color: #c78d68; color: #ffe4c7; }
+.pb .pb-search:focus-visible { outline: 2px solid #f3ac83; outline-offset: 2px; }
+.pb .pb-toc { padding: 0 8px 8px; }
+.pb .pb-toc b, .pb .pb-sec > h3 {
+  color: #ffe3c8;
+  background:
+    linear-gradient(90deg, #381c27 12%, #371b25de 52%, #26151c88),
+    url('../img/cinematic/donation-hall.webp') right 48% / cover no-repeat;
+  border-bottom: 1px solid #8e604e;
+  font: 800 clamp(1rem, 2.2vw, 1.23rem)/1.25 var(--cinematic-lettering);
+  text-shadow: 0 2px 3px #130a13;
+}
+.pb .pb-toc b { margin: 0 -8px 6px; padding: 12px 14px; letter-spacing: normal; text-transform: none; }
+.pb .pb-toc a { padding: 7px 9px; color: #eed7d1; }
+.pb .pb-toc a:is(:hover, :focus-visible) { background: #52303b; color: #fff0d7; }
+.pb .pb-sec { --pb-inset: clamp(12px, 2.3vw, 22px); padding: 0 var(--pb-inset) 13px; }
+.pb .pb-sec > h3 { margin: 0 calc(-1 * var(--pb-inset)); padding: 13px var(--pb-inset); border-radius: 4px 4px 0 0; }
+.pb .pb-sec > h3:focus-visible { outline-offset: -3px; }
+.pb .pb-sec.shut { padding-bottom: 0; }
+.pb .pb-body { color: #e7d3d5; overflow-wrap: anywhere; }
+.pb .pb-body h4 { color: #f5d5b8; }
+.pb .pb-count { border-color: #82554d; background: #2a1922; color: #f9d6aa; text-shadow: none; }
+
+@media (min-width: 861px) and (max-width: 1050px) {
+  .pb .pb-bar { top: 115px; }
+  .pb .pb-toc { top: 230px; }
+}
+@media (max-width: 860px) {
+  .pb .pb-toc { display: block; }
+  .pb .pb-toc a { background: #261923; border-color: #65434a; }
+}
 @media (max-width: 540px) {
   .inbox-head { flex-wrap: wrap; padding-inline: 10px; }
   .inbox-head .btn { margin-left: 0; }

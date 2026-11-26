@@ -276,7 +276,19 @@ window.makeDemoBackend = () => {
     async unlinkGame() { throw new Error('Demo mode: linking a game account works on the live site.'); },
     async serverStatus() { return { online: true, players: 3, uptime_min: 754, updated_at: now() }; },
     // Demo mode has no owner patch notes: they only live in the real database.
-    async ownerDoc() { return null; },
+    async ownerDoc(key) {
+      if (me?.role !== 'owner' || key !== 'patch-notes') return null;
+      return {
+        html: `<div class="update"><h2>Demo patch notes</h2>
+          <section id="website-preview"><h3>Website preview</h3>
+            <ul><li><span class="tag changed">Changed</span> Updated the styling of the notes archive.</li></ul>
+          </section>
+          <section id="owner-view"><h3>Owner view</h3>
+            <ul><li><span class="tag new">New</span> Sample notes for reviewing the private layout in demo mode.</li></ul>
+          </section>
+        </div>`,
+      };
+    },
 
     async forumIndex() {
       await delay(20);

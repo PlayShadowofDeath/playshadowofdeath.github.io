@@ -103,7 +103,8 @@
     view.classList.toggle('account-view', /^\/(register|forgot|finish)$/.test(path));
     view.classList.toggle('donation-view', /^\/donate(?:\/|$)/.test(path));
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
-      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],['#/updates', 'New Updates', /^\/updates/]];
+      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],
+      ['#/updates', 'New Updates', /^\/updates/], ['#/rules', 'Rules', /^\/rules$/]];
     if (S.me?.role === 'owner') nav.push(['#/patches', 'Patches', /^\/patches/]);
     document.getElementById('nav').innerHTML = nav.map(([h, t, re]) => `<a href="${h}" class="${re.test(path) ? 'on' : ''}">${t}</a>`).join('')
       + `<a href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}" class="play">Play now</a>`;
@@ -444,7 +445,7 @@
       <div class="crumbs"><a href="#/">Home</a> › Community</div>
       <div class="cols community-layout">
         <div class="main-col">
-          <div class="page-head realm-banner community-banner"><div><h1>Community</h1><p class="muted">Public posts from everyone. Share drops, screenshots and news.</p></div></div>
+          <div class="page-head realm-banner community-banner"><div><h1>Community</h1><p class="muted">Public posts from everyone. Share drops, screenshots and news.</p></div><a class="btn ghost sm" href="#/rules">Community rules</a></div>
           ${composer(S.me ? `What's happening, ${S.me.username}?` : '') || (!S.me ? '<div class="panel pad center"><a href="#/login">Log in</a> to post.</div>' : '')}
           <div id="feed"></div>
           <div class="center"><button class="btn ghost" id="more" hidden>Load more</button></div>
@@ -947,20 +948,37 @@
     setTitle('Rules');
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Rules</div>
-      <div class="panel pad narrow rules">
-        <h1>Community rules</h1>
-        <ol>
-          <li><b>Be respectful.</b> No harassment, hate speech, threats or targeting other players.</li>
-          <li><b>No spam or advertising</b> other servers, sites or services.</li>
-          <li><b>No scamming.</b> Trades in Buying &amp; Selling are at your own risk; report scammers to staff.</li>
-          <li><b>Keep it in the right place.</b> Post in the forum that fits your topic.</li>
-          <li><b>No inappropriate content.</b> Keep posts and pictures safe for everyone.</li>
-          <li><b>Don't share personal information</b>, yours or anyone else's.</li>
-          <li><b>Never share your password.</b> Staff will never ask for it.</li>
-          <li><b>Report bugs, don't abuse them.</b> Post them in Bug Reports.</li>
-          <li><b>Only donate to Shadow.</b></li>
-          <li>Staff decisions are final. Appeals go in the <b>Appeals</b> forum.</li>
-        </ol>
+      <div class="rules-page">
+        <header class="page-head realm-banner rules-banner">
+          <div><h1>Community Rules</h1><p class="muted">These rules apply in game, on the forums, and in site chat.</p></div>
+        </header>
+        <div class="rules-grid">
+          <section class="panel realm-panel">
+            <div class="panel-head"><h2>Treat players with respect</h2></div>
+            <ul>
+              <li><strong>Keep disagreements civil.</strong> Harassment, threats, hate speech, and targeting other players are prohibited.</li>
+              <li><strong>Keep chat and forums usable.</strong> Avoid spam, unsolicited advertising, and inappropriate content. Pick the forum that fits your topic.</li>
+              <li><strong>Respect privacy.</strong> Keep passwords, contact details, and other private information out of posts and messages. Staff will never ask for your password.</li>
+            </ul>
+          </section>
+          <section class="panel realm-panel">
+            <div class="panel-head"><h2>Play and trade fairly</h2></div>
+            <ul>
+              <li><strong>Play the game yourself.</strong> Bots, macros that play for you, and cheating tools are prohibited.</li>
+              <li><strong>Report bugs before using them again.</strong> If you find a bug that gives an unfair advantage, stop and tell staff. Keep sensitive details private.</li>
+              <li><strong>Trade honestly.</strong> Check what you’re accepting. Scamming and impersonating staff are prohibited. Verify donation instructions on the <a href="#/donate">Donate page</a>.</li>
+            </ul>
+          </section>
+          <section class="panel realm-panel">
+            <div class="panel-head"><h2>Reports and appeals</h2></div>
+            <ul>
+              <li><strong>Give staff enough context.</strong> Include the player name, what happened, when it happened, and any relevant screenshots. Keep personal information out of your report.</li>
+              <li><strong>Use the right channel.</strong> Use Bug Reports for ordinary bugs. Contact staff privately about harassment, scams, or bugs that could be abused.</li>
+              <li><strong>Appeal through the forums.</strong> If you think a mute or ban was a mistake, explain what happened in Appeals and give staff time to review it.</li>
+            </ul>
+            <div class="rules-action"><a class="btn ghost sm" href="#/forums">Open forums →</a></div>
+          </section>
+        </div>
       </div>`;
   };
 
@@ -1039,7 +1057,7 @@
     setTitle('New Updates');
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › New Updates</div>
-      <div class="guide">
+      <div class="guide update-intro">
         <header class="g-hero">
           <img class="updates-crest" src="img/cinematic/updates-crest.png" alt="" width="156" height="156">
           <h1>New Updates</h1>
@@ -1061,9 +1079,9 @@
     catch (e) { console.warn('owner patch notes:', e); } // e.g. owner-patches.sql not run yet
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Owner patch notes</div>
-      <div class="guide">
+      <div class="guide update-intro owner-update-intro">
         <header class="g-hero">
-          <div class="skull">♛</div>
+          <img class="updates-crest" src="img/cinematic/owner-crowned-skull.png" alt="" width="156" height="156">
           <h1>Owner Patch Notes</h1>
           <p>Private: only the owner account can see this page. Every change, owner tools and Server Manager included.</p>
           ${doc?.updated_at ? `<p class="muted">Last updated ${esc(new Date(doc.updated_at).toLocaleString())}</p>` : ''}
@@ -1071,7 +1089,7 @@
       </div>
       <div id="pb-root"></div>`;
     if (!doc) {
-      $('#pb-root', view).innerHTML = `<div class="panel pad center narrow muted">No owner patch notes yet${api.mode === 'demo' ? ' (demo mode only shows them on the live site)' : ''}.</div>`;
+      $('#pb-root', view).innerHTML = '<div class="panel realm-panel pad center narrow muted">No owner patch notes yet.</div>';
       return;
     }
     window.PatchBook.render($('#pb-root', view), doc.html);
