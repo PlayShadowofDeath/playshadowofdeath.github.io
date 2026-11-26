@@ -477,6 +477,7 @@
     const [threads, counts, server] = await Promise.all([api.threadsBy(p.id, 8), api.postCounts([p.id]), api.serverStatus().catch(() => null)]);
     const onlineNow = S.online.has(p.id);
     const g = p.game;
+    const coverColor = /^#[0-9a-f]{6}$/i.test(p.avatar_color) ? p.avatar_color : '#6e2a36';
     let friendBtn = '';
     if (S.me && !self) friendBtn = {
       none: `<button class="btn" id="add-friend">+ Add friend</button>`,
@@ -486,36 +487,52 @@
     }[rel.state];
     const canWall = canPost() && (self || rel.state === 'friends');
     view.innerHTML = `
-      <div class="profile-cover" style="--c:${esc(p.avatar_color)}"></div>
-      <div class="panel profile-head realm-panel">
-        ${avatar(p, 120, onlineNow)}
-        <div class="grow">
-          <h1>${esc(p.username)} ${badge(p)} ${donor(p)}${p.status === 'banned' ? ' <span class="rank banned">Banned</span>' : ''}</h1>
-          <div class="meta">${onlineNow ? '<span class="green">● Online now</span>' : `Last seen ${ago(p.last_seen)}`} · Joined ${date(p.created_at)} · ${counts[p.id] || 0} forum posts
-            ${g ? ` · In-game: <b>${esc(g.display_name || g.game_username)}</b> ${inGame(p, server) ? '<span class="ingame">⚔ In game now</span>' : ''}` : ''}</div>
-          ${p.bio ? `<p class="bio">${fmt(p.bio)}</p>` : ''}
-          ${g ? `<div class="game-stats">
-            <div><b>${g.combat_level ?? '–'}</b><span>Combat</span></div>
-            <div><b>${g.total_level ?? '–'}</b><span>Total level</span></div>
-            <div><b>${g.time_played_min != null ? played(g.time_played_min) : '–'}</b><span>Time played</span></div>
-            ${g.donator_rank ? `<div><b style="color:#${esc(g.donator_color)}">${esc(g.donator_rank)}</b><span>Donator</span></div>` : ''}
+      <header class="panel realm-panel profile-player">
+        <div class="profile-cover" aria-hidden="true" style="--c:${coverColor}"></div>
+        <div class="profile-head">
+          ${avatar(p, 106, onlineNow)}
+          <div class="profile-identity">
+            <div class="profile-name">
+              <h1>${esc(p.username)}</h1>
+              ${badge(p)} ${donor(p)}${p.status === 'banned' ? ' <span class="rank banned">Banned</span>' : ''}
+            </div>
+            <div class="profile-meta meta">
+              <span>${onlineNow ? '<span class="green">● Online now</span>' : p.last_seen ? `Last seen ${ago(p.last_seen)}` : 'Offline'}</span>
+              <span>Joined ${date(p.created_at)}</span>
+              <span>${counts[p.id] || 0} forum posts</span>
+            </div>
+            ${p.bio ? `<p class="bio">${fmt(p.bio)}</p>` : ''}
+          </div>
+          ${friendBtn || self ? `<div class="row profile-actions">${friendBtn}
+            ${self ? '<a class="btn ghost" href="#/settings">Edit profile</a>' : ''}
+            ${self && !g ? '<a class="btn ghost" href="#/settings/game">Link game account</a>' : ''}
           </div>` : ''}
         </div>
-        <div class="row">${friendBtn}${self ? '<a class="btn ghost" href="#/settings">Edit profile</a>' : ''}</div>
-      </div>
+        ${g ? `<div class="profile-character">
+          <div class="profile-character-name">
+            <span class="meta">In-game character</span><b>${esc(g.display_name || g.game_username)}</b>
+            ${inGame(p, server) ? '<span class="ingame">⚔ In game now</span>' : ''}
+          </div>
+          <dl class="profile-stats">
+            <div><dt>Combat level</dt><dd>${g.combat_level ?? '–'}</dd></div>
+            <div><dt>Total level</dt><dd>${g.total_level ?? '–'}</dd></div>
+            <div><dt>Time played</dt><dd>${g.time_played_min != null ? played(g.time_played_min) : '–'}</dd></div>
+          </dl>
+        </div>` : ''}
+      </header>
       ${isStaff() && !self && p.role === 'member' || S.me?.role === 'owner' && !self ? `<div class="panel pad row staff-tools">
         <b>Staff:</b>
         ${p.role === 'member' ? `<button class="btn ghost sm" id="ban">${p.status === 'banned' ? 'Unban' : 'Ban'}</button>` : ''}
         ${S.me.role === 'owner' ? `<label class="row">Rank <select id="role">${['member', 'moderator', 'admin', 'owner'].map((r) => `<option ${r === p.role ? 'selected' : ''}>${r}</option>`).join('')}</select></label>` : ''}
       </div>` : ''}
-      <div class="cols">
+      <div class="cols profile-activity">
         <div class="main-col">
-          <h2 class="sub">Wall</h2>
+          <div class="panel realm-panel"><div class="panel-head"><h2>Wall</h2></div></div>
           ${canWall ? composer(self ? 'Post something on your wall…' : `Write something to ${p.username}…`) : ''}
           <div id="feed"></div>
         </div>
         <aside class="side-col">
-          <div class="panel"><div class="panel-head"><h3>Recent threads</h3></div>
+          <div class="panel realm-panel"><div class="panel-head"><h2>Recent threads</h2></div>
             ${threads.map((t) => `<div class="mini-post"><div><a href="#/thread/${t.id}">${esc(t.title)}</a><div class="meta">${esc(t.category?.name || '')} · ${ago(t.created_at)}</div></div></div>`).join('') || '<p class="pad muted">No threads yet.</p>'}
           </div>
         </aside>
@@ -775,7 +792,7 @@
     }
   }
 
-  views.settings = async () => {
+  views.settings = async (section) => {
     if (!S.me) return needLogin();
     setTitle('Settings');
     const photosAvailable = api.supportsAvatarPhotos();
@@ -906,6 +923,10 @@
       if (confirm('Unlink your game account? Your levels and donator rank stop showing, and a game staff rank is removed.'))
         busy(e.target, async () => { await api.unlinkGame(); S.me = api.me(); renderHeader(); toast('Game account unlinked.'); route(); });
     };
+    if (section === 'game') {
+      const code = $('#link-code');
+      setTimeout(() => { if (code?.isConnected) code.focus(); }, 0);
+    }
   };
 
   views.rules = async () => {
@@ -1063,7 +1084,7 @@
     [/^\/register$/, views.register],
     [/^\/forgot$/, views.forgot],
     [/^\/finish$/, views.finish],
-    [/^\/settings$/, views.settings],
+    [/^\/settings(?:\/(game))?$/, views.settings],
     [/^\/rules$/, views.rules],
     [/^\/guide(?:\/([\w-]+))?$/, views.guide],
     [/^\/donate(?:\/([\w-]+))?$/, views.donate],

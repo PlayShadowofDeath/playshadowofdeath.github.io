@@ -818,8 +818,6 @@ main.home-view, main.donation-view {
   max-width: 100%;
 }
 .donor img { width: 20px; height: 20px; object-fit: contain; flex: none; }
-.profile-head .donor { gap: 6px; padding: 2px 8px 2px 4px; }
-.profile-head .donor img { width: 42px; height: 42px; }
 .member-info { display: grid; justify-items: start; gap: 3px; min-width: 0; }
 .member-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 7px; }
 .member-name .user { overflow-wrap: anywhere; }
@@ -835,16 +833,66 @@ main.home-view, main.donation-view {
   text-transform: none;
 }
 .member-info .donor img { width: 29px; height: 29px; }
-.profile-cover {
+.profile-player .profile-cover {
+  height: clamp(130px, 17vw, 220px);
+  margin: 0;
   background:
-    linear-gradient(0deg, var(--bg), transparent 66%),
-    linear-gradient(105deg, color-mix(in srgb, var(--c) 28%, #1b111b), #110c14b8 58%, #170b167a),
-    url('../img/cinematic/progression.webp') right 32% / cover no-repeat #1c111b;
+    linear-gradient(0deg, #21151d, transparent 65%),
+    linear-gradient(105deg, color-mix(in srgb, var(--c, #6e2a36) 36%, #1b111b), #110c146b 55%, #170b1626),
+    url('../img/cinematic/shadow-knight-citadel.webp') right 29% / cover no-repeat #1c111b;
 }
-.profile-head.realm-panel h1 { color: #ffe6cf; overflow-wrap: anywhere; }
-.profile-head.realm-panel .game-stats div {
-  border-color: #865951;
-  background: linear-gradient(#3b2029, #241721);
+.profile-player .profile-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: clamp(12px, 2vw, 23px);
+  padding: 0 clamp(14px, 3vw, 30px) 18px;
+  margin-top: -38px;
+}
+.profile-player .profile-head > .avatar {
+  border-color: #bd8b73;
+  box-shadow: 0 0 0 3px #20141e, 0 6px 14px #0a050a99;
+}
+.profile-name, .profile-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 12px; }
+.profile-name h1 {
+  margin: 0;
+  font: 800 clamp(1.55rem, 4vw, 2.6rem)/1.15 var(--cinematic-lettering);
+  color: #ffe6cf;
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 4px #120811;
+}
+.profile-name .donor { gap: 6px; padding: 0; border: 0; background: none; text-transform: none; }
+.profile-name .donor img { width: 32px; height: 32px; }
+.profile-identity .bio { margin: 10px 0 0; }
+.profile-meta { margin-top: 7px; color: #d3bdc5; }
+.profile-actions { align-self: end; justify-content: end; flex-wrap: wrap; }
+.profile-character {
+  display: grid;
+  grid-template-columns: minmax(145px, 1fr) minmax(0, 2fr);
+  gap: 14px;
+  align-items: center;
+  padding: 12px clamp(14px, 3vw, 30px);
+  border-top: 1px solid #76534e;
+  background: linear-gradient(100deg, #39212c, #21161f 72%);
+}
+.profile-character-name { display: grid; justify-items: start; }
+.profile-character-name b { color: #ffe1c6; overflow-wrap: anywhere; }
+.profile-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; }
+.profile-stats div { min-width: 0; padding: 4px 9px; border-inline-start: 1px solid #76534e; }
+.profile-stats dt { color: #ddc1ba; font-size: .79rem; }
+.profile-stats dd { margin: 0; color: #fff0db; font: 800 clamp(1rem, 2vw, 1.25rem)/1.25 var(--cinematic-lettering); }
+.profile-activity .panel-head { background: linear-gradient(95deg, #492631, #271a25); }
+.profile-activity .panel-head h2 { font: 800 1.14rem/1.25 var(--cinematic-lettering); color: #ffe3c8; }
+.profile-activity :is(.feed-post, .composer, #feed > .panel) {
+  border-color: #65444b;
+  background: linear-gradient(130deg, #291a24, #1c141d 70%);
+}
+
+@media (max-width: 660px) {
+  .profile-player .profile-head { grid-template-columns: auto minmax(0, 1fr); }
+  .profile-player .profile-head > .avatar { --s: 72px !important; }
+  .profile-actions { grid-column: 1 / -1; justify-content: start; }
+  .profile-character { grid-template-columns: minmax(0, 1fr); }
 }
 
 .player-guide .guide-banner {
