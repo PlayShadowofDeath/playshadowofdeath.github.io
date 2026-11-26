@@ -759,8 +759,9 @@
     setTitle('Settings');
     const iconsAvailable = api.supportsAvatarIcons();
     const m = S.me;
+    const staff = window.U.staffEmblem(m);
     const iconOptions = Object.entries(avatarIcons).map(([key, label]) =>
-      [key, key === 'initials' && m.role === 'owner' ? 'Crowned Skull (Owner)' : label]);
+      [key, key === 'initials' && staff ? staff[1] : label]);
     if (donorArt(m)) iconOptions.push(['donator', `${m.game.donator_rank} emblem`]);
     if (api.mode === 'demo') {
       iconOptions.push(...window.U.demoRankIcons(m).map(([key, label]) => [key, `${label} (test)`]));

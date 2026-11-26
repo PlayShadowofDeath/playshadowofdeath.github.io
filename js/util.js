@@ -52,9 +52,17 @@ window.U = (() => {
     member: { label: 'Member', cls: 'member' },
   };
   const rank = (p) => RANKS[p?.role] || RANKS.member;
-  const ownerEmblem = 'owner-crowned-skull.png';
-  const badge = (p) => p && p.role !== 'member'
-    ? `<span class="rank ${rank(p).cls}">${p.role === 'owner' ? `<img class="owner-emblem" src="img/cinematic/${ownerEmblem}" alt="">` : ''}${rank(p).label}</span>` : '';
+  const staffEmblems = Object.freeze({
+    owner: ['owner-crowned-skull.png', 'Crowned Skull (Owner)'],
+    admin: ['staff-admin-crown.png', 'Gold Crown (Admin)'],
+    moderator: ['staff-moderator-crown.png', 'Silver Crown (Moderator)'],
+  });
+  const staffEmblem = (p) => Object.hasOwn(staffEmblems, p?.role) ? staffEmblems[p.role] : null;
+  const badge = (p) => {
+    if (!p || p.role === 'member') return '';
+    const emblem = staffEmblem(p);
+    return `<span class="rank ${rank(p).cls}">${emblem ? `<img class="staff-emblem" src="img/cinematic/${emblem[0]}" alt="">` : ''}${rank(p).label}</span>`;
+  };
 
   const avatarIcons = Object.freeze({
     initials: 'Initials',
@@ -81,6 +89,7 @@ window.U = (() => {
   function avatar(p, size = 40, online) {
     const name = p?.username || '?';
     const icon = p?.avatar_icon;
+    const staff = staffEmblem(p);
     const testRank = p?.id === 'u-shadow' && icon?.startsWith('test-') && donorRanks.has(icon.slice(5)) ? icon.slice(5) : '';
     const rankArt = testRank ? `rank-${testRank}-reforged.png` : icon === 'donator' ? donorArt(p) : '';
     const art = rankArt || (Object.hasOwn(avatarArt, icon) ? avatarArt[icon] : '');
@@ -88,8 +97,8 @@ window.U = (() => {
       ? ` avatar-closeup avatar-closeup-${rankArt.slice(5, -'-reforged.png'.length)}` : '';
     const face = art
       ? `<span class="avatar-image${closeup}"><img class="avatar-icon avatar-icon-${rankArt ? 'donator' : icon}" src="img/cinematic/${art}" alt=""></span>`
-      : p?.role === 'owner'
-        ? `<span class="avatar-image"><img class="avatar-icon avatar-icon-owner" src="img/cinematic/${ownerEmblem}" alt=""></span>`
+      : staff
+        ? `<span class="avatar-image"><img class="avatar-icon avatar-icon-staff avatar-icon-${rank(p).cls}" src="img/cinematic/${staff[0]}" alt=""></span>`
         : esc(name[0].toUpperCase());
     return `<span class="avatar" style="--s:${size}px;--c:${esc(p?.avatar_color || '#555')}">${face}${
       online === undefined ? '' : `<i class="dot ${online ? 'on' : ''}" data-dot="${esc(p?.id || '')}"></i>`}</span>`;
@@ -116,5 +125,5 @@ window.U = (() => {
 
   const errText = (e) => (e && (e.message || e.error_description)) || String(e);
 
-  return { esc, fmt, ago, date, time, full, rank, badge, donor, donorArt, serverUp, inGame, played, avatar, avatarIcons, demoRankIcons, userLink, toast, errText };
+  return { esc, fmt, ago, date, time, full, rank, badge, staffEmblem, donor, donorArt, serverUp, inGame, played, avatar, avatarIcons, demoRankIcons, userLink, toast, errText };
 })();
