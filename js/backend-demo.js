@@ -82,9 +82,48 @@ window.makeDemoBackend = () => {
     return db;
   }
 
+  const rankExamples = [
+    ['lost-soul', 'Lost Soul', 'LostSoulDemo', 'b8b8b8'],
+    ['wraith', 'Wraith', 'WraithDemo', '9ec9ff'],
+    ['phantom', 'Phantom', 'PhantomDemo', 'b072e6'],
+    ['shade', 'Shade', 'ShadeDemo', '2fb5a8'],
+    ['revenant', 'Revenant', 'RevenantDemo', 'e0602a'],
+    ['reaper', 'Reaper', 'ReaperDemo', 'ff2a2a'],
+    ['death', 'Death', 'DeathDemo', 'e8c45c'],
+    ['eternal', 'Eternal', 'EternalDemo', 'b8f4ff'],
+    ['oblivion', 'Oblivion', 'OblivionDemo', 'a66bff'],
+  ];
+
+  function withRankProfiles(data) {
+    const ids = new Set(data.users.map((user) => user.id));
+    const names = new Set(data.users.map((user) => user.username.toLowerCase()));
+    rankExamples.forEach(([key, rank, preferredName, color], index) => {
+      const id = 'demo-rank-' + key;
+      if (ids.has(id)) return;
+      let username = preferredName;
+      for (let serial = 2; names.has(username.toLowerCase()); serial++) {
+        const suffix = '-' + serial;
+        username = preferredName.slice(0, 12 - suffix.length) + suffix;
+      }
+      names.add(username.toLowerCase());
+      const gameName = username.toLowerCase();
+      data.users.push({
+        id, username, role: 'member', status: 'active', avatar_color: '#' + color, avatar_icon: 'donator',
+        bio: `Demo profile for the ${rank} rank.`, signature: '', game_username: gameName,
+        created_at: new Date(Date.UTC(2024, 0, 9 - index)).toISOString(), last_seen: null,
+        game: {
+          game_username: gameName, display_name: username, staff_rank: 'player',
+          donator_rank: rank, donator_color: color, combat_level: 50 + index * 11,
+          total_level: 950 + index * 175, time_played_min: 180 + index * 320, online: false,
+        },
+      });
+    });
+    return data;
+  }
+
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch { return null; } };
-  let cache = load() || seed();
-  const db = () => (cache = load() || cache);
+  let cache = withRankProfiles(load() || seed());
+  const db = () => (cache = withRankProfiles(load() || cache));
   const save = (d) => { cache = d; try { localStorage.setItem(KEY, JSON.stringify(d)); } catch { /* full or blocked */ } };
   const pub = (u) => { if (!u) return null; const { password, email, ...p } = u; return p; };
   const prof = (d, id) => pub(d.users.find((u) => u.id === id));
@@ -158,7 +197,7 @@ window.makeDemoBackend = () => {
       await delay();
       const d = db();
       if (!(await api.usernameAvailable(username))) throw new Error('That username is taken.');
-      if (d.users.some((u) => u.email.toLowerCase() === email.toLowerCase())) throw new Error('That email already has an account.');
+      if (d.users.some((u) => u.email?.toLowerCase() === email.toLowerCase())) throw new Error('That email already has an account.');
       const id = 'u-' + (++d.seq);
       d.users.push({ id, username, role: 'member', avatar_color: '#b3131b', bio: '', signature: '', status: 'active',
         game_username: null, created_at: now(), last_seen: now(), email, password });
@@ -172,7 +211,7 @@ window.makeDemoBackend = () => {
     async signIn({ login, password }) {
       await delay();
       const l = login.trim().toLowerCase();
-      const u = db().users.find((x) => (x.email.toLowerCase() === l || x.username.toLowerCase() === l) && x.id !== BOT);
+      const u = db().users.find((x) => x.password && (x.email.toLowerCase() === l || x.username.toLowerCase() === l) && x.id !== BOT);
       if (!u || u.password !== password) throw new Error('Wrong email or password.');
       sessionStorage.setItem('sod_demo_uid', u.id);
       refreshMe(); authCb?.(me);
