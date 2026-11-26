@@ -119,15 +119,20 @@
       <a class="rank-perks" href="#d-perks">View perks <span aria-hidden="true">↓</span></a>
     </article>`).join('');
 
-  const head = '<tr><th>Perk</th>' + RANKS.map(([n, , , , c]) => `<th class="d-c" style="color:${c}" title="${n}">${n}</th>`).join('') + '</tr>';
-  const groups = GROUPS.map(([, name, perks]) => `
-    <section class="ch" id="d-${name.toLowerCase().replace(/[^a-z]+/g, '-')}">
-      <h2>${name}</h2>
-      <div class="d-scroll"><table class="d-table">${head}${perks.map(([what, from, how]) => `
-        <tr><td><b>${what}</b>${how ? `<div class="muted small">${how}</div>` : ''}</td>${RANKS.map((r, i) =>
-          `<td class="d-c">${i >= from ? '<span class="d-yes">✔</span>' : '<span class="d-no">·</span>'}</td>`).join('')}</tr>`).join('')}
-      </table></div>
-    </section>`).join('');
+  const head = '<tr><th scope="col">Perk</th>' + RANKS.map(([n, , , , c]) => `<th scope="col" class="d-c" style="--perk-rank:${c}">${n}</th>`).join('') + '</tr>';
+  const groups = GROUPS.map(([, name, perks]) => {
+    const id = 'd-' + name.toLowerCase().replace(/[^a-z]+/g, '-');
+    return `
+    <section class="ch d-perk-group" id="${id}">
+      <h2 id="${id}-title">${name}</h2>
+      <div class="d-scroll" tabindex="0" role="region" aria-labelledby="${id}-title">
+        <table class="d-table"><thead>${head}</thead><tbody>${perks.map(([what, from, how]) => `
+          <tr><th scope="row">${what}${how ? `<div class="small">${how}</div>` : ''}</th>${RANKS.map((r, i) =>
+            `<td class="d-c">${i >= from ? '<span class="d-yes" aria-label="Included">✔</span>' : '<span class="d-no" aria-label="Unavailable">·</span>'}</td>`).join('')}</tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </section>`;
+  }).join('');
 
   window.DONATE_TOC = `<a href="#d-ranks">The ranks</a><a href="#d-earn">How to get them</a>`
     + GROUPS.map(([, n]) => `<a href="#d-${n.toLowerCase().replace(/[^a-z]+/g, '-')}">${n}</a>`).join('')
