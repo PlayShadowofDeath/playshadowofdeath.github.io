@@ -1054,6 +1054,19 @@ body:has(.donation-view) .topbar {
 .wall-sign-in { color: #dfc4c6; }
 .wall-sign-in a { color: #ffd2a8; text-decoration: underline; text-underline-offset: 3px; }
 .inbox-banner { min-height: 88px; }
+.social-empty {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: clamp(22px, 4vw, 42px) 16px;
+  text-align: center;
+}
+.social-empty :is(h2, h3) {
+  margin: 0;
+  color: #ffe3c8;
+  font: 800 1.25rem/1.2 var(--cinematic-lettering);
+}
+.social-empty p { margin: 0 0 3px; color: #dac4c8; }
 .inbox-head, .chatbar :is(.cb-head, .cb-win header, .cb-tab) {
   background: linear-gradient(105deg, #452532, #281b29);
   color: #ffe5cc;

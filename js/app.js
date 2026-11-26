@@ -606,14 +606,17 @@
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Friends</div>
       <div class="page-head"><div><h1>Friends</h1><p class="muted">Friends can message you instantly from the chat bar and post on your wall.</p></div>
-        <a class="btn ghost" href="#/members">Find people</a></div>
+        ${sorted.length ? '<a class="btn ghost" href="#/members">Find players</a>' : ''}</div>
       ${incoming.length ? `<div class="panel"><div class="panel-head"><h2>Friend requests <span class="count inline">${incoming.length}</span></h2></div>
         ${incoming.map((r) => `<div class="list-row">${avatar(r.from, 44)}<div class="grow">${userLink(r.from)}<div class="meta">${ago(r.created_at)}</div></div>
           <button class="btn sm" data-accept="${r.id}">Accept</button><button class="btn ghost sm" data-decline="${r.id}">Decline</button></div>`).join('')}</div>` : ''}
       <div class="panel"><div class="panel-head"><h2>Your friends</h2><span class="muted">${S.friends.length}</span></div>
         ${sorted.map((f) => `<div class="list-row">${avatar(f.profile, 44, S.online.has(f.profile.id))}<div class="grow">${userLink(f.profile)} ${badge(f.profile)}
           <div class="meta">${S.online.has(f.profile.id) ? '<span class="green">Online</span>' : 'Last seen ' + ago(f.profile.last_seen)}</div></div>
-          <button class="btn sm" data-chat="${f.profile.id}">💬 Message</button></div>`).join('') || '<p class="pad muted">No friends yet. Visit someone\'s profile and press <b>Add friend</b>.</p>'}</div>
+          <button class="btn sm" data-chat="${f.profile.id}">💬 Message</button></div>`).join('') || `<div class="social-empty">
+            <h3>No friends yet</h3><p>Open a player’s profile and choose Add friend.</p>
+            <a class="btn" href="#/members">Find players</a>
+          </div>`}</div>
       ${outgoing.length ? `<div class="panel"><div class="panel-head"><h3>Requests you sent</h3></div>
         ${outgoing.map((r) => `<div class="list-row">${avatar(r.to, 36)}<div class="grow">${userLink(r.to)}<div class="meta">sent ${ago(r.created_at)}</div></div>
           <button class="btn ghost sm" data-decline="${r.id}">Cancel</button></div>`).join('')}</div>` : ''}`;
@@ -632,27 +635,33 @@
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Messages</div>
       <header class="page-head realm-banner inbox-banner"><h1>Messages</h1></header>
-      <div class="panel inbox realm-panel">
+      ${convos.length ? `<div class="panel inbox realm-panel">
         <div class="inbox-list">${convos.map((c) => `
           <a href="#/inbox/${encodeURIComponent(c.partner.username)}" class="inbox-item ${c === current ? 'on' : ''}${c.unread ? ' unread' : ''}">
             ${avatar(c.partner, 40, S.online.has(c.partner.id))}
             <div class="grow"><div class="row between"><b>${esc(c.partner.username)}</b><span class="meta">${c.last_at ? ago(c.last_at) : ''}</span></div>
             <div class="meta clip">${c.last_from_me ? 'You: ' : ''}${esc(c.last_body || 'Say hi!')}</div></div>
-            ${c.unread ? `<b class="count inline">${c.unread}</b>` : ''}</a>`).join('') || '<p class="pad muted">No conversations. Add friends to message them.</p>'}</div>
+            ${c.unread ? `<b class="count inline">${c.unread}</b>` : ''}</a>`).join('')}</div>
         <div class="inbox-thread">${current ? `
           <div class="inbox-head">${avatar(current.partner, 36, S.online.has(current.partner.id))}${userLink(current.partner)}
             <button class="btn ghost sm" id="pop">Open in chat bar</button></div>
           <div class="inbox-msgs" id="msgs"></div>
           <form id="send" class="inbox-send"><textarea id="msg" rows="2" maxlength="2000" placeholder="Write a message… (Enter to send)"></textarea><button class="btn">Send</button></form>`
           : '<div class="pad center muted">Pick a conversation.</div>'}</div>
-      </div>`;
+      </div>` : `<div class="panel realm-panel social-empty">
+        <h2>No messages yet</h2><p>Add a friend from Members to start a conversation.</p>
+        <a class="btn" href="#/members">Find players</a>
+      </div>`}`;
     if (!current) return;
     const partner = current.partner;
     const box = $('#msgs');
     const draw = async () => {
       const msgs = await api.conversation(partner.id, 200);
       box.innerHTML = msgs.map((m) => `<div class="bubble ${m.sender_id === S.me.id ? 'me' : ''}" title="${full(m.created_at)}">${fmt(m.body)}<span class="meta">${ago(m.created_at)}</span></div>`).join('')
-        || '<p class="center muted">No messages yet.</p>';
+        || `<div class="social-empty">
+          <h2>No messages yet</h2><p>Say hello to ${esc(partner.username)} below, or choose someone from Friends.</p>
+          <a class="btn ghost sm" href="#/friends">Open Friends</a>
+        </div>`;
       box.scrollTop = box.scrollHeight;
       await api.markRead(partner.id); delete S.unread[partner.id]; bus.emit('counts');
       const activeRow = box.isConnected ? $('.inbox-item.on') : null;
