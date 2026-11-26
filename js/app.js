@@ -1058,6 +1058,9 @@
     toast('Could not reach the database: ' + errText(e), 'error');
   }
   document.getElementById('year').textContent = new Date().getFullYear();
+  const footerPlay = document.getElementById('footer-play');
+  footerPlay.href = cfg.downloadUrl;
+  footerPlay.download = cfg.downloadName;
   window.Messenger.init({ api, S, bus, go });
   sessionFor = undefined;
   await syncSession();
