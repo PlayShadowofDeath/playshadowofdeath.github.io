@@ -39,6 +39,13 @@
 
     root.innerHTML = `
       <div class="pb">
+        ${opts.featured ? `<section class="pb-feature">
+          <div class="pb-feature-copy">
+            <p>Latest update${updates[0].date ? ` · ${esc(updates[0].date)}` : ''}</p>
+            <h2>${esc(updates[0].title)}</h2>
+          </div>
+          <button class="btn" type="button" data-featured>Read update <span aria-hidden="true">↓</span></button>
+        </section>` : ''}
         <div class="pb-bar">
           <div class="pb-updates" role="tablist"></div>
           <div class="pb-tools">
@@ -172,6 +179,16 @@
       const b = e.target.closest('button');
       if (b) selectUpdate(b.dataset.u);
     };
+    let t;
+    $('[data-featured]')?.addEventListener('click', () => {
+      clearTimeout(t);
+      $('.pb-search').value = '';
+      state.tag = '';
+      state.q = '';
+      root.querySelectorAll('.pb-tags button').forEach((button) => button.classList.toggle('on', !button.dataset.tag));
+      selectUpdate(0);
+      ($('.pb-main .pb-sec > h3') || $('.pb-updates button[data-u="0"]'))?.focus();
+    });
     root.querySelector('.pb-tags').onclick = (e) => {
       const b = e.target.closest('button');
       if (!b) return;
@@ -179,7 +196,6 @@
       root.querySelectorAll('.pb-tags button').forEach((x) => x.classList.toggle('on', x === b));
       apply();
     };
-    let t;
     $('.pb-search').oninput = (e) => { clearTimeout(t); t = setTimeout(() => { state.q = e.target.value.trim(); apply(); }, 120); };
     $('.pb-fold').onclick = (e) => {
       const open = e.target.dataset.open === '1';

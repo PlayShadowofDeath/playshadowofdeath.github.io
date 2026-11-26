@@ -24,6 +24,7 @@
 
   // ---------- shared state + tiny event bus ----------
   const S = window.S = { me: null, online: new Set(), friends: [], requests: { incoming: [], outgoing: [] }, unread: {} };
+  let previousUnread = 0;
   const listeners = {};
   const bus = window.bus = {
     on: (ev, fn) => (listeners[ev] = listeners[ev] || []).push(fn),
@@ -108,14 +109,17 @@
       + `<a href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}" class="play">Play now</a>`;
     const box = document.getElementById('userbox');
     if (!S.me) {
+      previousUnread = 0;
       box.innerHTML = `<a href="#/login" class="btn ghost sm">Log in</a><a href="#/register" class="btn sm">Register</a>`;
       return;
     }
     const unread = Object.values(S.unread).reduce((a, b) => a + b, 0);
+    const newMessage = unread > previousUnread;
+    previousUnread = unread;
     const reqs = S.requests.incoming.length;
     box.innerHTML = `
-      <a href="#/friends" class="icon-btn" title="Friends">👥${reqs ? `<b class="count">${reqs}</b>` : ''}</a>
-      <a href="#/inbox" class="icon-btn" title="Messages">✉️${unread ? `<b class="count">${unread}</b>` : ''}</a>
+      <a href="#/friends" class="icon-btn header-icon${reqs ? ' has-activity' : ''}" title="Friends" aria-label="Friends${reqs ? `, ${reqs} pending requests` : ''}"><span class="nav-glyph glyph-friends" aria-hidden="true"></span>${reqs ? `<b class="count" aria-hidden="true">${reqs}</b>` : ''}</a>
+      <a href="#/inbox" class="icon-btn header-icon${unread ? ' has-activity' : ''}${newMessage ? ' new-message' : ''}" title="Messages" aria-label="Messages${unread ? `, ${unread} unread` : ''}"><span class="nav-glyph glyph-message" aria-hidden="true"></span>${unread ? `<b class="count" aria-hidden="true">${unread}</b>` : ''}</a>
       <div class="menu">
         <button class="me-btn" id="me-btn">${avatar(S.me, 30)}<span>${esc(S.me.username)}</span>▾</button>
         <div class="menu-list" id="me-menu" hidden>
@@ -529,6 +533,7 @@
         <div class="main-col">
           <div class="panel realm-panel"><div class="panel-head"><h2>Wall</h2></div></div>
           ${canWall ? composer(self ? 'Post something on your wall…' : `Write something to ${p.username}…`) : ''}
+          ${!S.me ? '<p class="panel pad realm-panel wall-sign-in"><a href="#/login" id="wall-sign-in">Log in to post</a> on profile walls.</p>' : ''}
           <div id="feed"></div>
         </div>
         <aside class="side-col">
@@ -537,6 +542,11 @@
           </div>
         </aside>
       </div>`;
+    $('#wall-sign-in')?.addEventListener('click', (e) => {
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      needLogin();
+    });
     const feedEl = $('#feed');
     const load = async () => {
       const rows = await api.feed({ wallOwner: p.id, size: 30 });
@@ -620,9 +630,10 @@
     const current = convos.find((c) => c.partner.username.toLowerCase() === (partnerName || '').toLowerCase()) || (partnerName ? null : convos[0]);
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Messages</div>
-      <div class="panel inbox">
+      <header class="page-head realm-banner inbox-banner"><h1>Messages</h1></header>
+      <div class="panel inbox realm-panel">
         <div class="inbox-list">${convos.map((c) => `
-          <a href="#/inbox/${encodeURIComponent(c.partner.username)}" class="inbox-item ${c === current ? 'on' : ''}">
+          <a href="#/inbox/${encodeURIComponent(c.partner.username)}" class="inbox-item ${c === current ? 'on' : ''}${c.unread ? ' unread' : ''}">
             ${avatar(c.partner, 40, S.online.has(c.partner.id))}
             <div class="grow"><div class="row between"><b>${esc(c.partner.username)}</b><span class="meta">${c.last_at ? ago(c.last_at) : ''}</span></div>
             <div class="meta clip">${c.last_from_me ? 'You: ' : ''}${esc(c.last_body || 'Say hi!')}</div></div>
@@ -643,6 +654,9 @@
         || '<p class="center muted">No messages yet.</p>';
       box.scrollTop = box.scrollHeight;
       await api.markRead(partner.id); delete S.unread[partner.id]; bus.emit('counts');
+      const activeRow = box.isConnected ? $('.inbox-item.on') : null;
+      activeRow?.classList.remove('unread');
+      activeRow?.querySelector('.count')?.remove();
     };
     const send = () => {
       const v = $('#msg').value.trim();
@@ -1033,7 +1047,7 @@
         </header>
       </div>
       <div id="pb-root"></div>`;
-    window.PatchBook.render($('#pb-root', view), window.UPDATES_HTML || '');
+    window.PatchBook.render($('#pb-root', view), window.UPDATES_HTML || '', { featured: true });
   };
 
   // Owner-only patch notes: every change, in the same format as the patch notes file. The text lives in the

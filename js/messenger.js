@@ -61,7 +61,7 @@ window.Messenger = (() => {
           <div class="cb-friends">${friendRows()}</div>
           <a class="cb-foot" href="#/friends">Manage friends</a>
         </div>
-        <button class="cb-tab" data-toggle-list><i class="dot on"></i> Chat (${onlineFriends.length})${unreadTotal ? `<b class="count">${unreadTotal}</b>` : ''}</button>
+        <button class="cb-tab${unreadTotal ? ' has-unread' : ''}" data-toggle-list><i class="dot on"></i> Chat (${onlineFriends.length})${unreadTotal ? `<b class="count">${unreadTotal}</b>` : ''}</button>
       </div>`;
     windows.forEach((w) => fillWindow(w, true));
   }
@@ -72,7 +72,7 @@ window.Messenger = (() => {
     if (!list.length) return `<p class="cb-empty">${S.friends.length ? 'Nobody found.' : 'No friends yet.<br><a href="#/members">Find people</a> and add them.'}</p>`;
     return list.map((f) => {
       const on = S.online.has(f.profile.id), n = S.unread[f.profile.id];
-      return `<button class="cb-friend ${on ? '' : 'off'}" data-open="${f.profile.id}">${avatar(f.profile, 28, on)}
+      return `<button class="cb-friend ${on ? '' : 'off'}${n ? ' unread' : ''}" data-open="${f.profile.id}">${avatar(f.profile, 28, on)}
         <span class="grow">${esc(f.profile.username)}</span>${n ? `<b class="count">${n}</b>` : ''}</button>`;
     }).join('');
   }
@@ -116,6 +116,7 @@ window.Messenger = (() => {
     const tab = root.querySelector('[data-toggle-list]');
     if (!tab) return;
     const unreadTotal = Object.values(S.unread).reduce((a, b) => a + b, 0);
+    tab.classList.toggle('has-unread', unreadTotal > 0);
     tab.innerHTML = `<i class="dot on"></i> Chat (${S.friends.filter((f) => S.online.has(f.profile.id)).length})${unreadTotal ? `<b class="count">${unreadTotal}</b>` : ''}`;
     const fl = root.querySelector('.cb-friends');
     if (fl) fl.innerHTML = friendRows(root.querySelector('[data-search]')?.value || '');

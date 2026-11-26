@@ -95,7 +95,13 @@ window.makeDemoBackend = () => {
     ['death-veteran', 'Death', 'CinderKnight', 'e8c45c'],
   ];
 
-  function withRankProfiles(data) {
+  function withDemoExamples(data) {
+    if (!data.messages.some((message) => message.id === 90)) {
+      data.messages.push({
+        id: 90, sender_id: 'u-kage', recipient_id: 'u-shadow',
+        body: 'Hey Shadow! The new designs are ready for review.', created_at: ago(25), read_at: null,
+      });
+    }
     const owner = data.users.find((user) => user.id === 'u-shadow');
     if (owner?.game?.donator_rank) {
       owner.game.donator_rank = '';
@@ -128,8 +134,8 @@ window.makeDemoBackend = () => {
   }
 
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch { return null; } };
-  let cache = withRankProfiles(load() || seed());
-  const db = () => (cache = withRankProfiles(load() || cache));
+  let cache = withDemoExamples(load() || seed());
+  const db = () => (cache = withDemoExamples(load() || cache));
   const save = (d) => { cache = d; try { localStorage.setItem(KEY, JSON.stringify(d)); } catch { /* full or blocked */ } };
   const pub = (u) => { if (!u) return null; const { password, email, ...p } = u; return p; };
   const prof = (d, id) => pub(d.users.find((u) => u.id === id));

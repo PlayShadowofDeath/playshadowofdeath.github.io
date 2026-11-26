@@ -959,6 +959,142 @@ body:has(.donation-view) .topbar {
   background: linear-gradient(#09080942, #0a090a 82%, #4b2725), url('../img/cinematic/shadow-knight-citadel.webp') center 30% / cover;
 }
 
+.topbar .header-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 41px;
+  height: 37px;
+  padding: 0;
+  border: 1px solid #634347;
+  border-radius: 4px;
+  background: linear-gradient(#2b1b24, #1a121b);
+  color: #ceb095;
+  transition: border-color .18s ease, color .18s ease, box-shadow .18s ease;
+}
+.topbar .header-icon:is(:hover, :focus-visible) {
+  border-color: #cd9475;
+  color: #ffe4c7;
+  background: linear-gradient(#422632, #241721);
+}
+.nav-glyph { position: relative; display: block; transition: transform .2s ease; }
+.header-icon:is(:hover, :focus-visible) .nav-glyph { transform: translateY(-2px) rotate(-5deg); }
+.glyph-friends { width: 21px; height: 19px; }
+.glyph-friends::before, .glyph-friends::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+}
+.glyph-friends::before { top: 2px; left: 3px; width: 6px; height: 6px; border-radius: 50%; box-shadow: 9px 1px 0 -1px currentColor; }
+.glyph-friends::after { top: 9px; left: 0; width: 12px; height: 8px; border-radius: 8px 8px 2px 2px; box-shadow: 9px 1px 0 -1px currentColor; }
+.glyph-message {
+  width: 21px;
+  height: 15px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+}
+.glyph-message::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+.topbar .header-icon.has-activity {
+  border-color: #b47a58;
+  color: #ffe0aa;
+  background: linear-gradient(#4a2731, #2b1a24);
+  box-shadow: inset 0 0 8px #d2673b52, 0 0 10px #cd6e4059;
+}
+.has-activity .glyph-message::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 7px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #f0785b;
+  box-shadow: 0 0 5px #fa9569;
+}
+.topbar .header-icon .count, .inbox .count, .chatbar .count {
+  background: #793c31;
+  color: #fff0d6;
+  border: 1px solid #f0ab7a;
+}
+.new-message .glyph-message { animation: message-arrival .7s ease-out; }
+@keyframes message-arrival {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  30% { transform: translateY(-4px) rotate(-11deg); }
+  62% { transform: translateY(0) rotate(5deg); }
+}
+
+.wall-sign-in { color: #dfc4c6; }
+.wall-sign-in a { color: #ffd2a8; text-decoration: underline; text-underline-offset: 3px; }
+.inbox-banner { min-height: 88px; }
+.inbox-head, .chatbar :is(.cb-head, .cb-win header, .cb-tab) {
+  background: linear-gradient(105deg, #452532, #281b29);
+  color: #ffe5cc;
+  border-color: #986852;
+}
+.chatbar :is(.cb-main, .cb-win) { border-color: #8b5c50; }
+.chatbar .cb-tab:is(:hover, :focus-visible) { background: linear-gradient(105deg, #5b303d, #392234); }
+.chatbar .cb-tab.has-unread, .chatbar .cb-win.flash header {
+  background: linear-gradient(105deg, #63342c, #36212a);
+  box-shadow: inset 0 0 12px #e0894f45;
+}
+.chatbar .cb-win.flash header { animation: none; }
+.inbox-item.unread, .cb-friend.unread {
+  box-shadow: inset 3px 0 #e1a477;
+  background: linear-gradient(90deg, #59343a, #2c1c28);
+  color: #ffdfbb;
+}
+.inbox-item.unread:is(:hover, :focus-visible), .cb-friend.unread:is(:hover, :focus-visible) { background: #623a42; }
+.inbox-msgs, .chatbar .cb-msgs { background: #171219; }
+.inbox .bubble, .chatbar .cb-msg span { background: #2b202d; }
+.inbox .bubble.me, .chatbar .cb-msg.me span { background: linear-gradient(#68353d, #46242e); }
+
+.pb-feature {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: clamp(16px, 3vw, 30px);
+  border: 1px solid #a87359;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #29151ff7 14%, #321822d9 48%, #21101980),
+    url('../img/cinematic/new-content.webp') right 48% / cover no-repeat #281720;
+  box-shadow: 0 7px 20px #0804098f;
+}
+.pb-feature p { margin: 0 0 5px; color: #efbd9d; font-weight: 700; }
+.pb-feature h2 {
+  margin: 0;
+  color: #ffead0;
+  font: 800 clamp(1.35rem, 3vw, 2rem)/1.2 var(--cinematic-lettering);
+  overflow-wrap: anywhere;
+}
+.pb-feature-copy { min-width: 0; }
+.pb-feature .btn { min-height: 40px; }
+.pb:has(.pb-feature) .pb-sec > h3 { scroll-margin-top: 150px; }
+
+@media (max-width: 540px) {
+  .inbox-head { flex-wrap: wrap; padding-inline: 10px; }
+  .inbox-head .btn { margin-left: 0; }
+  .inbox-list .inbox-item { padding-inline: 9px; }
+  .inbox .bubble { max-width: 88%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topbar .header-icon, .nav-glyph { transition: none; }
+  .header-icon:is(:hover, :focus-visible) .nav-glyph { transform: none; }
+  .new-message .glyph-message { animation: none; }
+}
+
 .donate {
   --hall-frame-cap: clamp(24px, 3.1vw, 44px);
   --hall-frame-rail: clamp(13px, 2vw, 30px);
