@@ -159,7 +159,7 @@
       <section class="hero">
         <div class="hero-inner">
           <p class="hero-kicker">The darkness awaits</p>
-          <h1><img src="img/cinematic/wordmark.webp" alt="Shadow of Death" fetchpriority="high"></h1>
+          <h1><img src="img/cinematic/wordmark-client.png" alt="Shadow of Death" fetchpriority="high"></h1>
           <p class="hero-kicker">Death is only the beginning</p>
           <a class="btn lg hero-play" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">Play now</a>
         </div>
