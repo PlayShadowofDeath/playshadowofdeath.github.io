@@ -273,9 +273,69 @@ main.home-view, main.donation-view {
 
 .feature-links a:is(:hover, :focus-visible) { border-color: #ff9c7c; }
 .feature-links a:is(:hover, :focus-visible) img { transform: scale(1.06); filter: brightness(1.3); }
-.home-details { text-align: center; margin: 18px auto 28px; }
+.home-community {
+  padding: clamp(32px, 5vw, 60px) clamp(10px, 3vw, 38px) 8px;
+  background:
+    linear-gradient(180deg, var(--bg), transparent 140px, #0c090bd9 600px, var(--bg) 880px),
+    linear-gradient(105deg, #210b1096, #160d15bf 58%, #170c13a6),
+    url('../img/cinematic/shadow-knight-citadel.webp') center top / auto clamp(560px, 62vw, 940px) no-repeat;
+}
+
+.home-details { text-align: center; margin: 0 auto 34px; }
 .home-details .server-pill { margin: 14px auto 0; }
-.home-details .hero-stats { margin-top: 16px; }
+.home-details .hero-stats { margin-top: 22px; }
+
+.home-details .hero-stats div {
+  --stat-edge: #a36c4f;
+  --stat-glow: #7d3d29;
+  --stat-dark: #25151a;
+  min-width: min(124px, 42vw);
+  padding: 13px 14px;
+  border: 1px solid var(--stat-edge);
+  border-radius: 4px;
+  background: radial-gradient(ellipse at top, var(--stat-glow), transparent 80%), var(--stat-dark);
+  box-shadow: inset 0 0 0 2px #110b10a8, 0 6px 15px #0503089c;
+}
+
+.home-details .hero-stats div:nth-child(2) {
+  --stat-edge: #ad6160;
+  --stat-glow: #79333f;
+  --stat-dark: #28141f;
+}
+
+.home-details .hero-stats div:nth-child(3) {
+  --stat-edge: #8d719f;
+  --stat-glow: #52345d;
+  --stat-dark: #201625;
+}
+
+.home-details .hero-stats div:has(.green) {
+  --stat-edge: #668e7d;
+  --stat-glow: #244f44;
+  --stat-dark: #132321;
+}
+
+.home-details .hero-stats b { text-shadow: 0 2px 8px #11090b; }
+.home-details .hero-stats b.green { color: #98e9ba; }
+.home-details .hero-stats span { color: #f0d8cf; }
+
+.home-community .panel {
+  border-color: #754d49;
+  background: linear-gradient(135deg, #271721, #1b141c 58%, #151019);
+  box-shadow: inset 0 0 0 2px #140d159c, 0 9px 24px #07040980;
+}
+
+.home-community .panel-head {
+  border-color: #744944;
+  background: linear-gradient(100deg, #48232a, #281922 70%, #20161d);
+}
+
+.home-community .side-col .panel-head {
+  background: linear-gradient(100deg, #3b2928, #231a24);
+}
+
+.home-community .panel-head :is(h2, h3) { color: #ffe2c7; }
+.home-community .panel .meta { color: #c5b0bb; }
 
 body:has(.donation-view) .topbar {
   background: linear-gradient(#09080942, #0a090a 82%, #4b2725), url('../img/cinematic/shadow-knight-citadel.webp') center 30% / cover;

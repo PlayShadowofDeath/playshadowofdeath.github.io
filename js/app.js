@@ -170,6 +170,7 @@
         <a href="#/donate"><img src="img/cinematic/donator-ranks.webp" alt=""><span>Donator Ranks</span></a>
         <a href="#/updates"><img src="img/cinematic/new-content.webp" alt=""><span>New Content</span></a>
       </nav>
+      <div class="home-community">
       <div class="home-details">
           <p>A 718 RuneScape private server. Bosses, raids, custom items and a community that plays together.</p>
           <div class="hero-btns">
@@ -221,6 +222,7 @@
               <div class="mini-body">${fmt(p.body.slice(0, 140))}</div></div></div>`).join('') || '<p class="pad muted">No posts yet.</p>'}
           </div>
         </aside>
+      </div>
       </div>`;
   };
 
