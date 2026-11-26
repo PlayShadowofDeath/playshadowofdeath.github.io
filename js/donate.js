@@ -110,6 +110,7 @@
 
   const rankCards = RANKS.map(([n, d, xp, dr, c], i) => `
     <article class="d-rank" style="--rc:${c}">
+      <span class="rank-smoke" aria-hidden="true"></span>
       <img class="rank-emblem" src="img/cinematic/rank-${n.toLowerCase().replace(/ /g, '-')}-reforged.png" alt="" width="640" height="640" loading="lazy">
       <div class="d-rname">${n}</div>
       <div class="d-amt">$${d.toLocaleString()}</div>
