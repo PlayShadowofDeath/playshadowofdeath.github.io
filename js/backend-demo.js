@@ -146,6 +146,7 @@ window.makeDemoBackend = () => {
 
   const api = {
     mode: 'demo',
+    supportsAvatarIcons: () => true,
 
     async init() { return refreshMe(); },
     me: () => me,
@@ -199,7 +200,7 @@ window.makeDemoBackend = () => {
       if (fields.username && d.users.some((u) => u.id !== me.id && u.username.toLowerCase() === fields.username.toLowerCase()))
         throw new Error('That username is taken.');
       const u = d.users.find((x) => x.id === me.id);
-      ['username', 'bio', 'signature', 'avatar_color'].forEach((k) => { if (k in fields) u[k] = fields[k]; });
+      ['username', 'bio', 'signature', 'avatar_color', 'avatar_icon'].forEach((k) => { if (k in fields) u[k] = fields[k]; });
       save(d); refreshMe();
       return pub(u);
     },

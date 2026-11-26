@@ -1,7 +1,7 @@
 // Shadow of Death website: pages + navigation.
 (async () => {
   const cfg = window.SOD_CONFIG;
-  const { esc, fmt, ago, date, full, badge, donor, serverUp, inGame, played, avatar, userLink, toast, errText } = window.U;
+  const { esc, fmt, ago, date, full, badge, donor, donorArt, serverUp, inGame, played, avatar, avatarIcons, userLink, toast, errText } = window.U;
   const view = document.getElementById('view');
   const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js';
 
@@ -555,7 +555,7 @@
       $('#list').innerHTML = rows.map((p) => `
         <a class="panel member-card realm-panel" href="#/u/${encodeURIComponent(p.username)}">
           ${avatar(p, 56, S.online.has(p.id))}
-          <div><b class="user ${window.U.rank(p).cls}">${esc(p.username)}</b><div>${badge(p) || '<span class="meta">Member</span>'}</div>
+          <div><b class="user ${window.U.rank(p).cls}">${esc(p.username)}</b><div class="member-badges">${badge(p)}${donor(p) || (p.role === 'member' ? '<span class="meta">Member</span>' : '')}</div>
           <div class="meta">Joined ${date(p.created_at)}</div></div></a>`).join('') || '<p class="muted">Nobody found.</p>';
       const pages = Math.ceil(total / 30);
       $('#pg').innerHTML = pages > 1 ? `<nav class="pager">${Array.from({ length: pages }, (_, i) => `<a href="javascript:void 0" data-pg="${i}" class="${i === pageNo ? 'on' : ''}">${i + 1}</a>`).join('')}</nav>` : '';
@@ -753,7 +753,11 @@
   views.settings = async () => {
     if (!S.me) return needLogin();
     setTitle('Settings');
+    const iconsAvailable = api.supportsAvatarIcons();
     const m = S.me;
+    const iconOptions = Object.entries(avatarIcons);
+    if (donorArt(m)) iconOptions.push(['donator', `${m.game.donator_rank} emblem`]);
+    const savedIcon = iconOptions.some(([key]) => key === m.avatar_icon) ? m.avatar_icon : 'initials';
     const colors = ['#b3131b', '#e0561b', '#d4a63a', '#2fb37a', '#2f7bb3', '#6b2fb3', '#b32f8c', '#555555'];
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Settings</div>
@@ -761,7 +765,8 @@
       <div class="cols even">
         <form class="panel pad form" id="prof">
           <h2>Profile</h2>
-          <div class="row">${avatar(m, 64)}<div class="swatches">${colors.map((c) => `<button type="button" data-color="${c}" style="--c:${c}" class="${c === m.avatar_color ? 'on' : ''}"></button>`).join('')}</div></div>
+          <div class="row"><div id="avatar-preview">${avatar(m, 64)}</div><div class="swatches" role="group" aria-label="Profile icon color">${colors.map((c) => `<button type="button" data-color="${c}" style="--c:${c}" class="${c === m.avatar_color ? 'on' : ''}" aria-label="Color ${c}" aria-pressed="${c === m.avatar_color}"></button>`).join('')}</div></div>
+          ${iconsAvailable ? `<label>Profile icon<select id="avatar-icon">${iconOptions.map(([key, label]) => `<option value="${key}"${key === savedIcon ? ' selected' : ''}>${esc(label)}</option>`).join('')}</select></label>` : ''}
           <label>Username<input id="name" maxlength="12" value="${esc(m.username)}"></label>
           <label>About me<textarea id="bio" rows="4" maxlength="500">${esc(m.bio)}</textarea></label>
           <label>Forum signature<textarea id="sig" rows="2" maxlength="200" placeholder="Shown under your forum posts">${esc(m.signature)}</textarea></label>
@@ -793,16 +798,27 @@
         </div>
       </div>`;
     let color = m.avatar_color;
+    const iconPicker = $('#avatar-icon');
+    const previewAvatar = () => {
+      $('#avatar-preview').innerHTML = avatar({ ...m, avatar_color: color, avatar_icon: iconPicker?.value ?? savedIcon }, 64);
+    };
+    iconPicker?.addEventListener('change', previewAvatar);
     $$('[data-color]').forEach((b) => b.onclick = () => {
-      color = b.dataset.color; $$('[data-color]').forEach((x) => x.classList.toggle('on', x === b));
-      $('#prof .avatar').style.setProperty('--c', color);
+      color = b.dataset.color;
+      $$('[data-color]').forEach((x) => {
+        x.classList.toggle('on', x === b);
+        x.setAttribute('aria-pressed', String(x === b));
+      });
+      previewAvatar();
     });
     $('#prof').onsubmit = (e) => {
       e.preventDefault();
       const username = $('#name').value.trim();
       if (!NAME_RE.test(username)) return toast('Usernames are 3–12 letters, numbers, spaces, - or _.', 'error');
       busy(e.submitter, async () => {
-        await api.updateProfile({ username, bio: $('#bio').value.trim(), signature: $('#sig').value.trim(), avatar_color: color });
+        const fields = { username, bio: $('#bio').value.trim(), signature: $('#sig').value.trim(), avatar_color: color };
+        if (iconPicker) fields.avatar_icon = iconPicker.value;
+        await api.updateProfile(fields);
         S.me = api.me(); renderHeader(); toast('Profile saved.', 'ok');
       });
     };

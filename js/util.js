@@ -54,14 +54,36 @@ window.U = (() => {
   const rank = (p) => RANKS[p?.role] || RANKS.member;
   const badge = (p) => p && p.role !== 'member' ? `<span class="rank ${rank(p).cls}">${rank(p).label}</span>` : '';
 
+  const avatarIcons = Object.freeze({
+    initials: 'Initials',
+    knight: 'Shadow Knight',
+    dragon: 'Dragon',
+    citadel: 'Citadel',
+    portal: 'Crimson Portal',
+  });
+  const avatarArt = {
+    knight: 'shadow-knight-mobile.webp',
+    dragon: 'bossing.webp',
+    citadel: 'progression.webp',
+    portal: 'new-content.webp',
+  };
+  const donorRanks = new Set(['lost-soul', 'wraith', 'phantom', 'shade', 'revenant', 'reaper', 'death', 'eternal', 'oblivion']);
+  const donorArt = (p) => {
+    const key = p?.game?.donator_rank?.trim().toLowerCase().replace(/\s+/g, '-');
+    return donorRanks.has(key) ? `rank-${key}-reforged.png` : '';
+  };
+
   function avatar(p, size = 40, online) {
     const name = p?.username || '?';
-    return `<span class="avatar" style="--s:${size}px;--c:${esc(p?.avatar_color || '#555')}">${esc(name[0].toUpperCase())}${
+    const icon = p?.avatar_icon;
+    const art = icon === 'donator' ? donorArt(p) : Object.hasOwn(avatarArt, icon) ? avatarArt[icon] : '';
+    const face = art ? `<img class="avatar-icon avatar-icon-${icon}" src="img/cinematic/${art}" alt="">` : esc(name[0].toUpperCase());
+    return `<span class="avatar" style="--s:${size}px;--c:${esc(p?.avatar_color || '#555')}">${face}${
       online === undefined ? '' : `<i class="dot ${online ? 'on' : ''}" data-dot="${esc(p?.id || '')}"></i>`}</span>`;
   }
   // Donator rank from the game ("Death", "Reaper", ...) in that rank's in-game colour.
   const donor = (p) => p?.game?.donator_rank
-    ? `<span class="donor" style="--d:#${esc(/^[0-9a-f]{6}$/i.test(p.game.donator_color) ? p.game.donator_color : 'd4a63a')}">${esc(p.game.donator_rank)}</span>` : '';
+    ? `<span class="donor" style="--d:#${esc(/^[0-9a-f]{6}$/i.test(p.game.donator_color) ? p.game.donator_color : 'd4a63a')}">${donorArt(p) ? `<img src="img/cinematic/${donorArt(p)}" alt="">` : ''}<span>${esc(p.game.donator_rank)}</span></span>` : '';
   // The game server updates this every minute, so an old "online" means the server is down.
   const serverUp = (s) => !!s && s.online && Date.now() - new Date(s.updated_at).getTime() < 3 * 60000;
   const inGame = (p, s) => !!p?.game?.online && serverUp(s);
@@ -81,5 +103,5 @@ window.U = (() => {
 
   const errText = (e) => (e && (e.message || e.error_description)) || String(e);
 
-  return { esc, fmt, ago, date, time, full, rank, badge, donor, serverUp, inGame, played, avatar, userLink, toast, errText };
+  return { esc, fmt, ago, date, time, full, rank, badge, donor, donorArt, serverUp, inGame, played, avatar, avatarIcons, userLink, toast, errText };
 })();

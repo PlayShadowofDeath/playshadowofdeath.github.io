@@ -774,6 +774,28 @@ main.home-view, main.donation-view {
 }
 .member-search .search { width: 100%; border-color: #a57360; background: #1c111ce8; }
 .member-card.realm-panel:is(:hover, :focus-visible) { border-color: #d09172; }
+.avatar .avatar-icon {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.avatar .avatar-icon-knight { object-position: 44% 15%; }
+.avatar .avatar-icon-dragon { object-position: 72% center; }
+.avatar .avatar-icon-citadel { object-position: 76% center; }
+.avatar .avatar-icon-portal { object-position: 66% center; }
+.avatar .avatar-icon-donator { object-fit: contain; background: #1f151d; }
+.donor {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+}
+.donor img { width: 20px; height: 20px; object-fit: contain; flex: none; }
+.member-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 3px 0; }
 .profile-cover {
   background:
     linear-gradient(0deg, var(--bg), transparent 66%),
