@@ -9,6 +9,7 @@
   --red2: #ff796c;
   --radius: 3px;
   --cinematic-lettering: "Playfair Display", Georgia, serif;
+  --wordmark-tone: brightness(1.22) saturate(1.08);
   --steel: linear-gradient(162deg, #281b1c 2%, #9a746a 11%, #2c2222 25%, #59423d 47%, #261719 68%, #a96453 85%, #2c1b1c);
   --bevel: polygon(13px 0, calc(100% - 13px) 0, 100% 13px, 100% calc(100% - 13px), calc(100% - 13px) 100%, 13px 100%, 0 calc(100% - 13px), 0 13px);
 }
@@ -70,7 +71,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   width: 82%;
   height: auto;
   margin-top: -22%;
-  filter: drop-shadow(0 6px 8px #0a0508);
+  filter: var(--wordmark-tone) drop-shadow(0 6px 8px #0a0508);
 }
 
 .footer-nav {
@@ -154,7 +155,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   width: 100%;
   height: 74px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px #080506);
+  filter: var(--wordmark-tone) drop-shadow(0 2px 4px #080506);
 }
 
 .topbar #nav {
@@ -299,6 +300,7 @@ main.home-view, main.donation-view {
   width: clamp(240px, 29vw, 455px);
   height: auto;
   margin: -10px auto;
+  filter: var(--wordmark-tone) drop-shadow(0 3px 3px #000) drop-shadow(0 0 5px #8d110c);
   animation: crimson-glow 4.8s ease-in-out infinite alternate;
 }
 
@@ -331,8 +333,8 @@ main.home-view, main.donation-view {
 }
 
 @keyframes crimson-glow {
-  from { filter: drop-shadow(0 3px 3px #000) drop-shadow(0 0 5px #8d110c); }
-  to { filter: drop-shadow(0 3px 3px #000) drop-shadow(0 0 15px #ee221997); }
+  from { filter: var(--wordmark-tone) drop-shadow(0 3px 3px #000) drop-shadow(0 0 5px #8d110c); }
+  to { filter: var(--wordmark-tone) drop-shadow(0 3px 3px #000) drop-shadow(0 0 10px #c3231a80); }
 }
 
 .feature-links {
