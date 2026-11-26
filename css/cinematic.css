@@ -437,8 +437,33 @@ main.home-view, main.donation-view {
 }
 
 .home-community .side-col .panel-head {
+  min-height: 56px;
   border-color: #573b41;
-  background: linear-gradient(100deg, #302127, #211921);
+  background:
+    linear-gradient(90deg, #281a23 0%, #281a23f5 41%, transparent 88%),
+    linear-gradient(var(--sidebar-tint), var(--sidebar-tint)),
+    var(--sidebar-art) var(--sidebar-position) / var(--sidebar-size) no-repeat #211921;
+}
+
+.home-online {
+  --sidebar-art: url('../img/cinematic/progression.webp');
+  --sidebar-position: right 31%;
+  --sidebar-size: 91% auto;
+  --sidebar-tint: #16352f9e;
+}
+
+.home-newest {
+  --sidebar-art: url('../img/cinematic/donation-hall.webp');
+  --sidebar-position: right 53%;
+  --sidebar-size: 155% auto;
+  --sidebar-tint: #4e2a2066;
+}
+
+.home-posts {
+  --sidebar-art: url('../img/cinematic/donation-hall.webp');
+  --sidebar-position: right 22%;
+  --sidebar-size: 155% auto;
+  --sidebar-tint: #50202a68;
 }
 
 .home-community .panel-head :is(h2, h3) { color: #ffe2c7; }
@@ -451,6 +476,16 @@ main.home-view, main.donation-view {
   font: 700 1.06rem/1.25 var(--cinematic-lettering);
   text-shadow: 0 0 10px #e992654f;
 }
+
+.home-posts .panel-head a {
+  flex: none;
+  padding: 3px 6px;
+  border-radius: 3px;
+  background: #271820e8;
+  color: #ffe1c1;
+}
+
+.home-posts .panel-head a:hover { text-decoration: underline; }
 
 .home-community .side-col [data-online-count] {
   min-width: 1.7em;
