@@ -315,7 +315,7 @@ main.home-view, main.donation-view {
   font: 800 1.3rem Cinzel, Georgia, serif;
 }
 
-.hero .hero-play, .topbar #nav a.play, .footer-actions #footer-play {
+.hero .hero-play, .topbar #nav a.play, .footer-actions #footer-play, .client-download.btn {
   --play-light: #67132238;
   border: 1px solid #a77a65;
   border-radius: 3px;
@@ -332,16 +332,103 @@ main.home-view, main.donation-view {
 
 .hero .hero-play:is(:hover, :focus-visible),
 .topbar #nav a.play:is(:hover, :focus-visible),
-.footer-actions #footer-play:is(:hover, :focus-visible) {
+.footer-actions #footer-play:is(:hover, :focus-visible),
+.client-download.btn:is(:hover, :focus-visible) {
   --play-light: #bd283848;
   border-color: #e1a588;
   box-shadow: inset 0 0 0 2px #291118, inset 0 0 0 3px #b98169a3,
     inset 0 -6px 8px #08050999, 0 3px 0 #15080b, 0 0 14px #a3213a66;
 }
 
-.hero .hero-play:active, .topbar #nav a.play:active, .footer-actions #footer-play:active {
+.hero .hero-play:active, .topbar #nav a.play:active, .footer-actions #footer-play:active, .client-download.btn:active {
   translate: 0 2px;
   box-shadow: inset 0 2px 8px #22040dcc, 0 1px 0 #15080b;
+}
+
+.client-page {
+  padding: clamp(24px, 5vw, 55px) clamp(12px, 4vw, 44px) 32px;
+  background: linear-gradient(180deg, #160a132b, #0c080e 82%),
+    url('../img/cinematic/donation-hall.webp') center top / cover no-repeat;
+}
+.client-heading { text-align: center; margin-bottom: 24px; }
+.client-heading img {
+  display: block;
+  width: min(390px, 100%);
+  height: auto;
+  margin: 0 auto 9px;
+  filter: var(--wordmark-tone) drop-shadow(0 4px 7px #10050a);
+}
+.client-heading h1 {
+  margin: 0;
+  color: #ffead5;
+  font: 800 clamp(1.8rem, 4.5vw, 3rem)/1.15 var(--cinematic-lettering);
+}
+.client-platforms {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 740px;
+  margin: 0 auto;
+}
+.client-platform {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 8px;
+  min-height: 162px;
+  padding: 26px clamp(14px, 3.5vw, 30px);
+  text-align: center;
+}
+.client-platform::before, .client-platform::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.client-platform::before {
+  inset: 12px 10px;
+  border-radius: 7px;
+  background: radial-gradient(ellipse at top, #462430, #181019 80%);
+}
+.client-platform::after {
+  inset: 0;
+  border: 1px solid transparent;
+  border-image: url('../img/cinematic/rank-frame.webp') 88 56 / 23px 18px round;
+  transition: filter .22s ease;
+}
+.client-platform:is(:hover, :focus-within)::after {
+  filter: brightness(1.5) drop-shadow(0 0 5px #df806e);
+}
+.client-platform:focus-visible { outline: 2px solid #e4a183; outline-offset: 2px; }
+.client-platform h2 {
+  margin: 0;
+  color: #ffe1c6;
+  font: 800 1.4rem/1.15 var(--cinematic-lettering);
+}
+.client-platform p { margin: 0; color: #e0c7c8; }
+.client-mobile { grid-column: 1 / -1; justify-self: center; width: min(100%, 363px); }
+.client-download.btn { display: grid; gap: 2px; padding: 8px 13px; font-size: .82rem; }
+.client-download span { font-size: .73rem; letter-spacing: normal; text-transform: none; }
+.client-platform .client-soon {
+  color: #cbb0b9;
+  padding: 3px 8px;
+  border: 1px solid #654452;
+  border-radius: 4px;
+  transition: color .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.client-platform:is(:hover, :focus-within) .client-soon {
+  color: #ffe4c6;
+  border-color: #d48b75;
+  box-shadow: 0 0 12px #d578655f;
+}
+@media (max-width: 540px) {
+  .client-platforms { grid-template-columns: minmax(0, 1fr); }
+  .client-mobile { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .client-platform::after, .client-platform .client-soon { transition: none; }
 }
 
 @keyframes fog-drift {

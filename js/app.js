@@ -107,7 +107,7 @@
       ['#/updates', 'New Updates', /^\/updates/], ['#/rules', 'Rules', /^\/rules$/]];
     if (S.me?.role === 'owner') nav.push(['#/patches', 'Patches', /^\/patches/]);
     document.getElementById('nav').innerHTML = nav.map(([h, t, re]) => `<a href="${h}" class="${re.test(path) ? 'on' : ''}">${t}</a>`).join('')
-      + `<a href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}" class="play">Play now</a>`;
+      + `<a href="#/play" class="play${path === '/play' ? ' on' : ''}">Play now</a>`;
     const box = document.getElementById('userbox');
     if (!S.me) {
       previousUnread = 0;
@@ -172,7 +172,7 @@
           <p class="hero-kicker">The darkness awaits</p>
           <h1><img src="img/cinematic/wordmark-client.png" alt="Shadow of Death" fetchpriority="high"></h1>
           <p class="hero-kicker">Death is only the beginning</p>
-          <a class="btn lg hero-play" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">Play now</a>
+          <a class="btn lg hero-play" href="#/play">Play now</a>
         </div>
       </section>
       <nav class="feature-links" aria-label="Explore Shadow of Death">
@@ -1110,8 +1110,36 @@
   }
 
   // ---------- router ----------
+  views.play = () => {
+    setTitle('Get the Client');
+    view.innerHTML = `
+      <div class="crumbs"><a href="#/">Home</a> › Get the Client</div>
+      <section class="client-page">
+        <header class="client-heading">
+          <img src="img/cinematic/wordmark-client.png" alt="Shadow of Death" width="1774" height="887">
+          <h1>Get the Client</h1>
+        </header>
+        <div class="client-platforms">
+          <article class="client-platform client-windows">
+            <h2>Windows</h2>
+            <p>After downloading, open the .exe to launch the game.</p>
+            <a class="btn client-download" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">Download for Windows <span>.exe · 70 KB</span></a>
+          </article>
+          <article class="client-platform client-mac" tabindex="0">
+            <h2>Mac</h2>
+            <p class="client-soon">Coming soon</p>
+          </article>
+          <article class="client-platform client-mobile" tabindex="0">
+            <h2>Mobile</h2>
+            <p class="client-soon">Coming soon</p>
+          </article>
+        </div>
+      </section>`;
+  };
+
   const routes = [
     [/^\/?$/, views.home],
+    [/^\/play$/, views.play],
     [/^\/forums$/, views.forums],
     [/^\/forum\/(\d+)(?:\/(\d+))?$/, views.forum],
     [/^\/thread\/(\d+)(?:\/(\d+|last))?$/, views.thread],
@@ -1214,9 +1242,6 @@
     toast('Could not reach the database: ' + errText(e), 'error');
   }
   document.getElementById('year').textContent = new Date().getFullYear();
-  const footerPlay = document.getElementById('footer-play');
-  footerPlay.href = cfg.downloadUrl;
-  footerPlay.download = cfg.downloadName;
   window.Messenger.init({ api, S, bus, go });
   sessionFor = undefined;
   await syncSession();
