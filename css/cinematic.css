@@ -733,7 +733,7 @@ body:has(.donation-view) .topbar {
   align-items: center;
   gap: 5px;
   min-width: 0;
-  padding: 16px 12px 20px;
+  padding: clamp(30px, 2.8vw, 42px) 12px clamp(48px, 4.3vw, 64px);
   border: 0;
   background: radial-gradient(ellipse at 50% 35%, color-mix(in srgb, var(--rc) 18%, #130b0e), transparent 61%),
     linear-gradient(#1c1213, #0c0809 58%, #281012);
@@ -753,13 +753,15 @@ body:has(.donation-view) .topbar {
   filter: brightness(1.5) drop-shadow(0 0 5px var(--rc));
 }
 
+.donate .d-rank > * { position: relative; }
+
 .rank-emblem {
   display: block;
   width: 100%;
   height: auto;
   max-width: 240px;
+  aspect-ratio: 1;
   object-fit: contain;
-  mix-blend-mode: screen;
 }
 
 .donate .d-rname {
@@ -770,7 +772,33 @@ body:has(.donation-view) .topbar {
 .donate .d-amt { font: 700 1.25rem Cinzel, Georgia, serif; }
 .donate .d-boost { font-size: .86rem; }
 .donate .d-tag { position: static; }
-.donate .d-rank .btn { margin-top: auto; font: 700 .78rem Cinzel, Georgia, serif; text-transform: uppercase; }
+.donate .rank-perks {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  max-width: 100%;
+  margin-top: auto;
+  padding: 4px 10px;
+  border: 1px solid #9a6257;
+  border-radius: 4px;
+  background: linear-gradient(#371c23, #221216);
+  color: #ffe4cd;
+  font: 700 .82rem/1.2 var(--cinematic-lettering);
+  transition: background-color .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.donate .rank-perks span { color: var(--rc); }
+
+.donate .d-rank:is(:hover, :focus-within) .rank-perks {
+  border-color: color-mix(in srgb, var(--rc), #ca8d77 45%);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--rc) 35%, transparent);
+}
+
+.donate .rank-perks:is(:hover, :focus-visible) {
+  background: linear-gradient(#602e39, #351920);
+  color: #fff5e8;
+}
 .donate .d-rank .d-coins { margin-bottom: 6px; }
 
 @media (max-width: 1050px) {
@@ -801,7 +829,7 @@ body:has(.donation-view) .topbar {
 
 @media (prefers-reduced-motion: reduce) {
   .hero::before, .hero::after, .hero h1 img { animation: none; }
-  .feature-links img, .donate .d-rank::before { transition: none; }
+  .feature-links img, .donate .d-rank::before, .donate .rank-perks { transition: none; }
 }
 
 @media (min-width: 861px) and (max-width: 1050px) {

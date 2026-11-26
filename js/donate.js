@@ -110,13 +110,13 @@
 
   const rankCards = RANKS.map(([n, d, xp, dr, c], i) => `
     <article class="d-rank" style="--rc:${c}">
-      <img class="rank-emblem" src="img/cinematic/rank-${n.toLowerCase().replace(/ /g, '-')}.webp" alt="" width="320" height="320">
+      <img class="rank-emblem" src="img/cinematic/rank-${n.toLowerCase().replace(/ /g, '-')}-reforged.png" alt="" width="640" height="640" loading="lazy">
       <div class="d-rname">${n}</div>
       <div class="d-amt">$${d.toLocaleString()}</div>
       <div class="d-boost">+${xp}% XP · +${dr}% drops</div>
       <div class="d-coins">${coins(d * COINS_PER_DOLLAR)} coins in bonds</div>
       ${i >= 7 ? '<div class="d-tag">Perks only</div>' : ''}
-      <a class="btn sm" href="#d-perks">View perks</a>
+      <a class="rank-perks" href="#d-perks">View perks <span aria-hidden="true">↓</span></a>
     </article>`).join('');
 
   const head = '<tr><th>Perk</th>' + RANKS.map(([n, , , , c]) => `<th class="d-c" style="color:${c}" title="${n}">${n}</th>`).join('') + '</tr>';
