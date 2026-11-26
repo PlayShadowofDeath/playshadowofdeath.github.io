@@ -22,6 +22,72 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   outline-offset: 3px;
 }
 
+.footer {
+  position: relative;
+  border-top: 1px solid #956251;
+  background:
+    radial-gradient(ellipse at 24% 0%, #772a2b55, transparent 62%),
+    linear-gradient(160deg, #23171c, #110d12 70%);
+  padding: 34px 0 60px;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 3px 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b78461a0 25%, #693d42 62%, transparent);
+}
+
+.footer .footer-inner {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  align-items: start;
+  gap: clamp(24px, 5vw, 64px);
+}
+
+.footer-brand {
+  display: grid;
+  justify-items: center;
+  justify-self: start;
+  width: min(100%, 230px);
+  gap: 9px;
+}
+
+.footer-knight {
+  width: 112px;
+  aspect-ratio: 1;
+  border: 2px solid #c18e69;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 38%, #110a12b0),
+    url('../img/cinematic/shadow-knight-citadel.webp') 22% 8% / 325% auto no-repeat;
+  box-shadow: 0 0 0 3px #241016, 0 0 0 4px #794b45, 0 0 26px #b941416e;
+}
+
+.footer-brand img { display: block; width: 100%; height: auto; }
+
+.footer-nav { display: grid; justify-items: start; gap: 8px; }
+.footer-nav h2 {
+  margin: 0 0 6px;
+  color: #ffe4cb;
+  font: 700 1.15rem/1.2 var(--cinematic-lettering);
+}
+.footer-nav a { color: #e3ccd0; }
+.footer-nav a:hover { color: #ffcc9e; text-decoration: underline; }
+
+.footer-bottom {
+  margin-top: 22px;
+  padding-top: 13px;
+  border-top: 1px solid #604049;
+  color: #cbb4bb;
+}
+
+@media (max-width: 600px) {
+  .footer .footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-brand { grid-column: 1 / -1; justify-self: center; }
+}
+
 .topbar {
   background: linear-gradient(#2b2121 0%, #080708 12%, #151011 82%, #3f2825);
   border-bottom: 2px solid #6c4b43;
