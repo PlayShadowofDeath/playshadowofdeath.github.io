@@ -329,11 +329,77 @@ main.home-view, main.donation-view {
 }
 
 .home-community .side-col .panel-head {
-  background: linear-gradient(100deg, #3b2928, #231a24);
+  border-color: #573b41;
+  background: linear-gradient(100deg, #302127, #211921);
 }
 
 .home-community .panel-head :is(h2, h3) { color: #ffe2c7; }
 .home-community .panel .meta { color: #c5b0bb; }
+
+.home-community .side-col .panel { border-color: #573b41; }
+.home-community .online-list .dot.on { box-shadow: 0 0 7px #81d4a898; }
+
+.home-news .news { padding: 20px clamp(16px, 2vw, 26px); }
+.home-news .news-body { margin: 11px 0; }
+.home-news .more { color: #ffd5a5; }
+.home-news .more:hover { text-decoration: underline; }
+
+.home-forum-activity .panel-head {
+  box-shadow: inset 0 2px #b67d56;
+}
+
+.home-forum-activity .tbl tr:is(:hover, :focus-within) td {
+  background: #b1765220;
+}
+
+.home-forum-activity tr:is(:hover, :focus-within) .t-title { color: #ffe2bf; }
+.home-forum-activity .t-title:hover { text-decoration: underline; }
+
+.thread-mark {
+  display: inline-block;
+  position: relative;
+  width: 15px;
+  height: 15px;
+  color: #cf9b71;
+  vertical-align: middle;
+}
+
+.thread-mark.discussion {
+  height: 11px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+}
+
+.thread-mark.discussion::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 3px;
+  border: 2px solid transparent;
+  border-left-color: currentColor;
+}
+
+.thread-mark.pin {
+  background: currentColor;
+  clip-path: polygon(25% 4%, 75% 4%, 75% 19%, 65% 19%, 65% 45%, 85% 65%, 56% 65%, 50% 100%, 44% 65%, 15% 65%, 35% 45%, 35% 19%, 25% 19%);
+}
+
+.thread-mark.lock::before,
+.thread-mark.lock::after {
+  content: "";
+  position: absolute;
+  border: 1px solid currentColor;
+}
+
+.thread-mark.lock::before {
+  inset: 0 4px 7px;
+  border-radius: 5px 5px 0 0;
+}
+
+.thread-mark.lock::after {
+  inset: 6px 1px 0;
+  border-radius: 2px;
+}
 
 body:has(.donation-view) .topbar {
   background: linear-gradient(#09080942, #0a090a 82%, #4b2725), url('../img/cinematic/shadow-knight-citadel.webp') center 30% / cover;

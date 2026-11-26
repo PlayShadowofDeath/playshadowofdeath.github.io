@@ -189,7 +189,7 @@
       </div>
       <div class="cols">
         <div class="main-col">
-          <div class="panel">
+          <div class="panel home-news">
             <div class="panel-head"><h2>Latest news</h2>${news ? `<a href="#/forum/${news.id}">All news →</a>` : ''}</div>
             ${newsThreads.length ? newsThreads.map((t, i) => `
               <article class="news">
@@ -199,10 +199,14 @@
                 <a href="#/thread/${t.id}" class="more">Read more →</a>
               </article>`).join('') : '<p class="pad muted">No news yet.</p>'}
           </div>
-          <div class="panel">
+          <div class="panel home-forum-activity">
             <div class="panel-head"><h2>Recent forum activity</h2><a href="#/forums">Forums →</a></div>
             <table class="tbl">${recent.map((t) => `
-              <tr><td class="ic">${t.locked ? '🔒' : t.pinned ? '📌' : '💬'}</td>
+              <tr><td class="ic">${t.locked
+                ? '<span class="thread-mark lock" role="img" aria-label="Locked" title="Locked"></span>'
+                : t.pinned
+                  ? '<span class="thread-mark pin" role="img" aria-label="Pinned" title="Pinned"></span>'
+                  : '<span class="thread-mark discussion" aria-hidden="true"></span>'}</td>
                 <td><a href="#/thread/${t.id}" class="t-title">${esc(t.title)}</a>
                   <div class="meta">in <a href="#/forum/${t.category?.id}">${esc(t.category?.name || '')}</a> · by ${userLink(t.author)}</div></td>
                 <td class="right meta nowrap">${ago(t.last_post_at)}<br>by ${userLink(t.last_poster)}</td></tr>`).join('') || '<tr><td class="pad muted">No threads yet.</td></tr>'}
