@@ -631,7 +631,9 @@
     if (S.me) return go('#/');
     setTitle('Log in');
     view.innerHTML = `
-      <div class="auth panel">
+      <div class="login-layout">
+        <div class="login-art" aria-hidden="true"></div>
+        <div class="auth panel">
         <h1>Welcome back</h1>
         <p class="muted">Log in to post, add friends and chat.</p>
         ${api.mode === 'demo' ? '<div class="note">Demo mode: log in as <b>Shadow</b> (owner) or <b>Kagemaru</b> (admin), password <b>demo123</b>.</div>' : ''}
@@ -641,6 +643,7 @@
           <button class="btn block">Log in</button>
         </form>
         <p class="center meta"><a href="#/forgot">Forgot password?</a> · New here? <a href="#/register">Create an account</a></p>
+        </div>
       </div>`;
     $('#f').onsubmit = (e) => {
       e.preventDefault();
@@ -903,7 +906,7 @@
       <div class="crumbs"><a href="#/">Home</a> › New Updates</div>
       <div class="guide">
         <header class="g-hero">
-          <div class="skull">☠</div>
+          <img class="updates-crest" src="img/cinematic/rank-death.webp" alt="" width="104" height="104">
           <h1>New Updates</h1>
           <p>The biggest additions and improvements to Shadow of Death, newest first. Pick an update, filter by type or search.</p>
         </header>

@@ -8,6 +8,7 @@
   --gold-hi: #f7e3cf;
   --red2: #ff796c;
   --radius: 3px;
+  --cinematic-lettering: "Playfair Display", Georgia, serif;
   --steel: linear-gradient(162deg, #281b1c 2%, #9a746a 11%, #2c2222 25%, #59423d 47%, #261719 68%, #a96453 85%, #2c1b1c);
   --bevel: polygon(13px 0, calc(100% - 13px) 0, 100% 13px, 100% calc(100% - 13px), calc(100% - 13px) 100%, 13px 100%, 0 calc(100% - 13px), 0 13px);
 }
@@ -53,10 +54,65 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   justify-content: center;
 }
 
-.topbar #nav a {
-  font: 700 .82rem Cinzel, Georgia, serif;
+.topbar #nav a, .topbar #userbox a.btn {
+  font: 700 .94rem/1.25 var(--cinematic-lettering);
+  letter-spacing: .015em;
   color: #ebd6c5;
+}
+
+.topbar #nav a {
   border-bottom: 1px solid transparent;
+}
+
+.updates-crest {
+  display: block;
+  width: 104px;
+  height: 104px;
+  margin: 0 auto 10px;
+  object-fit: contain;
+  mask-image: radial-gradient(ellipse 74% 72% at 50% 43%, #000 50%, transparent 91%);
+  filter: drop-shadow(0 0 9px #ce4b39);
+}
+
+.login-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  max-width: 1020px;
+  margin: clamp(24px, 5vw, 64px) auto;
+  border: 1px solid #6c4b43;
+  background: #111011;
+  box-shadow: 0 16px 48px #0009;
+}
+
+.login-art {
+  min-height: 460px;
+  background: linear-gradient(270deg, #111011, transparent 45%),
+    url('../img/cinematic/shadow-knight-mobile.webp') center 38% / cover no-repeat;
+}
+
+.login-layout .auth {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(20px, 4vw, 46px);
+  align-self: center;
+  border: 0;
+  box-shadow: none;
+}
+
+.login-layout h1 {
+  font: 800 clamp(1.85rem, 4vw, 2.6rem)/1.15 var(--cinematic-lettering);
+  color: var(--gold-hi);
+}
+
+@media (max-width: 700px) {
+  .login-layout { grid-template-columns: minmax(0, 1fr); }
+  .login-art {
+    min-height: clamp(170px, 49vw, 265px);
+    background-image: linear-gradient(0deg, #111011, transparent 55%),
+      url('../img/cinematic/shadow-knight-mobile.webp');
+    background-position: center 32%;
+  }
 }
 
 .topbar #nav a.on, .topbar #nav a:hover {
