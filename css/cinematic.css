@@ -423,6 +423,20 @@ main.home-view, main.donation-view {
   border-color: #d48b75;
   box-shadow: 0 0 12px #d578655f;
 }
+.client-install {
+  max-width: 740px;
+  margin: 20px auto 0;
+}
+.client-install .panel-head {
+  background: linear-gradient(90deg, #47232c, #311d28b8),
+    url('../img/cinematic/donation-hall.webp') right 47% / cover no-repeat;
+}
+.client-install .panel-head h2 {
+  color: #ffe3c8;
+  font: 800 1.2rem/1.25 var(--cinematic-lettering);
+}
+.client-install-body { padding: 8px clamp(12px, 3vw, 20px) 14px; }
+.client-install-body a { overflow-wrap: anywhere; }
 @media (max-width: 540px) {
   .client-platforms { grid-template-columns: minmax(0, 1fr); }
   .client-mobile { width: 100%; }

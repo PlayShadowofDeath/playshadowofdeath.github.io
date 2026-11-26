@@ -10,9 +10,7 @@ window.SOD_CONFIG = {
   supabaseAnonKey: 'sb_publishable_p1zRPQ7TLPsuqWabEB5c8w_sVW51rr7',   // the PUBLIC "anon" key only. NEVER the service_role key.
 
   siteName: 'Shadow of Death',
-  // The Play buttons download this file: the small auto-updating launcher
-  // that fetches its own Java (a copy of Launcher\Shadow of Death (No Java).exe).
-  downloadUrl: 'download/Shadow-of-Death.exe',
-  downloadName: 'Shadow of Death.exe',
+  // Windows installer with Java bundled, from the latest game release.
+  downloadUrl: 'https://github.com/tjsmith95/Shadow-of-Death/releases/latest/download/Shadow.of.Death.Final.Installer.%2B.Java.exe',
   discordUrl: '',        // e.g. 'https://discord.gg/xxxx' (leave empty to hide)
 };

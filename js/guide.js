@@ -21,12 +21,7 @@ window.GUIDE_TOC = `  <a href="#start">1. Getting in</a>
   <a href="#commands">19. Commands</a>
   <a href="#tips">20. Tips &amp; known issues</a>
 `;
-window.GUIDE_HTML = `
-<!-- 1 -->
-<section class="ch" id="start">
-  <h2><span class="num">1</span>Getting in</h2>
-  <div class="card">
-    <h3>Download &amp; install</h3>
+window.CLIENT_INSTALL_STEPS = `
     <ol class="steps">
       <li>Download the installer: <a href="https://github.com/tjsmith95/Shadow-of-Death/releases/latest">github.com/tjsmith95/Shadow-of-Death/releases/latest</a>. Grab the <b>Shadow of Death Final Installer + Java</b> .exe. Java comes built in, so you don't need to install anything else.</li>
       <li>Run it. You get a desktop shortcut and a Start menu entry, with no admin prompt.</li>
@@ -34,6 +29,14 @@ window.GUIDE_HTML = `
       <li>Press <b>PLAY</b>.</li>
     </ol>
     <div class="tip"><b>Black screen when you maximise?</b> Open the launcher's <b>Settings</b> and turn on <b>safe graphics</b>.</div>
+`;
+window.GUIDE_HTML = `
+<!-- 1 -->
+<section class="ch" id="start">
+  <h2><span class="num">1</span>Getting in</h2>
+  <div class="card">
+    <h3>Download &amp; install</h3>
+    ${window.CLIENT_INSTALL_STEPS}
   </div>
   <div class="card">
     <h3>Making your account</h3>
