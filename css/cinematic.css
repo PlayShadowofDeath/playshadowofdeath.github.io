@@ -26,7 +26,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   position: relative;
   border-top: 1px solid #956251;
   background:
-    radial-gradient(ellipse at 26% 39%, #6d272a72, transparent 53%),
+    radial-gradient(ellipse at 50% 39%, #6d272a72, transparent 56%),
     linear-gradient(160deg, #24151d, #100c11 72%);
   padding: clamp(16px, 2.5vw, 30px) 0 44px;
 }
@@ -41,12 +41,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 
 .footer .footer-inner {
   display: grid;
-  grid-template-columns: minmax(0, 1.16fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-areas: "game brand community";
   align-items: center;
-  gap: clamp(20px, 4vw, 56px);
+  gap: clamp(16px, 3vw, 42px);
 }
 
 .footer-brand {
+  grid-area: brand;
   display: grid;
   justify-items: center;
   justify-self: center;
@@ -73,16 +75,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 
 .footer-nav {
   display: grid;
-  align-self: start;
-  margin-top: clamp(30px, 6vw, 76px);
-  gap: 19px;
+  gap: 14px;
 }
-.footer-actions, .footer-directory {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 clamp(15px, 3vw, 34px);
-}
-.footer-actions { gap: 10px; }
+.footer-game { grid-area: game; }
+.footer-community { grid-area: community; }
+.footer-directory { display: grid; }
 .footer-actions a {
   display: flex;
   justify-content: space-between;
@@ -96,7 +93,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   background: linear-gradient(110deg, #532630, #281822);
   font: 700 clamp(1rem, 2vw, 1.27rem)/1.2 var(--cinematic-lettering);
 }
-.footer-actions a:first-child {
+.footer-game .footer-actions a {
   background: linear-gradient(110deg, #67282f, #3a1721);
   box-shadow: inset 0 1px #e6a07e5e;
 }
@@ -125,9 +122,12 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 
 @media (max-width: 700px) {
-  .footer .footer-inner { grid-template-columns: minmax(0, 1fr); }
+  .footer .footer-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "brand brand" "game community";
+    align-items: start;
+  }
   .footer-brand { width: min(100%, 420px); }
-  .footer-nav { margin-top: 0; }
 }
 
 .topbar {
