@@ -794,8 +794,19 @@ main.home-view, main.donation-view {
 .avatar .avatar-icon-citadel { object-position: 76% center; }
 .avatar .avatar-icon-portal { object-position: 66% center; }
 .avatar .avatar-icon-donator { object-fit: contain; background: #1f151d; }
-.avatar .avatar-closeup-wraith .avatar-icon { transform: scale(1.82); transform-origin: 50% 33%; }
-.avatar .avatar-closeup-death .avatar-icon { transform: scale(1.65); transform-origin: 50% 28%; }
+.avatar-closeup .avatar-icon {
+  transform: scale(var(--avatar-zoom));
+  transform-origin: 50% var(--avatar-focus);
+}
+.avatar-closeup-lost-soul { --avatar-zoom: 1.38; --avatar-focus: 49%; }
+.avatar-closeup-wraith { --avatar-zoom: 1.82; --avatar-focus: 33%; }
+.avatar-closeup-phantom { --avatar-zoom: 1.54; --avatar-focus: 47%; }
+.avatar-closeup-shade { --avatar-zoom: 1.68; --avatar-focus: 36%; }
+.avatar-closeup-revenant { --avatar-zoom: 1.72; --avatar-focus: 38%; }
+.avatar-closeup-reaper { --avatar-zoom: 1.76; --avatar-focus: 31%; }
+.avatar-closeup-death { --avatar-zoom: 1.65; --avatar-focus: 28%; }
+.avatar-closeup-eternal { --avatar-zoom: 1.56; --avatar-focus: 33%; }
+.avatar-closeup-oblivion { --avatar-zoom: 1.72; --avatar-focus: 39%; }
 .donor {
   display: inline-flex;
   align-items: center;
