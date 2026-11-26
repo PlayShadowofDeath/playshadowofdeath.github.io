@@ -99,6 +99,7 @@
     const path = location.hash.slice(1) || '/';
     view.classList.toggle('home-view', path === '/');
     view.classList.toggle('login-view', path === '/login');
+    view.classList.toggle('account-view', /^\/(register|forgot|finish)$/.test(path));
     view.classList.toggle('donation-view', /^\/donate(?:\/|$)/.test(path));
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
       ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],['#/updates', 'New Updates', /^\/updates/]];
@@ -134,6 +135,11 @@
 
   // ---------- pages ----------
   const views = {};
+  const threadMark = (t) => t.locked
+    ? '<span class="thread-mark lock" role="img" aria-label="Locked" title="Locked"></span>'
+    : t.pinned
+      ? '<span class="thread-mark pin" role="img" aria-label="Pinned" title="Pinned"></span>'
+      : '<span class="thread-mark discussion" aria-hidden="true"></span>';
 
   const onlineHtml = (profiles) => profiles.map((p) =>
     `<a class="online-member" href="#/u/${encodeURIComponent(p.username)}">${avatar(p, 30, true)}<span>${esc(p.username)}</span></a>`).join('')
@@ -202,11 +208,7 @@
           <div class="panel home-forum-activity">
             <div class="panel-head"><h2>Recent forum activity</h2><a href="#/forums">Forums →</a></div>
             <table class="tbl">${recent.map((t) => `
-              <tr><td class="ic">${t.locked
-                ? '<span class="thread-mark lock" role="img" aria-label="Locked" title="Locked"></span>'
-                : t.pinned
-                  ? '<span class="thread-mark pin" role="img" aria-label="Pinned" title="Pinned"></span>'
-                  : '<span class="thread-mark discussion" aria-hidden="true"></span>'}</td>
+              <tr><td class="ic">${threadMark(t)}</td>
                 <td><a href="#/thread/${t.id}" class="t-title">${esc(t.title)}</a>
                   <div class="meta">in <a href="#/forum/${t.category?.id}">${esc(t.category?.name || '')}</a> · by ${userLink(t.author)}</div></td>
                 <td class="right meta nowrap">${ago(t.last_post_at)}<br>by ${userLink(t.last_poster)}</td></tr>`).join('') || '<tr><td class="pad muted">No threads yet.</td></tr>'}
@@ -236,14 +238,15 @@
     const sections = [...new Set(cats.map((c) => c.section))];
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Forums</div>
+      <header class="page-head realm-banner forums-banner"><h1>Forums</h1></header>
       ${sections.map((s) => `
-        <div class="panel forum-section">
-          <div class="section-head">${esc(s)}</div>
+        <section class="panel forum-section realm-panel">
+          <h2 class="section-head">${esc(s)}</h2>
           <table class="tbl forum-tbl">
             <thead><tr><th colspan="2">Forum</th><th class="num">Threads</th><th class="num">Posts</th><th>Last post</th></tr></thead>
             ${cats.filter((c) => c.section === s).map((c) => `
               <tr>
-                <td class="ic big">${esc(c.icon)}</td>
+                <td class="ic big">${threadMark(c)}</td>
                 <td><a href="#/forum/${c.id}" class="f-name">${esc(c.name)}</a>${c.staff_only ? ' <span class="tag">Staff posts</span>' : ''}
                   <div class="meta">${esc(c.description)}</div></td>
                 <td class="num">${c.thread_count}</td><td class="num">${c.post_count}</td>
@@ -251,7 +254,7 @@
                   <div class="meta">${ago(c.last_post_at)} by ${esc(c.last_post_username || '')}</div>` : '<span class="muted">No posts yet</span>'}</td>
               </tr>`).join('')}
           </table>
-        </div>`).join('')}
+        </section>`).join('')}
       <p class="meta center">Tip: format posts with **bold**, *italic*, __underline__ and "> " for quotes.</p>`;
   };
 
@@ -263,16 +266,16 @@
     const canStart = canPost() && (!cat.staff_only || isStaff());
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › <a href="#/forums">Forums</a> › ${esc(cat.name)}</div>
-      <div class="page-head">
-        <div><h1>${esc(cat.icon)} ${esc(cat.name)}</h1><p class="muted">${esc(cat.description)}</p></div>
+      <div class="page-head realm-banner forums-banner">
+        <div><h1>${esc(cat.name)}</h1><p class="muted">${esc(cat.description)}</p></div>
         ${canStart ? `<a class="btn" href="#/new/${cat.id}">+ New thread</a>` : !S.me ? '<a class="btn ghost" href="#/login">Log in to post</a>' : ''}
       </div>
-      <div class="panel">
+      <div class="panel realm-panel">
         <table class="tbl thread-tbl">
           <thead><tr><th colspan="2">Thread</th><th class="num">Replies</th><th class="num">Views</th><th>Last post</th></tr></thead>
           ${list.rows.map((t) => `
             <tr class="${t.pinned ? 'pinned' : ''}">
-              <td class="ic">${t.locked ? '🔒' : t.pinned ? '📌' : '💬'}</td>
+              <td class="ic">${threadMark(t)}</td>
               <td>${t.pinned ? '<span class="tag gold">Pinned</span> ' : ''}<a href="#/thread/${t.id}" class="t-title">${esc(t.title)}</a>
                 <div class="meta">by ${userLink(t.author)} · ${ago(t.created_at)}</div></td>
               <td class="num">${t.reply_count}</td><td class="num">${t.view_count}</td>
@@ -320,9 +323,10 @@
     const canReply = canPost() && (!t.locked || isStaff());
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › <a href="#/forums">Forums</a> › <a href="#/forum/${t.category.id}">${esc(t.category.name)}</a> › ${esc(t.title)}</div>
-      <div class="page-head">
-        <div><h1>${t.pinned ? '📌 ' : ''}${t.locked ? '🔒 ' : ''}${esc(t.title)}</h1>
+      <div class="page-head thread-heading realm-panel">
+        <div><h1>${t.pinned || t.locked ? threadMark(t) + ' ' : ''}${esc(t.title)}</h1>
           <p class="meta">Started by ${userLink(t.author)} · ${full(t.created_at)} · ${t.view_count} views</p></div>
+        ${canReply ? '<button class="btn" type="button" id="jump-reply">Reply</button>' : ''}
         ${isStaff() ? `<div class="row staff-tools">
           <button class="btn ghost sm" id="pin">${t.pinned ? 'Unpin' : 'Pin'}</button>
           <button class="btn ghost sm" id="lock">${t.locked ? 'Unlock' : 'Lock'}</button>
@@ -330,7 +334,7 @@
       </div>
       ${pager(posts.total, size, p, `#/thread/${t.id}`)}
       ${posts.rows.map((x, i) => `
-        <article class="panel post" id="post-${x.id}">
+        <article class="panel post realm-panel" id="post-${x.id}">
           <aside class="post-author">
             ${avatar(x.author, 72, x.author ? S.online.has(x.author.id) : undefined)}
             <div>${userLink(x.author)}</div>${badge(x.author)}${donor(x.author)}
@@ -349,10 +353,11 @@
           </div>
         </article>`).join('')}
       ${pager(posts.total, size, p, `#/thread/${t.id}`)}
-      ${canReply ? `<div class="panel pad" id="reply-box"><h3>Reply</h3>
+      ${canReply ? `<div class="panel pad realm-panel" id="reply-box"><h3>Reply</h3>
           <form id="reply" class="form">${editor('reply-body', 'Write a reply…')}<div class="row end"><button class="btn">Post reply</button></div></form></div>`
         : `<div class="panel pad center muted">${t.locked ? '🔒 This thread is locked.' : !S.me ? '<a href="#/login">Log in</a> or <a href="#/register">register</a> to reply.' : 'Finish your sign-up to reply.'}</div>`}`;
     wireEditors();
+    $('#jump-reply')?.addEventListener('click', () => $('#reply-body')?.focus());
     const byId = Object.fromEntries(posts.rows.map((x) => [x.id, x]));
     $$('[data-quote]').forEach((b) => b.onclick = () => {
       const x = byId[b.dataset.quote], ta = $('#reply-body');
@@ -433,15 +438,15 @@
     let pageNo = 0;
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Community</div>
-      <div class="cols">
+      <div class="cols community-layout">
         <div class="main-col">
-          <div class="page-head"><div><h1>Community</h1><p class="muted">Public posts from everyone. Share drops, screenshots and news.</p></div></div>
+          <div class="page-head realm-banner community-banner"><div><h1>Community</h1><p class="muted">Public posts from everyone. Share drops, screenshots and news.</p></div></div>
           ${composer(S.me ? `What's happening, ${S.me.username}?` : '') || (!S.me ? '<div class="panel pad center"><a href="#/login">Log in</a> to post.</div>' : '')}
           <div id="feed"></div>
           <div class="center"><button class="btn ghost" id="more" hidden>Load more</button></div>
         </div>
         <aside class="side-col">
-          <div class="panel"><div class="panel-head"><h3>Your friends</h3><a href="#/friends">Manage →</a></div>
+          <div class="panel realm-panel"><div class="panel-head"><h3>Your friends</h3><a href="#/friends">Manage →</a></div>
             <div class="pad">${S.me ? (S.friends.map((f) => `<div class="row friend-row">${avatar(f.profile, 30, S.online.has(f.profile.id))}${userLink(f.profile)}</div>`).join('') || '<span class="muted">No friends yet. Find people on the <a href="#/members">Members</a> page.</span>') : '<span class="muted">Log in to see your friends.</span>'}</div></div>
         </aside>
       </div>`;
@@ -482,7 +487,7 @@
     const canWall = canPost() && (self || rel.state === 'friends');
     view.innerHTML = `
       <div class="profile-cover" style="--c:${esc(p.avatar_color)}"></div>
-      <div class="panel profile-head">
+      <div class="panel profile-head realm-panel">
         ${avatar(p, 120, onlineNow)}
         <div class="grow">
           <h1>${esc(p.username)} ${badge(p)} ${donor(p)}${p.status === 'banned' ? ' <span class="rank banned">Banned</span>' : ''}</h1>
@@ -541,14 +546,14 @@
     setTitle('Members');
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Members</div>
-      <div class="page-head"><div><h1>Members</h1><p class="muted">Find players and add them as friends.</p></div>
-        <input id="search" class="search" placeholder="Search by name…"></div>
+      <div class="page-head realm-banner members-banner"><div><h1>Members</h1><p class="muted">Find players and add them as friends.</p></div>
+        <label class="member-search">Find a player<input id="search" class="search" type="search" placeholder="Search by name…"></label></div>
       <div id="list" class="member-grid"></div><div id="pg"></div>`;
     let pageNo = 0, timer;
     const load = async () => {
       const { rows, total } = await api.members({ search: $('#search').value.trim(), page: pageNo });
       $('#list').innerHTML = rows.map((p) => `
-        <a class="panel member-card" href="#/u/${encodeURIComponent(p.username)}">
+        <a class="panel member-card realm-panel" href="#/u/${encodeURIComponent(p.username)}">
           ${avatar(p, 56, S.online.has(p.id))}
           <div><b class="user ${window.U.rank(p).cls}">${esc(p.username)}</b><div>${badge(p) || '<span class="meta">Member</span>'}</div>
           <div class="meta">Joined ${date(p.created_at)}</div></div></a>`).join('') || '<p class="muted">Nobody found.</p>';
@@ -850,20 +855,27 @@
     setTitle('Player Guide');
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Guide</div>
-      <div class="guide">
-        <header class="g-hero">
-          <div class="skull">☠</div>
+      <div class="guide player-guide">
+        <header class="g-hero realm-banner guide-banner">
+          <span class="guide-seal" aria-hidden="true"></span>
           <h1>The Player's Guide</h1>
           <p>Everything you need, from your first login to Reaper tasks, raids and Torva. Use the contents to jump around.</p>
         </header>
         <div class="g-layout">
-          <nav class="toc"><b>Contents</b>${window.GUIDE_TOC || ''}</nav>
+          <nav class="toc" aria-label="Player Guide contents"><b>Contents</b>${window.GUIDE_TOC || ''}</nav>
           <div class="g-main">${window.GUIDE_HTML || '<p class="muted">The guide could not be loaded.</p>'}</div>
         </div>
       </div>`;
+    const markChapter = (id) => {
+      $$('.player-guide .toc a', view).forEach((link) => {
+        if (link.getAttribute('href') === '#' + id) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
     const jump = (id) => {
       const el = document.getElementById(id);
       if (!el) return;
+      markChapter(id);
       el.scrollIntoView({ behavior: 'smooth' });
       history.replaceState(null, '', '#/guide/' + id);
     };
@@ -875,7 +887,10 @@
       jump(a.getAttribute('href').slice(1));
     });
     // After the router's scroll-to-top; instant so the smooth scroll doesn't stop halfway.
-    if (chapter) setTimeout(() => document.getElementById(chapter)?.scrollIntoView({ behavior: 'instant' }), 50);
+    if (chapter) {
+      markChapter(chapter);
+      setTimeout(() => document.getElementById(chapter)?.scrollIntoView({ behavior: 'instant' }), 50);
+    }
   };
 
   // Donate (text in js/donate.js): ranks, how to get them, every perk by group. #/donate/d-slayer opens a section.

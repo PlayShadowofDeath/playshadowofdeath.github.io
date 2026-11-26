@@ -692,6 +692,160 @@ main.home-view, main.donation-view {
   border-radius: 2px;
 }
 
+.realm-banner {
+  --realm-art: url('../img/cinematic/donation-hall.webp');
+  min-height: 124px;
+  padding: clamp(18px, 3vw, 32px);
+  border: 1px solid #93604d;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, #21121af2, #28121bbd 52%, #1a101a73),
+    var(--realm-art) right 42% / cover no-repeat #23151d;
+  box-shadow: inset 0 1px #be86597a, 0 8px 22px #08040799;
+}
+
+.realm-banner h1 {
+  margin: 0 0 4px;
+  color: #fff0da;
+  font: 800 clamp(1.9rem, 4.2vw, 3rem)/1.1 var(--cinematic-lettering);
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 3px #160a12, 0 0 13px #e9745666;
+}
+
+.realm-banner p { color: #edcfc8; }
+.community-banner { --realm-art: url('../img/cinematic/shadow-knight-citadel.webp'); }
+.members-banner, .guide-banner { --realm-art: url('../img/cinematic/progression.webp'); }
+
+.realm-panel,
+.community-layout :is(.composer, .feed-post),
+.player-guide :is(.toc, .ch) {
+  border-color: #77504e;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #291922, #1b141d 63%, #171018);
+  box-shadow: inset 0 0 0 2px #110b13, 0 7px 18px #0a050a8c;
+}
+
+.forum-section .section-head,
+.community-layout .side-col .panel-head,
+.player-guide nav.toc b {
+  margin: 0;
+  border-bottom: 1px solid #95634f;
+  background:
+    linear-gradient(90deg, #351a25, #381b24d9 45%, #1e121b94),
+    url('../img/cinematic/donation-hall.webp') right 47% / cover no-repeat;
+  color: #ffe2c6;
+  font: 800 1.18rem/1.25 var(--cinematic-lettering);
+  text-shadow: 0 2px 3px #1b0b13;
+}
+
+.realm-panel :is(.forum-tbl, .thread-tbl) td { border-color: #503641; }
+.realm-panel :is(.forum-tbl, .thread-tbl) tr:is(:hover, :focus-within) td { background: #79504737; }
+.realm-panel :is(.forum-tbl, .thread-tbl) tr:is(:hover, :focus-within) :is(.f-name, .t-title) { color: #ffe1bd; }
+.realm-panel :is(.f-name, .t-title):hover { text-decoration: underline; }
+.thread-heading { padding: 16px clamp(14px, 2.5vw, 27px); }
+.thread-heading h1, #reply-box.realm-panel h3 {
+  font-family: var(--cinematic-lettering);
+  color: #ffe5cd;
+  overflow-wrap: anywhere;
+}
+.realm-panel.post .post-author {
+  border-color: #63424c;
+  background: radial-gradient(ellipse at top, #54303b7a, transparent 76%), #21151d;
+}
+.realm-panel.post .post-main { background: #1b141b; min-width: 0; }
+.realm-panel #reply-body { scroll-margin-top: 140px; }
+
+.community-layout .composer {
+  border-color: #a16a59;
+  background: linear-gradient(120deg, #42232d, #21141d 75%);
+}
+.community-layout .feed-post .fp-head { padding-bottom: 10px; border-bottom: 1px solid #67444c; }
+.community-layout .feed-post .fp-body { margin: 14px 0; }
+.community-layout :is(.fp-head, .fp-comments) .meta { color: #cbb4be; }
+.community-layout .fp-actions .link { min-height: 34px; color: #e8beb0; }
+.community-layout .fp-actions .link:is(:hover, :focus-visible, .liked) { color: #ff9f91; }
+
+.member-search {
+  display: grid;
+  gap: 5px;
+  width: min(100%, 290px);
+  color: #ffe2c6;
+  font-weight: 700;
+}
+.member-search .search { width: 100%; border-color: #a57360; background: #1c111ce8; }
+.member-card.realm-panel:is(:hover, :focus-visible) { border-color: #d09172; }
+.profile-cover {
+  background:
+    linear-gradient(0deg, var(--bg), transparent 66%),
+    linear-gradient(105deg, color-mix(in srgb, var(--c) 28%, #1b111b), #110c14b8 58%, #170b167a),
+    url('../img/cinematic/progression.webp') right 32% / cover no-repeat #1c111b;
+}
+.profile-head.realm-panel h1 { color: #ffe6cf; overflow-wrap: anywhere; }
+.profile-head.realm-panel .game-stats div {
+  border-color: #865951;
+  background: linear-gradient(#3b2029, #241721);
+}
+
+.player-guide .guide-banner {
+  min-height: 190px;
+  margin-bottom: 22px;
+  padding: 20px 16px;
+}
+.player-guide .guide-banner h1 { color: #fff0da; }
+.player-guide .guide-banner p { color: #edcfc8; }
+.guide-seal {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  width: 53px;
+  height: 45px;
+  padding: 7px;
+  margin-bottom: 8px;
+  border: 1px solid #b57c5f;
+  border-radius: 7px 7px 13px 13px;
+  background: linear-gradient(#542a31, #25141d);
+  box-shadow: 0 0 16px #bb65554f;
+}
+.guide-seal::before, .guide-seal::after {
+  content: '';
+  border: 1px solid #dcab84;
+  border-radius: 2px 2px 5px 2px;
+  background: repeating-linear-gradient(180deg, transparent 0 5px, #b98161 5px 6px);
+}
+.guide-seal::before { transform: skewY(8deg); }
+.guide-seal::after { transform: skewY(-8deg); }
+.player-guide nav.toc { padding: 0 8px 8px; }
+.player-guide nav.toc b { width: auto; margin: 0 -8px 6px; padding: 12px 14px; letter-spacing: normal; text-transform: none; }
+.player-guide nav.toc a { min-height: 36px; padding: 7px 9px; }
+.player-guide nav.toc a:is(:hover, :focus-visible, [aria-current]) {
+  color: #fff0d8;
+  background: #532a35;
+  box-shadow: inset 2px 0 #c48b67;
+}
+.player-guide section.ch > h2 { border-bottom-color: #9b6658; color: #ffe3c9; font-family: var(--cinematic-lettering); }
+
+main.container.account-view {
+  max-width: none;
+  padding-top: clamp(28px, 6vw, 65px);
+  background:
+    linear-gradient(0deg, var(--bg), transparent 46%),
+    linear-gradient(90deg, #0c080d8a, #130c13e8 65%, #160b14cf),
+    url('../img/cinematic/shadow-knight-citadel.webp') 28% top / cover no-repeat #100b11;
+}
+.account-view .auth {
+  max-width: 480px;
+  margin: 0 auto;
+  border-color: #916355;
+  background: linear-gradient(#20151ded, #151019fa);
+  box-shadow: 0 16px 48px #080409b8;
+}
+.account-view .auth h1 { color: #ffe7d1; font-family: var(--cinematic-lettering); }
+
+@media (max-width: 860px) {
+  .player-guide nav.toc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .player-guide nav.toc b { grid-column: 1 / -1; }
+}
+
 body:has(.donation-view) .topbar {
   background: linear-gradient(#09080942, #0a090a 82%, #4b2725), url('../img/cinematic/shadow-knight-citadel.webp') center 30% / cover;
 }
