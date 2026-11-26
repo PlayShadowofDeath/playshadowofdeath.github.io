@@ -109,42 +109,53 @@
   const coins = (n) => n >= 1e9 ? (n / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B' : Math.round(n / 1e6) + 'M';
 
   const rankCards = RANKS.map(([n, d, xp, dr, c], i) => `
-    <div class="d-rank" style="--rc:${c}">
+    <article class="d-rank" style="--rc:${c}">
+      <span class="rank-smoke" aria-hidden="true"></span>
+      <img class="rank-emblem" src="img/cinematic/rank-${n.toLowerCase().replace(/ /g, '-')}-reforged.png" alt="" width="640" height="640" loading="lazy">
       <div class="d-rname">${n}</div>
       <div class="d-amt">$${d.toLocaleString()}</div>
       <div class="d-boost">+${xp}% XP · +${dr}% drops</div>
       <div class="d-coins">${coins(d * COINS_PER_DOLLAR)} coins in bonds</div>
       ${i >= 7 ? '<div class="d-tag">Perks only</div>' : ''}
-    </div>`).join('');
+      <a class="rank-perks" href="#d-perks">View perks <span aria-hidden="true">↓</span></a>
+    </article>`).join('');
 
-  const head = '<tr><th>Perk</th>' + RANKS.map(([n, , , , c]) => `<th class="d-c" style="color:${c}" title="${n}">${n}</th>`).join('') + '</tr>';
-  const groups = GROUPS.map(([icon, name, perks]) => `
-    <section class="ch" id="d-${name.toLowerCase().replace(/[^a-z]+/g, '-')}">
-      <h2><span class="num">${icon}</span>${name}</h2>
-      <div class="d-scroll"><table class="d-table">${head}${perks.map(([what, from, how]) => `
-        <tr><td><b>${what}</b>${how ? `<div class="muted small">${how}</div>` : ''}</td>${RANKS.map((r, i) =>
-          `<td class="d-c">${i >= from ? '<span class="d-yes">✔</span>' : '<span class="d-no">·</span>'}</td>`).join('')}</tr>`).join('')}
-      </table></div>
-    </section>`).join('');
+  const head = '<tr><th scope="col">Perk</th>' + RANKS.map(([n, , , , c]) => `<th scope="col" class="d-c" style="--perk-rank:${c}">${n}</th>`).join('') + '</tr>';
+  const groups = GROUPS.map(([, name, perks]) => {
+    const id = 'd-' + name.toLowerCase().replace(/[^a-z]+/g, '-');
+    return `
+    <section class="ch d-perk-group" id="${id}">
+      <h2 id="${id}-title">${name}</h2>
+      <div class="d-scroll" tabindex="0" role="region" aria-labelledby="${id}-title">
+        <table class="d-table"><thead>${head}</thead><tbody>${perks.map(([what, from, how]) => `
+          <tr><th scope="row">${what}${how ? `<div class="small">${how}</div>` : ''}</th>${RANKS.map((r, i) =>
+            `<td class="d-c">${i >= from ? '<span class="d-yes" aria-label="Included">✔</span>' : '<span class="d-no" aria-label="Unavailable">·</span>'}</td>`).join('')}</tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </section>`;
+  }).join('');
 
   window.DONATE_TOC = `<a href="#d-ranks">The ranks</a><a href="#d-earn">How to get them</a>`
     + GROUPS.map(([, n]) => `<a href="#d-${n.toLowerCase().replace(/[^a-z]+/g, '-')}">${n}</a>`).join('')
     + `<a href="#d-zone">The Death Zone</a>`;
 
-  window.DONATE_HTML = `
-    <div class="warn"><b>Only donate to Shadow.</b> Anyone else asking for donations is scamming you. In game, type <code>::donateguide</code> for this page, <code>::rank</code> for your progress and <code>::donator</code> for your perks.</div>
+  window.DONATE_RANKS = `
     <section class="ch" id="d-ranks">
-      <h2><span class="num">👑</span>The ranks</h2>
+      <h2>The ranks</h2>
       <p>Your rank goes by how much you've donated in total (bonds count too). Each rank has every perk of the ranks below it. Eternal and Oblivion keep Death's boosts and add their own perks.</p>
       <div class="d-ranks">${rankCards}</div>
     </section>
+  `;
+
+  window.DONATE_HTML = `
+    <div class="warn"><b>Only donate to Shadow.</b> Anyone else asking for donations is scamming you. In game, type <code>::donateguide</code> for this page, <code>::rank</code> for your progress and <code>::donator</code> for your perks.</div>
     <section class="ch" id="d-earn">
-      <h2><span class="num">🎟️</span>How to get them</h2>
-      <div class="grid">${EARN.map(([i, t, p]) => `<div class="card"><h3>${i} ${t}</h3><p>${p}</p></div>`).join('')}</div>
+      <h2>How to get them</h2>
+      <div class="grid">${EARN.map(([, t, p]) => `<div class="card"><h3>${t}</h3><p>${p}</p></div>`).join('')}</div>
     </section>
-    ${groups}
+    <div id="d-perks">${groups}</div>
     <section class="ch" id="d-zone">
-      <h2><span class="num">☠</span>The Death Zone <span class="muted small">Death, Eternal and Oblivion</span></h2>
+      <h2>The Death Zone <span class="muted small">Death, Eternal and Oblivion</span></h2>
       <p>The top ranks' own island. Get there with the <b>Teleport: Death Zone</b> button in <code>::donator</code>, the portal at home or the Teleports menu.</p>
       <div class="grid">${DEATH_ZONE.map(([t, p]) => `<div class="card"><h3>${t}</h3><p>${p}</p></div>`).join('')}</div>
     </section>`;

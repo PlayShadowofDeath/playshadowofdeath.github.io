@@ -55,13 +55,18 @@ window.Messenger = (() => {
       <div class="cb-main ${listOpen ? 'open' : ''}">
         <div class="cb-list" ${listOpen ? '' : 'hidden'}>
           <div class="cb-head"><b>Chat</b><span class="grow"></span>
-            <button class="cb-icon" data-mute title="${muted ? 'Sound off' : 'Sound on'}">${muted ? '🔕' : '🔔'}</button>
             <button class="cb-icon" data-close-list title="Hide">▾</button></div>
           <input class="cb-search" placeholder="Search friends…" data-search>
           <div class="cb-friends">${friendRows()}</div>
-          <a class="cb-foot" href="#/friends">Manage friends</a>
+          <div class="cb-links">
+            <a class="cb-foot" href="#/inbox" data-chat-inbox>View all messages</a>
+            <a class="cb-foot" href="#/friends">Manage friends</a>
+          </div>
         </div>
-        <button class="cb-tab" data-toggle-list><i class="dot on"></i> Chat (${onlineFriends.length})${unreadTotal ? `<b class="count">${unreadTotal}</b>` : ''}</button>
+        <div class="cb-tab-row">
+          <button class="cb-tab${unreadTotal ? ' has-unread' : ''}" type="button" data-toggle-list aria-expanded="${listOpen}"><i class="dot on"></i> Chat (${onlineFriends.length})${unreadTotal ? `<b class="count">${unreadTotal}</b>` : ''}</button>
+          <button class="cb-sound" type="button" data-mute aria-label="Mute chat sounds" aria-pressed="${muted}" title="${muted ? 'Unmute chat sounds' : 'Mute chat sounds'}"><span class="cb-bell" aria-hidden="true"></span></button>
+        </div>
       </div>`;
     windows.forEach((w) => fillWindow(w, true));
   }
@@ -72,7 +77,7 @@ window.Messenger = (() => {
     if (!list.length) return `<p class="cb-empty">${S.friends.length ? 'Nobody found.' : 'No friends yet.<br><a href="#/members">Find people</a> and add them.'}</p>`;
     return list.map((f) => {
       const on = S.online.has(f.profile.id), n = S.unread[f.profile.id];
-      return `<button class="cb-friend ${on ? '' : 'off'}" data-open="${f.profile.id}">${avatar(f.profile, 28, on)}
+      return `<button class="cb-friend ${on ? '' : 'off'}${n ? ' unread' : ''}" data-open="${f.profile.id}">${avatar(f.profile, 28, on)}
         <span class="grow">${esc(f.profile.username)}</span>${n ? `<b class="count">${n}</b>` : ''}</button>`;
     }).join('');
   }
@@ -116,6 +121,7 @@ window.Messenger = (() => {
     const tab = root.querySelector('[data-toggle-list]');
     if (!tab) return;
     const unreadTotal = Object.values(S.unread).reduce((a, b) => a + b, 0);
+    tab.classList.toggle('has-unread', unreadTotal > 0);
     tab.innerHTML = `<i class="dot on"></i> Chat (${S.friends.filter((f) => S.online.has(f.profile.id)).length})${unreadTotal ? `<b class="count">${unreadTotal}</b>` : ''}`;
     const fl = root.querySelector('.cb-friends');
     if (fl) fl.innerHTML = friendRows(root.querySelector('[data-search]')?.value || '');
@@ -156,7 +162,16 @@ window.Messenger = (() => {
     if (t.matches('[data-close-list]')) { listOpen = false; render(); return; }
     if (t.matches('[data-mute]')) {
       muted = !muted; try { localStorage.setItem('sod_chat_muted', muted ? '1' : '0'); } catch { /* ignore */ }
-      render(); return;
+      t.setAttribute('aria-pressed', String(muted));
+      t.title = muted ? 'Unmute chat sounds' : 'Mute chat sounds';
+      return;
+    }
+    if (t.matches('[data-chat-inbox]') && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) {
+      e.preventDefault();
+      listOpen = false;
+      go('#/inbox');
+      render();
+      return;
     }
     if (t.matches('[data-open]')) {
       const f = S.friends.find((x) => x.profile.id === t.dataset.open);

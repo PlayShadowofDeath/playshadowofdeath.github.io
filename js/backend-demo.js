@@ -48,7 +48,7 @@ window.makeDemoBackend = () => {
       user.game = { game_username: user.username.toLowerCase(), display_name: user.username, staff_rank: staff, donator_rank: donor,
         donator_color: color, combat_level: cb, total_level: total, time_played_min: mins, online, last_seen: ago(online ? 1 : 300) };
     };
-    game('u-shadow', 'owner', 'Death', 'e8c45c', 138, 2496, 5400, true);
+    game('u-shadow', 'owner', '', '', 138, 2496, 5400, true);
     game('u-kage', 'admin', 'Death', 'e8c45c', 126, 2210, 3900, false);
     game('u-grim', 'player', '', '', 97, 1650, 1200, true);
     game('u-lily', 'player', 'Wraith', '9ec9ff', 54, 1820, 2300, false);
@@ -82,9 +82,60 @@ window.makeDemoBackend = () => {
     return db;
   }
 
+  const rankExamples = [
+    ['lost-soul', 'Lost Soul', 'LostSoulDemo', 'b8b8b8'],
+    ['wraith', 'Wraith', 'WraithDemo', '9ec9ff'],
+    ['phantom', 'Phantom', 'PhantomDemo', 'b072e6'],
+    ['shade', 'Shade', 'ShadeDemo', '2fb5a8'],
+    ['revenant', 'Revenant', 'RevenantDemo', 'e0602a'],
+    ['reaper', 'Reaper', 'ReaperDemo', 'ff2a2a'],
+    ['death', 'Death', 'DeathDemo', 'e8c45c'],
+    ['eternal', 'Eternal', 'EternalDemo', 'b8f4ff'],
+    ['oblivion', 'Oblivion', 'OblivionDemo', 'a66bff'],
+    ['death-veteran', 'Death', 'CinderKnight', 'e8c45c'],
+  ];
+
+  function withDemoExamples(data) {
+    if (!data.messages.some((message) => message.id === 90)) {
+      data.messages.push({
+        id: 90, sender_id: 'u-kage', recipient_id: 'u-shadow',
+        body: 'Hey Shadow! The new designs are ready for review.', created_at: ago(25), read_at: null,
+      });
+    }
+    const owner = data.users.find((user) => user.id === 'u-shadow');
+    if (owner?.game?.donator_rank) {
+      owner.game.donator_rank = '';
+      owner.game.donator_color = '';
+    }
+    const ids = new Set(data.users.map((user) => user.id));
+    const names = new Set(data.users.map((user) => user.username.toLowerCase()));
+    rankExamples.forEach(([key, rank, preferredName, color], index) => {
+      const id = 'demo-rank-' + key;
+      if (ids.has(id)) return;
+      let username = preferredName;
+      for (let serial = 2; names.has(username.toLowerCase()); serial++) {
+        const suffix = '-' + serial;
+        username = preferredName.slice(0, 12 - suffix.length) + suffix;
+      }
+      names.add(username.toLowerCase());
+      const gameName = username.toLowerCase();
+      data.users.push({
+        id, username, role: 'member', status: 'active', avatar_color: '#' + color,
+        bio: `Demo profile for the ${rank} rank.`, signature: '', game_username: gameName,
+        created_at: new Date(Date.UTC(2024, 0, 9 - index)).toISOString(), last_seen: null,
+        game: {
+          game_username: gameName, display_name: username, staff_rank: 'player',
+          donator_rank: rank, donator_color: color, combat_level: 50 + index * 11,
+          total_level: 950 + index * 175, time_played_min: 180 + index * 320, online: false,
+        },
+      });
+    });
+    return data;
+  }
+
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch { return null; } };
-  let cache = load() || seed();
-  const db = () => (cache = load() || cache);
+  let cache = withDemoExamples(load() || seed());
+  const db = () => (cache = withDemoExamples(load() || cache));
   const save = (d) => { cache = d; try { localStorage.setItem(KEY, JSON.stringify(d)); } catch { /* full or blocked */ } };
   const pub = (u) => { if (!u) return null; const { password, email, ...p } = u; return p; };
   const prof = (d, id) => pub(d.users.find((u) => u.id === id));
@@ -146,6 +197,7 @@ window.makeDemoBackend = () => {
 
   const api = {
     mode: 'demo',
+    supportsAvatarPhotos: () => true,
 
     async init() { return refreshMe(); },
     me: () => me,
@@ -157,7 +209,7 @@ window.makeDemoBackend = () => {
       await delay();
       const d = db();
       if (!(await api.usernameAvailable(username))) throw new Error('That username is taken.');
-      if (d.users.some((u) => u.email.toLowerCase() === email.toLowerCase())) throw new Error('That email already has an account.');
+      if (d.users.some((u) => u.email?.toLowerCase() === email.toLowerCase())) throw new Error('That email already has an account.');
       const id = 'u-' + (++d.seq);
       d.users.push({ id, username, role: 'member', avatar_color: '#b3131b', bio: '', signature: '', status: 'active',
         game_username: null, created_at: now(), last_seen: now(), email, password });
@@ -171,7 +223,7 @@ window.makeDemoBackend = () => {
     async signIn({ login, password }) {
       await delay();
       const l = login.trim().toLowerCase();
-      const u = db().users.find((x) => (x.email.toLowerCase() === l || x.username.toLowerCase() === l) && x.id !== BOT);
+      const u = db().users.find((x) => x.password && (x.email.toLowerCase() === l || x.username.toLowerCase() === l) && x.id !== BOT);
       if (!u || u.password !== password) throw new Error('Wrong email or password.');
       sessionStorage.setItem('sod_demo_uid', u.id);
       refreshMe(); authCb?.(me);
@@ -199,7 +251,7 @@ window.makeDemoBackend = () => {
       if (fields.username && d.users.some((u) => u.id !== me.id && u.username.toLowerCase() === fields.username.toLowerCase()))
         throw new Error('That username is taken.');
       const u = d.users.find((x) => x.id === me.id);
-      ['username', 'bio', 'signature', 'avatar_color'].forEach((k) => { if (k in fields) u[k] = fields[k]; });
+      ['username', 'bio', 'signature', 'avatar_color', 'avatar_photo'].forEach((k) => { if (k in fields) u[k] = fields[k]; });
       save(d); refreshMe();
       return pub(u);
     },
@@ -224,7 +276,19 @@ window.makeDemoBackend = () => {
     async unlinkGame() { throw new Error('Demo mode: linking a game account works on the live site.'); },
     async serverStatus() { return { online: true, players: 3, uptime_min: 754, updated_at: now() }; },
     // Demo mode has no owner patch notes: they only live in the real database.
-    async ownerDoc() { return null; },
+    async ownerDoc(key) {
+      if (me?.role !== 'owner' || key !== 'patch-notes') return null;
+      return {
+        html: `<div class="update"><h2>Demo patch notes</h2>
+          <section id="website-preview"><h3>Website preview</h3>
+            <ul><li><span class="tag changed">Changed</span> Updated the styling of the notes archive.</li></ul>
+          </section>
+          <section id="owner-view"><h3>Owner view</h3>
+            <ul><li><span class="tag new">New</span> Sample notes for reviewing the private layout in demo mode.</li></ul>
+          </section>
+        </div>`,
+      };
+    },
 
     async forumIndex() {
       await delay(20);

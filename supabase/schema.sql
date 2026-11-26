@@ -26,6 +26,7 @@ create table if not exists public.profiles (
   id            uuid primary key references auth.users(id) on delete cascade,
   username      citext not null unique check (username ~ '^[A-Za-z0-9_ -]{3,12}$'),
   avatar_color  text not null default '#b3131b' check (avatar_color ~ '^#[0-9a-fA-F]{6}$'),
+  avatar_photo  text check (length(avatar_photo) <= 32768 and avatar_photo ~ '^data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$'),
   bio           text not null default '' check (char_length(bio) <= 500),
   signature     text not null default '' check (char_length(signature) <= 200),
   role          text not null default 'member' check (role in ('member','moderator','admin','owner')),

@@ -4,13 +4,15 @@ window.makeSupabaseBackend = (cfg) => {
   const sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
     auth: { persistSession: true, autoRefreshToken: true },
   });
-  const P = 'id,username,avatar_color,bio,signature,role,status,game_username,created_at,last_seen,'
+  const profileColumns = 'id,username,avatar_color,bio,signature,role,status,game_username,created_at,last_seen,'
     + 'game:game_accounts!linked_profile(game_username,display_name,staff_rank,donator_rank,donator_color,combat_level,total_level,time_played_min,online,last_seen)';
   const gameKey = (name) => name.trim().toLowerCase().replace(/ /g, '_');
   const GAME_DOMAIN = 'players.shadowofdeath.invalid';
   let me = null;           // my profile
   let live = null;         // realtime channel (presence + typing)
   let inbox = null;        // realtime channel (my messages / friend requests)
+  let avatarPhotosAvailable = false;
+  let P = profileColumns;
 
   const ok = ({ data, error }) => { if (error) throw error; return data; };
   const uid = () => me?.id;
@@ -23,10 +25,16 @@ window.makeSupabaseBackend = (cfg) => {
 
   const api = {
     mode: 'live',
+    supportsAvatarPhotos: () => avatarPhotosAvailable,
 
     // ---------- accounts ----------
     async init() {
-      const { data } = await sb.auth.getSession();
+      const [{ data }, avatarColumn] = await Promise.all([
+        sb.auth.getSession(),
+        sb.from('profiles').select('avatar_photo').limit(0),
+      ]);
+      avatarPhotosAvailable = !avatarColumn.error;
+      P = avatarPhotosAvailable ? 'avatar_photo,' + profileColumns : profileColumns;
       return loadMe(data.session);
     },
     me: () => me,

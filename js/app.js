@@ -1,7 +1,7 @@
 // Shadow of Death website: pages + navigation.
 (async () => {
   const cfg = window.SOD_CONFIG;
-  const { esc, fmt, ago, date, full, badge, donor, serverUp, inGame, played, avatar, userLink, toast, errText } = window.U;
+  const { esc, fmt, ago, date, full, badge, donor, serverUp, inGame, played, avatar, validAvatarPhoto, userLink, toast, errText } = window.U;
   const view = document.getElementById('view');
   const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js';
 
@@ -24,6 +24,7 @@
 
   // ---------- shared state + tiny event bus ----------
   const S = window.S = { me: null, online: new Set(), friends: [], requests: { incoming: [], outgoing: [] }, unread: {} };
+  let previousUnread = 0;
   const listeners = {};
   const bus = window.bus = {
     on: (ev, fn) => (listeners[ev] = listeners[ev] || []).push(fn),
@@ -97,21 +98,29 @@
   // ---------- header ----------
   function renderHeader() {
     const path = location.hash.slice(1) || '/';
+    view.classList.toggle('home-view', path === '/');
+    view.classList.toggle('login-view', path === '/login');
+    view.classList.toggle('account-view', /^\/(register|forgot|finish)$/.test(path));
+    view.classList.toggle('donation-view', /^\/donate(?:\/|$)/.test(path));
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
-      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],['#/updates', 'New Updates', /^\/updates/]];
+      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],
+      ['#/updates', 'New Updates', /^\/updates/], ['#/rules', 'Rules', /^\/rules$/]];
     if (S.me?.role === 'owner') nav.push(['#/patches', 'Patches', /^\/patches/]);
     document.getElementById('nav').innerHTML = nav.map(([h, t, re]) => `<a href="${h}" class="${re.test(path) ? 'on' : ''}">${t}</a>`).join('')
       + `<a href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}" class="play">Play now</a>`;
     const box = document.getElementById('userbox');
     if (!S.me) {
+      previousUnread = 0;
       box.innerHTML = `<a href="#/login" class="btn ghost sm">Log in</a><a href="#/register" class="btn sm">Register</a>`;
       return;
     }
     const unread = Object.values(S.unread).reduce((a, b) => a + b, 0);
+    const newMessage = unread > previousUnread;
+    previousUnread = unread;
     const reqs = S.requests.incoming.length;
     box.innerHTML = `
-      <a href="#/friends" class="icon-btn" title="Friends">👥${reqs ? `<b class="count">${reqs}</b>` : ''}</a>
-      <a href="#/inbox" class="icon-btn" title="Messages">✉️${unread ? `<b class="count">${unread}</b>` : ''}</a>
+      <a href="#/friends" class="icon-btn header-icon${reqs ? ' has-activity' : ''}" title="Friends" aria-label="Friends${reqs ? `, ${reqs} pending requests` : ''}"><span class="nav-glyph glyph-friends" aria-hidden="true"></span>${reqs ? `<b class="count" aria-hidden="true">${reqs}</b>` : ''}</a>
+      <a href="#/inbox" class="icon-btn header-icon${unread ? ' has-activity' : ''}${newMessage ? ' new-message' : ''}" title="Messages" aria-label="Messages${unread ? `, ${unread} unread` : ''}"><span class="nav-glyph glyph-message" aria-hidden="true"></span>${unread ? `<b class="count" aria-hidden="true">${unread}</b>` : ''}</a>
       <div class="menu">
         <button class="me-btn" id="me-btn">${avatar(S.me, 30)}<span>${esc(S.me.username)}</span>▾</button>
         <div class="menu-list" id="me-menu" hidden>
@@ -131,9 +140,14 @@
 
   // ---------- pages ----------
   const views = {};
+  const threadMark = (t) => t.locked
+    ? '<span class="thread-mark lock" role="img" aria-label="Locked" title="Locked"></span>'
+    : t.pinned
+      ? '<span class="thread-mark pin" role="img" aria-label="Pinned" title="Pinned"></span>'
+      : '<span class="thread-mark discussion" aria-hidden="true"></span>';
 
   const onlineHtml = (profiles) => profiles.map((p) =>
-    `<a href="#/u/${encodeURIComponent(p.username)}" title="${esc(p.username)}">${avatar(p, 34, true)}</a>`).join('')
+    `<a class="online-member" href="#/u/${encodeURIComponent(p.username)}">${avatar(p, 30, true)}<span>${esc(p.username)}</span></a>`).join('')
     || '<span class="muted">Nobody right now.</span>';
   // Keep "who's online" on the home page up to date.
   bus.on('presence', async () => {
@@ -155,15 +169,27 @@
     view.innerHTML = `
       <section class="hero">
         <div class="hero-inner">
-          ${server ? `<div class="server-pill ${up ? '' : 'down'}"><i class="dot ${up ? 'on' : ''}"></i>${up
-            ? `Server online · <b>${server.players}</b> playing now` : 'Server offline'}</div>` : ''}
-          <h1>Shadow of Death</h1>
+          <p class="hero-kicker">The darkness awaits</p>
+          <h1><img src="img/cinematic/wordmark-client.png" alt="Shadow of Death" fetchpriority="high"></h1>
+          <p class="hero-kicker">Death is only the beginning</p>
+          <a class="btn lg hero-play" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">Play now</a>
+        </div>
+      </section>
+      <nav class="feature-links" aria-label="Explore Shadow of Death">
+        <a href="#/guide/bossing"><img src="img/cinematic/bossing.webp" alt=""><span>Epic Bossing</span></a>
+        <a href="#/guide"><img src="img/cinematic/progression.webp" alt=""><span>Progression</span></a>
+        <a href="#/donate"><img src="img/cinematic/donator-ranks.webp" alt=""><span>Donator Ranks</span></a>
+        <a href="#/updates"><img src="img/cinematic/new-content.webp" alt=""><span>New Content</span></a>
+      </nav>
+      <div class="home-community">
+      <div class="home-details">
           <p>A 718 RuneScape private server. Bosses, raids, custom items and a community that plays together.</p>
           <div class="hero-btns">
-            <a class="btn lg" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">⚔ Play now</a>
             ${S.me ? '<a class="btn lg ghost" href="#/forums">Visit the forums</a>' : '<a class="btn lg ghost" href="#/register">Join the community</a>'}
             ${cfg.discordUrl ? `<a class="btn lg ghost" href="${esc(cfg.discordUrl)}" target="_blank" rel="noopener">Discord</a>` : ''}
           </div>
+          ${server ? `<div class="server-pill ${up ? '' : 'down'}"><i class="dot ${up ? 'on' : ''}"></i>${up
+            ? `Server online · <b>${server.players}</b> playing now` : 'Server offline'}</div>` : ''}
           <div class="hero-stats">
             <div><b>${stats.members}</b><span>Members</span></div>
             <div><b>${stats.threads}</b><span>Threads</span></div>
@@ -171,11 +197,10 @@
             ${server ? `<div><b class="${up ? 'green' : ''}">${up ? server.players : 0}</b><span>In game</span></div>` : ''}
             <div><b class="green" data-online-count>${S.online.size}</b><span>On the site</span></div>
           </div>
-        </div>
-      </section>
+      </div>
       <div class="cols">
         <div class="main-col">
-          <div class="panel">
+          <div class="panel home-news">
             <div class="panel-head"><h2>Latest news</h2>${news ? `<a href="#/forum/${news.id}">All news →</a>` : ''}</div>
             ${newsThreads.length ? newsThreads.map((t, i) => `
               <article class="news">
@@ -185,10 +210,10 @@
                 <a href="#/thread/${t.id}" class="more">Read more →</a>
               </article>`).join('') : '<p class="pad muted">No news yet.</p>'}
           </div>
-          <div class="panel">
+          <div class="panel home-forum-activity">
             <div class="panel-head"><h2>Recent forum activity</h2><a href="#/forums">Forums →</a></div>
             <table class="tbl">${recent.map((t) => `
-              <tr><td class="ic">${t.locked ? '🔒' : t.pinned ? '📌' : '💬'}</td>
+              <tr><td class="ic">${threadMark(t)}</td>
                 <td><a href="#/thread/${t.id}" class="t-title">${esc(t.title)}</a>
                   <div class="meta">in <a href="#/forum/${t.category?.id}">${esc(t.category?.name || '')}</a> · by ${userLink(t.author)}</div></td>
                 <td class="right meta nowrap">${ago(t.last_post_at)}<br>by ${userLink(t.last_poster)}</td></tr>`).join('') || '<tr><td class="pad muted">No threads yet.</td></tr>'}
@@ -196,18 +221,19 @@
           </div>
         </div>
         <aside class="side-col">
-          <div class="panel">
+          <div class="panel home-online">
             <div class="panel-head"><h3>Who's online</h3><span class="muted" data-online-count>${S.online.size}</span></div>
             <div class="pad online-list" id="online-list">${onlineHtml(onlineProfiles)}</div>
           </div>
-          ${stats.newest ? `<div class="panel"><div class="panel-head"><h3>Newest member</h3></div>
-            <div class="pad row">${avatar(stats.newest, 40)}<div>${userLink(stats.newest)}<div class="meta">joined ${ago(stats.newest.created_at)}</div></div></div></div>` : ''}
-          <div class="panel">
+          ${stats.newest ? `<div class="panel home-newest"><div class="panel-head"><h3>Newest member</h3></div>
+            <div class="pad row">${avatar(stats.newest, 44)}<div>${userLink(stats.newest)}<div class="meta">Joined ${ago(stats.newest.created_at)}</div></div></div></div>` : ''}
+          <div class="panel home-posts">
             <div class="panel-head"><h3>Community posts</h3><a href="#/community">All →</a></div>
-            ${feed.map((p) => `<div class="mini-post">${avatar(p.author, 28)}<div><div>${userLink(p.author)} <span class="meta">${ago(p.created_at)}</span></div>
+            ${feed.map((p) => `<div class="mini-post">${avatar(p.author, 28)}<div class="mini-copy"><div class="mini-byline">${userLink(p.author)} <span class="meta">${ago(p.created_at)}</span></div>
               <div class="mini-body">${fmt(p.body.slice(0, 140))}</div></div></div>`).join('') || '<p class="pad muted">No posts yet.</p>'}
           </div>
         </aside>
+      </div>
       </div>`;
   };
 
@@ -217,14 +243,15 @@
     const sections = [...new Set(cats.map((c) => c.section))];
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Forums</div>
+      <header class="page-head realm-banner forums-banner"><h1>Forums</h1></header>
       ${sections.map((s) => `
-        <div class="panel forum-section">
-          <div class="section-head">${esc(s)}</div>
+        <section class="panel forum-section realm-panel">
+          <h2 class="section-head">${esc(s)}</h2>
           <table class="tbl forum-tbl">
             <thead><tr><th colspan="2">Forum</th><th class="num">Threads</th><th class="num">Posts</th><th>Last post</th></tr></thead>
             ${cats.filter((c) => c.section === s).map((c) => `
               <tr>
-                <td class="ic big">${esc(c.icon)}</td>
+                <td class="ic big">${threadMark(c)}</td>
                 <td><a href="#/forum/${c.id}" class="f-name">${esc(c.name)}</a>${c.staff_only ? ' <span class="tag">Staff posts</span>' : ''}
                   <div class="meta">${esc(c.description)}</div></td>
                 <td class="num">${c.thread_count}</td><td class="num">${c.post_count}</td>
@@ -232,7 +259,7 @@
                   <div class="meta">${ago(c.last_post_at)} by ${esc(c.last_post_username || '')}</div>` : '<span class="muted">No posts yet</span>'}</td>
               </tr>`).join('')}
           </table>
-        </div>`).join('')}
+        </section>`).join('')}
       <p class="meta center">Tip: format posts with **bold**, *italic*, __underline__ and "> " for quotes.</p>`;
   };
 
@@ -244,16 +271,16 @@
     const canStart = canPost() && (!cat.staff_only || isStaff());
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › <a href="#/forums">Forums</a> › ${esc(cat.name)}</div>
-      <div class="page-head">
-        <div><h1>${esc(cat.icon)} ${esc(cat.name)}</h1><p class="muted">${esc(cat.description)}</p></div>
+      <div class="page-head realm-banner forums-banner">
+        <div><h1>${esc(cat.name)}</h1><p class="muted">${esc(cat.description)}</p></div>
         ${canStart ? `<a class="btn" href="#/new/${cat.id}">+ New thread</a>` : !S.me ? '<a class="btn ghost" href="#/login">Log in to post</a>' : ''}
       </div>
-      <div class="panel">
+      <div class="panel realm-panel">
         <table class="tbl thread-tbl">
           <thead><tr><th colspan="2">Thread</th><th class="num">Replies</th><th class="num">Views</th><th>Last post</th></tr></thead>
           ${list.rows.map((t) => `
             <tr class="${t.pinned ? 'pinned' : ''}">
-              <td class="ic">${t.locked ? '🔒' : t.pinned ? '📌' : '💬'}</td>
+              <td class="ic">${threadMark(t)}</td>
               <td>${t.pinned ? '<span class="tag gold">Pinned</span> ' : ''}<a href="#/thread/${t.id}" class="t-title">${esc(t.title)}</a>
                 <div class="meta">by ${userLink(t.author)} · ${ago(t.created_at)}</div></td>
               <td class="num">${t.reply_count}</td><td class="num">${t.view_count}</td>
@@ -301,9 +328,10 @@
     const canReply = canPost() && (!t.locked || isStaff());
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › <a href="#/forums">Forums</a> › <a href="#/forum/${t.category.id}">${esc(t.category.name)}</a> › ${esc(t.title)}</div>
-      <div class="page-head">
-        <div><h1>${t.pinned ? '📌 ' : ''}${t.locked ? '🔒 ' : ''}${esc(t.title)}</h1>
+      <div class="page-head thread-heading realm-panel">
+        <div><h1>${t.pinned || t.locked ? threadMark(t) + ' ' : ''}${esc(t.title)}</h1>
           <p class="meta">Started by ${userLink(t.author)} · ${full(t.created_at)} · ${t.view_count} views</p></div>
+        ${canReply ? '<button class="btn" type="button" id="jump-reply">Reply</button>' : ''}
         ${isStaff() ? `<div class="row staff-tools">
           <button class="btn ghost sm" id="pin">${t.pinned ? 'Unpin' : 'Pin'}</button>
           <button class="btn ghost sm" id="lock">${t.locked ? 'Unlock' : 'Lock'}</button>
@@ -311,7 +339,7 @@
       </div>
       ${pager(posts.total, size, p, `#/thread/${t.id}`)}
       ${posts.rows.map((x, i) => `
-        <article class="panel post" id="post-${x.id}">
+        <article class="panel post realm-panel" id="post-${x.id}">
           <aside class="post-author">
             ${avatar(x.author, 72, x.author ? S.online.has(x.author.id) : undefined)}
             <div>${userLink(x.author)}</div>${badge(x.author)}${donor(x.author)}
@@ -330,10 +358,11 @@
           </div>
         </article>`).join('')}
       ${pager(posts.total, size, p, `#/thread/${t.id}`)}
-      ${canReply ? `<div class="panel pad" id="reply-box"><h3>Reply</h3>
+      ${canReply ? `<div class="panel pad realm-panel" id="reply-box"><h3>Reply</h3>
           <form id="reply" class="form">${editor('reply-body', 'Write a reply…')}<div class="row end"><button class="btn">Post reply</button></div></form></div>`
         : `<div class="panel pad center muted">${t.locked ? '🔒 This thread is locked.' : !S.me ? '<a href="#/login">Log in</a> or <a href="#/register">register</a> to reply.' : 'Finish your sign-up to reply.'}</div>`}`;
     wireEditors();
+    $('#jump-reply')?.addEventListener('click', () => $('#reply-body')?.focus());
     const byId = Object.fromEntries(posts.rows.map((x) => [x.id, x]));
     $$('[data-quote]').forEach((b) => b.onclick = () => {
       const x = byId[b.dataset.quote], ta = $('#reply-body');
@@ -414,15 +443,15 @@
     let pageNo = 0;
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Community</div>
-      <div class="cols">
+      <div class="cols community-layout">
         <div class="main-col">
-          <div class="page-head"><div><h1>Community</h1><p class="muted">Public posts from everyone. Share drops, screenshots and news.</p></div></div>
+          <div class="page-head realm-banner community-banner"><div><h1>Community</h1><p class="muted">Public posts from everyone. Share drops, screenshots and news.</p></div><a class="btn ghost sm" href="#/rules">Community rules</a></div>
           ${composer(S.me ? `What's happening, ${S.me.username}?` : '') || (!S.me ? '<div class="panel pad center"><a href="#/login">Log in</a> to post.</div>' : '')}
           <div id="feed"></div>
           <div class="center"><button class="btn ghost" id="more" hidden>Load more</button></div>
         </div>
         <aside class="side-col">
-          <div class="panel"><div class="panel-head"><h3>Your friends</h3><a href="#/friends">Manage →</a></div>
+          <div class="panel realm-panel"><div class="panel-head"><h3>Your friends</h3><a href="#/friends">Manage →</a></div>
             <div class="pad">${S.me ? (S.friends.map((f) => `<div class="row friend-row">${avatar(f.profile, 30, S.online.has(f.profile.id))}${userLink(f.profile)}</div>`).join('') || '<span class="muted">No friends yet. Find people on the <a href="#/members">Members</a> page.</span>') : '<span class="muted">Log in to see your friends.</span>'}</div></div>
         </aside>
       </div>`;
@@ -453,6 +482,7 @@
     const [threads, counts, server] = await Promise.all([api.threadsBy(p.id, 8), api.postCounts([p.id]), api.serverStatus().catch(() => null)]);
     const onlineNow = S.online.has(p.id);
     const g = p.game;
+    const coverColor = /^#[0-9a-f]{6}$/i.test(p.avatar_color) ? p.avatar_color : '#6e2a36';
     let friendBtn = '';
     if (S.me && !self) friendBtn = {
       none: `<button class="btn" id="add-friend">+ Add friend</button>`,
@@ -462,40 +492,62 @@
     }[rel.state];
     const canWall = canPost() && (self || rel.state === 'friends');
     view.innerHTML = `
-      <div class="profile-cover" style="--c:${esc(p.avatar_color)}"></div>
-      <div class="panel profile-head">
-        ${avatar(p, 120, onlineNow)}
-        <div class="grow">
-          <h1>${esc(p.username)} ${badge(p)} ${donor(p)}${p.status === 'banned' ? ' <span class="rank banned">Banned</span>' : ''}</h1>
-          <div class="meta">${onlineNow ? '<span class="green">● Online now</span>' : `Last seen ${ago(p.last_seen)}`} · Joined ${date(p.created_at)} · ${counts[p.id] || 0} forum posts
-            ${g ? ` · In-game: <b>${esc(g.display_name || g.game_username)}</b> ${inGame(p, server) ? '<span class="ingame">⚔ In game now</span>' : ''}` : ''}</div>
-          ${p.bio ? `<p class="bio">${fmt(p.bio)}</p>` : ''}
-          ${g ? `<div class="game-stats">
-            <div><b>${g.combat_level ?? '–'}</b><span>Combat</span></div>
-            <div><b>${g.total_level ?? '–'}</b><span>Total level</span></div>
-            <div><b>${g.time_played_min != null ? played(g.time_played_min) : '–'}</b><span>Time played</span></div>
-            ${g.donator_rank ? `<div><b style="color:#${esc(g.donator_color)}">${esc(g.donator_rank)}</b><span>Donator</span></div>` : ''}
+      <header class="panel realm-panel profile-player">
+        <div class="profile-cover" aria-hidden="true" style="--c:${coverColor}"></div>
+        <div class="profile-head">
+          ${avatar(p, 106, onlineNow)}
+          <div class="profile-identity">
+            <div class="profile-name">
+              <h1>${esc(p.username)}</h1>
+              ${badge(p)} ${donor(p)}${p.status === 'banned' ? ' <span class="rank banned">Banned</span>' : ''}
+            </div>
+            <div class="profile-meta meta">
+              <span>${onlineNow ? '<span class="green">● Online now</span>' : p.last_seen ? `Last seen ${ago(p.last_seen)}` : 'Offline'}</span>
+              <span>Joined ${date(p.created_at)}</span>
+              <span>${counts[p.id] || 0} forum posts</span>
+            </div>
+            ${p.bio ? `<p class="bio">${fmt(p.bio)}</p>` : ''}
+          </div>
+          ${friendBtn || self ? `<div class="row profile-actions">${friendBtn}
+            ${self ? '<a class="btn ghost" href="#/settings">Edit profile</a>' : ''}
+            ${self && !g ? '<a class="btn ghost" href="#/settings/game">Link game account</a>' : ''}
           </div>` : ''}
         </div>
-        <div class="row">${friendBtn}${self ? '<a class="btn ghost" href="#/settings">Edit profile</a>' : ''}</div>
-      </div>
+        ${g ? `<div class="profile-character">
+          <div class="profile-character-name">
+            <span class="meta">In-game character</span><b>${esc(g.display_name || g.game_username)}</b>
+            ${inGame(p, server) ? '<span class="ingame">⚔ In game now</span>' : ''}
+          </div>
+          <dl class="profile-stats">
+            <div><dt>Combat level</dt><dd>${g.combat_level ?? '–'}</dd></div>
+            <div><dt>Total level</dt><dd>${g.total_level ?? '–'}</dd></div>
+            <div><dt>Time played</dt><dd>${g.time_played_min != null ? played(g.time_played_min) : '–'}</dd></div>
+          </dl>
+        </div>` : ''}
+      </header>
       ${isStaff() && !self && p.role === 'member' || S.me?.role === 'owner' && !self ? `<div class="panel pad row staff-tools">
         <b>Staff:</b>
         ${p.role === 'member' ? `<button class="btn ghost sm" id="ban">${p.status === 'banned' ? 'Unban' : 'Ban'}</button>` : ''}
         ${S.me.role === 'owner' ? `<label class="row">Rank <select id="role">${['member', 'moderator', 'admin', 'owner'].map((r) => `<option ${r === p.role ? 'selected' : ''}>${r}</option>`).join('')}</select></label>` : ''}
       </div>` : ''}
-      <div class="cols">
+      <div class="cols profile-activity">
         <div class="main-col">
-          <h2 class="sub">Wall</h2>
+          <div class="panel realm-panel"><div class="panel-head"><h2>Wall</h2></div></div>
           ${canWall ? composer(self ? 'Post something on your wall…' : `Write something to ${p.username}…`) : ''}
+          ${!S.me ? '<p class="panel pad realm-panel wall-sign-in"><a href="#/login" id="wall-sign-in">Log in to post</a> on profile walls.</p>' : ''}
           <div id="feed"></div>
         </div>
         <aside class="side-col">
-          <div class="panel"><div class="panel-head"><h3>Recent threads</h3></div>
+          <div class="panel realm-panel"><div class="panel-head"><h2>Recent threads</h2></div>
             ${threads.map((t) => `<div class="mini-post"><div><a href="#/thread/${t.id}">${esc(t.title)}</a><div class="meta">${esc(t.category?.name || '')} · ${ago(t.created_at)}</div></div></div>`).join('') || '<p class="pad muted">No threads yet.</p>'}
           </div>
         </aside>
       </div>`;
+    $('#wall-sign-in')?.addEventListener('click', (e) => {
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      needLogin();
+    });
     const feedEl = $('#feed');
     const load = async () => {
       const rows = await api.feed({ wallOwner: p.id, size: 30 });
@@ -522,17 +574,21 @@
     setTitle('Members');
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Members</div>
-      <div class="page-head"><div><h1>Members</h1><p class="muted">Find players and add them as friends.</p></div>
-        <input id="search" class="search" placeholder="Search by name…"></div>
+      <div class="page-head realm-banner members-banner"><div><h1>Members</h1><p class="muted">Find players and add them as friends.</p></div>
+        <label class="member-search">Find a player<input id="search" class="search" type="search" placeholder="Search by name…"></label></div>
       <div id="list" class="member-grid"></div><div id="pg"></div>`;
     let pageNo = 0, timer;
     const load = async () => {
       const { rows, total } = await api.members({ search: $('#search').value.trim(), page: pageNo });
       $('#list').innerHTML = rows.map((p) => `
-        <a class="panel member-card" href="#/u/${encodeURIComponent(p.username)}">
+        <a class="panel member-card realm-panel" href="#/u/${encodeURIComponent(p.username)}">
           ${avatar(p, 56, S.online.has(p.id))}
-          <div><b class="user ${window.U.rank(p).cls}">${esc(p.username)}</b><div>${badge(p) || '<span class="meta">Member</span>'}</div>
-          <div class="meta">Joined ${date(p.created_at)}</div></div></a>`).join('') || '<p class="muted">Nobody found.</p>';
+          <div class="member-info">
+            <div class="member-name"><b class="user ${window.U.rank(p).cls}">${esc(p.username)}</b>${badge(p)}</div>
+            <div class="meta">Joined ${date(p.created_at)}</div>
+            ${donor(p)}
+          </div>
+        </a>`).join('') || '<p class="muted">Nobody found.</p>';
       const pages = Math.ceil(total / 30);
       $('#pg').innerHTML = pages > 1 ? `<nav class="pager">${Array.from({ length: pages }, (_, i) => `<a href="javascript:void 0" data-pg="${i}" class="${i === pageNo ? 'on' : ''}">${i + 1}</a>`).join('')}</nav>` : '';
       $$('[data-pg]').forEach((a) => a.onclick = () => { pageNo = +a.dataset.pg; load(); });
@@ -550,14 +606,17 @@
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Friends</div>
       <div class="page-head"><div><h1>Friends</h1><p class="muted">Friends can message you instantly from the chat bar and post on your wall.</p></div>
-        <a class="btn ghost" href="#/members">Find people</a></div>
+        ${sorted.length ? '<a class="btn ghost" href="#/members">Find players</a>' : ''}</div>
       ${incoming.length ? `<div class="panel"><div class="panel-head"><h2>Friend requests <span class="count inline">${incoming.length}</span></h2></div>
         ${incoming.map((r) => `<div class="list-row">${avatar(r.from, 44)}<div class="grow">${userLink(r.from)}<div class="meta">${ago(r.created_at)}</div></div>
           <button class="btn sm" data-accept="${r.id}">Accept</button><button class="btn ghost sm" data-decline="${r.id}">Decline</button></div>`).join('')}</div>` : ''}
       <div class="panel"><div class="panel-head"><h2>Your friends</h2><span class="muted">${S.friends.length}</span></div>
         ${sorted.map((f) => `<div class="list-row">${avatar(f.profile, 44, S.online.has(f.profile.id))}<div class="grow">${userLink(f.profile)} ${badge(f.profile)}
           <div class="meta">${S.online.has(f.profile.id) ? '<span class="green">Online</span>' : 'Last seen ' + ago(f.profile.last_seen)}</div></div>
-          <button class="btn sm" data-chat="${f.profile.id}">💬 Message</button></div>`).join('') || '<p class="pad muted">No friends yet. Visit someone\'s profile and press <b>Add friend</b>.</p>'}</div>
+          <button class="btn sm" data-chat="${f.profile.id}">💬 Message</button></div>`).join('') || `<div class="social-empty">
+            <h3>No friends yet</h3><p>Open a player’s profile and choose Add friend.</p>
+            <a class="btn" href="#/members">Find players</a>
+          </div>`}</div>
       ${outgoing.length ? `<div class="panel"><div class="panel-head"><h3>Requests you sent</h3></div>
         ${outgoing.map((r) => `<div class="list-row">${avatar(r.to, 36)}<div class="grow">${userLink(r.to)}<div class="meta">sent ${ago(r.created_at)}</div></div>
           <button class="btn ghost sm" data-decline="${r.id}">Cancel</button></div>`).join('')}</div>` : ''}`;
@@ -575,29 +634,39 @@
     const current = convos.find((c) => c.partner.username.toLowerCase() === (partnerName || '').toLowerCase()) || (partnerName ? null : convos[0]);
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Messages</div>
-      <div class="panel inbox">
+      <header class="page-head realm-banner inbox-banner"><h1>Messages</h1></header>
+      ${convos.length ? `<div class="panel inbox realm-panel">
         <div class="inbox-list">${convos.map((c) => `
-          <a href="#/inbox/${encodeURIComponent(c.partner.username)}" class="inbox-item ${c === current ? 'on' : ''}">
+          <a href="#/inbox/${encodeURIComponent(c.partner.username)}" class="inbox-item ${c === current ? 'on' : ''}${c.unread ? ' unread' : ''}">
             ${avatar(c.partner, 40, S.online.has(c.partner.id))}
             <div class="grow"><div class="row between"><b>${esc(c.partner.username)}</b><span class="meta">${c.last_at ? ago(c.last_at) : ''}</span></div>
             <div class="meta clip">${c.last_from_me ? 'You: ' : ''}${esc(c.last_body || 'Say hi!')}</div></div>
-            ${c.unread ? `<b class="count inline">${c.unread}</b>` : ''}</a>`).join('') || '<p class="pad muted">No conversations. Add friends to message them.</p>'}</div>
+            ${c.unread ? `<b class="count inline">${c.unread}</b>` : ''}</a>`).join('')}</div>
         <div class="inbox-thread">${current ? `
           <div class="inbox-head">${avatar(current.partner, 36, S.online.has(current.partner.id))}${userLink(current.partner)}
             <button class="btn ghost sm" id="pop">Open in chat bar</button></div>
           <div class="inbox-msgs" id="msgs"></div>
           <form id="send" class="inbox-send"><textarea id="msg" rows="2" maxlength="2000" placeholder="Write a message… (Enter to send)"></textarea><button class="btn">Send</button></form>`
           : '<div class="pad center muted">Pick a conversation.</div>'}</div>
-      </div>`;
+      </div>` : `<div class="panel realm-panel social-empty">
+        <h2>No messages yet</h2><p>Add a friend from Members to start a conversation.</p>
+        <a class="btn" href="#/members">Find players</a>
+      </div>`}`;
     if (!current) return;
     const partner = current.partner;
     const box = $('#msgs');
     const draw = async () => {
       const msgs = await api.conversation(partner.id, 200);
       box.innerHTML = msgs.map((m) => `<div class="bubble ${m.sender_id === S.me.id ? 'me' : ''}" title="${full(m.created_at)}">${fmt(m.body)}<span class="meta">${ago(m.created_at)}</span></div>`).join('')
-        || '<p class="center muted">No messages yet.</p>';
+        || `<div class="social-empty">
+          <h2>No messages yet</h2><p>Say hello to ${esc(partner.username)} below, or choose someone from Friends.</p>
+          <a class="btn ghost sm" href="#/friends">Open Friends</a>
+        </div>`;
       box.scrollTop = box.scrollHeight;
       await api.markRead(partner.id); delete S.unread[partner.id]; bus.emit('counts');
+      const activeRow = box.isConnected ? $('.inbox-item.on') : null;
+      activeRow?.classList.remove('unread');
+      activeRow?.querySelector('.count')?.remove();
     };
     const send = () => {
       const v = $('#msg').value.trim();
@@ -619,7 +688,8 @@
     if (S.me) return go('#/');
     setTitle('Log in');
     view.innerHTML = `
-      <div class="auth panel">
+      <div class="login-layout">
+        <div class="auth panel">
         <h1>Welcome back</h1>
         <p class="muted">Log in to post, add friends and chat.</p>
         ${api.mode === 'demo' ? '<div class="note">Demo mode: log in as <b>Shadow</b> (owner) or <b>Kagemaru</b> (admin), password <b>demo123</b>.</div>' : ''}
@@ -629,6 +699,7 @@
           <button class="btn block">Log in</button>
         </form>
         <p class="center meta"><a href="#/forgot">Forgot password?</a> · New here? <a href="#/register">Create an account</a></p>
+        </div>
       </div>`;
     $('#f').onsubmit = (e) => {
       e.preventDefault();
@@ -724,9 +795,31 @@
     };
   };
 
-  views.settings = async () => {
+  async function readProfilePhoto(file) {
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 8 * 1024 * 1024) {
+      throw new Error('Choose a JPG, PNG, or WebP image up to 8 MB.');
+    }
+    const image = await createImageBitmap(file);
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 128;
+      const ctx = canvas.getContext('2d', { alpha: false });
+      const side = Math.min(image.width, image.height);
+      ctx.fillStyle = '#231820';
+      ctx.fillRect(0, 0, 128, 128);
+      ctx.drawImage(image, (image.width - side) / 2, (image.height - side) / 2, side, side, 0, 0, 128, 128);
+      const photo = canvas.toDataURL('image/jpeg', .78);
+      if (!validAvatarPhoto(photo)) throw new Error('This image could not be saved as a profile photo.');
+      return photo;
+    } finally {
+      image.close();
+    }
+  }
+
+  views.settings = async (section) => {
     if (!S.me) return needLogin();
     setTitle('Settings');
+    const photosAvailable = api.supportsAvatarPhotos();
     const m = S.me;
     const colors = ['#b3131b', '#e0561b', '#d4a63a', '#2fb37a', '#2f7bb3', '#6b2fb3', '#b32f8c', '#555555'];
     view.innerHTML = `
@@ -735,7 +828,14 @@
       <div class="cols even">
         <form class="panel pad form" id="prof">
           <h2>Profile</h2>
-          <div class="row">${avatar(m, 64)}<div class="swatches">${colors.map((c) => `<button type="button" data-color="${c}" style="--c:${c}" class="${c === m.avatar_color ? 'on' : ''}"></button>`).join('')}</div></div>
+          <div class="row">
+            <div id="avatar-preview">${avatar(m, 84)}</div>
+            ${photosAvailable ? `<div class="profile-photo-controls">
+              <label>Profile photo<input id="avatar-upload" type="file" accept="image/jpeg,image/png,image/webp"></label>
+              <button type="button" class="btn ghost sm" id="remove-photo" ${validAvatarPhoto(m.avatar_photo) ? '' : 'hidden'}>Remove photo</button>
+            </div>` : ''}
+          </div>
+          <div class="swatches" role="group" aria-label="Profile icon color">${colors.map((c) => `<button type="button" data-color="${c}" style="--c:${c}" class="${c === m.avatar_color ? 'on' : ''}" aria-label="Color ${c}" aria-pressed="${c === m.avatar_color}"></button>`).join('')}</div>
           <label>Username<input id="name" maxlength="12" value="${esc(m.username)}"></label>
           <label>About me<textarea id="bio" rows="4" maxlength="500">${esc(m.bio)}</textarea></label>
           <label>Forum signature<textarea id="sig" rows="2" maxlength="200" placeholder="Shown under your forum posts">${esc(m.signature)}</textarea></label>
@@ -767,16 +867,62 @@
         </div>
       </div>`;
     let color = m.avatar_color;
+    let photo = validAvatarPhoto(m.avatar_photo) ? m.avatar_photo : null;
+    let photoRequest = 0, photoPending = false;
+    const photoInput = $('#avatar-upload');
+    const removePhoto = $('#remove-photo');
+    const previewAvatar = () => {
+      const preview = $('#avatar-preview');
+      if (!preview) return;
+      preview.innerHTML = avatar({ username: $('#name')?.value.trim() || m.username, avatar_color: color, avatar_photo: photo }, 84);
+      if (removePhoto) removePhoto.hidden = !photo;
+    };
+    photoInput?.addEventListener('change', async () => {
+      const file = photoInput.files[0];
+      if (!file) return;
+      const request = ++photoRequest;
+      photoPending = true;
+      try {
+        const rendered = await readProfilePhoto(file);
+        if (request !== photoRequest || !photoInput.isConnected) return;
+        photo = rendered;
+        previewAvatar();
+      } catch (error) {
+        if (request === photoRequest && photoInput.isConnected) {
+          toast(error instanceof DOMException ? 'That image could not be opened.' : errText(error), 'error');
+        }
+      } finally {
+        if (request === photoRequest) {
+          photoPending = false;
+          photoInput.value = '';
+        }
+      }
+    });
+    removePhoto?.addEventListener('click', () => {
+      photoRequest++;
+      photoPending = false;
+      photoInput.value = '';
+      photo = null;
+      previewAvatar();
+    });
+    $('#name').addEventListener('input', previewAvatar);
     $$('[data-color]').forEach((b) => b.onclick = () => {
-      color = b.dataset.color; $$('[data-color]').forEach((x) => x.classList.toggle('on', x === b));
-      $('#prof .avatar').style.setProperty('--c', color);
+      color = b.dataset.color;
+      $$('[data-color]').forEach((x) => {
+        x.classList.toggle('on', x === b);
+        x.setAttribute('aria-pressed', String(x === b));
+      });
+      previewAvatar();
     });
     $('#prof').onsubmit = (e) => {
       e.preventDefault();
+      if (photoPending) return toast('Wait for the photo preview before saving.', 'error');
       const username = $('#name').value.trim();
       if (!NAME_RE.test(username)) return toast('Usernames are 3–12 letters, numbers, spaces, - or _.', 'error');
       busy(e.submitter, async () => {
-        await api.updateProfile({ username, bio: $('#bio').value.trim(), signature: $('#sig').value.trim(), avatar_color: color });
+        const fields = { username, bio: $('#bio').value.trim(), signature: $('#sig').value.trim(), avatar_color: color };
+        if (photosAvailable && photo !== (S.me.avatar_photo ?? null)) fields.avatar_photo = photo;
+        await api.updateProfile(fields);
         S.me = api.me(); renderHeader(); toast('Profile saved.', 'ok');
       });
     };
@@ -801,26 +947,47 @@
       if (confirm('Unlink your game account? Your levels and donator rank stop showing, and a game staff rank is removed.'))
         busy(e.target, async () => { await api.unlinkGame(); S.me = api.me(); renderHeader(); toast('Game account unlinked.'); route(); });
     };
+    if (section === 'game') {
+      const code = $('#link-code');
+      setTimeout(() => { if (code?.isConnected) code.focus(); }, 0);
+    }
   };
 
   views.rules = async () => {
     setTitle('Rules');
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Rules</div>
-      <div class="panel pad narrow rules">
-        <h1>Community rules</h1>
-        <ol>
-          <li><b>Be respectful.</b> No harassment, hate speech, threats or targeting other players.</li>
-          <li><b>No spam or advertising</b> other servers, sites or services.</li>
-          <li><b>No scamming.</b> Trades in Buying &amp; Selling are at your own risk; report scammers to staff.</li>
-          <li><b>Keep it in the right place.</b> Post in the forum that fits your topic.</li>
-          <li><b>No inappropriate content.</b> Keep posts and pictures safe for everyone.</li>
-          <li><b>Don't share personal information</b>, yours or anyone else's.</li>
-          <li><b>Never share your password.</b> Staff will never ask for it.</li>
-          <li><b>Report bugs, don't abuse them.</b> Post them in Bug Reports.</li>
-          <li><b>Only donate to Shadow.</b></li>
-          <li>Staff decisions are final. Appeals go in the <b>Appeals</b> forum.</li>
-        </ol>
+      <div class="rules-page">
+        <header class="page-head realm-banner rules-banner">
+          <div><h1>Community Rules</h1><p class="muted">These rules apply in game, on the forums, and in site chat.</p></div>
+        </header>
+        <div class="rules-grid">
+          <section class="panel realm-panel">
+            <div class="panel-head"><h2>Treat players with respect</h2></div>
+            <ul>
+              <li><strong>Keep disagreements civil.</strong> Harassment, threats, hate speech, and targeting other players are prohibited.</li>
+              <li><strong>Keep chat and forums usable.</strong> Avoid spam, unsolicited advertising, and inappropriate content. Pick the forum that fits your topic.</li>
+              <li><strong>Respect privacy.</strong> Keep passwords, contact details, and other private information out of posts and messages. Staff will never ask for your password.</li>
+            </ul>
+          </section>
+          <section class="panel realm-panel">
+            <div class="panel-head"><h2>Play and trade fairly</h2></div>
+            <ul>
+              <li><strong>Play the game yourself.</strong> Bots, macros that play for you, and cheating tools are prohibited.</li>
+              <li><strong>Report bugs before using them again.</strong> If you find a bug that gives an unfair advantage, stop and tell staff. Keep sensitive details private.</li>
+              <li><strong>Trade honestly.</strong> Check what you’re accepting. Scamming and impersonating staff are prohibited. Verify donation instructions on the <a href="#/donate">Donate page</a>.</li>
+            </ul>
+          </section>
+          <section class="panel realm-panel">
+            <div class="panel-head"><h2>Reports and appeals</h2></div>
+            <ul>
+              <li><strong>Give staff enough context.</strong> Include the player name, what happened, when it happened, and any relevant screenshots. Keep personal information out of your report.</li>
+              <li><strong>Use the right channel.</strong> Use Bug Reports for ordinary bugs. Contact staff privately about harassment, scams, or bugs that could be abused.</li>
+              <li><strong>Appeal through the forums.</strong> If you think a mute or ban was a mistake, explain what happened in Appeals and give staff time to review it.</li>
+            </ul>
+            <div class="rules-action"><a class="btn ghost sm" href="#/forums">Open forums →</a></div>
+          </section>
+        </div>
       </div>`;
   };
 
@@ -829,20 +996,27 @@
     setTitle('Player Guide');
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Guide</div>
-      <div class="guide">
-        <header class="g-hero">
-          <div class="skull">☠</div>
+      <div class="guide player-guide">
+        <header class="g-hero realm-banner guide-banner">
+          <span class="guide-seal" aria-hidden="true"></span>
           <h1>The Player's Guide</h1>
           <p>Everything you need, from your first login to Reaper tasks, raids and Torva. Use the contents to jump around.</p>
         </header>
         <div class="g-layout">
-          <nav class="toc"><b>Contents</b>${window.GUIDE_TOC || ''}</nav>
+          <nav class="toc" aria-label="Player Guide contents"><b>Contents</b>${window.GUIDE_TOC || ''}</nav>
           <div class="g-main">${window.GUIDE_HTML || '<p class="muted">The guide could not be loaded.</p>'}</div>
         </div>
       </div>`;
+    const markChapter = (id) => {
+      $$('.player-guide .toc a', view).forEach((link) => {
+        if (link.getAttribute('href') === '#' + id) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
     const jump = (id) => {
       const el = document.getElementById(id);
       if (!el) return;
+      markChapter(id);
       el.scrollIntoView({ behavior: 'smooth' });
       history.replaceState(null, '', '#/guide/' + id);
     };
@@ -854,7 +1028,10 @@
       jump(a.getAttribute('href').slice(1));
     });
     // After the router's scroll-to-top; instant so the smooth scroll doesn't stop halfway.
-    if (chapter) setTimeout(() => document.getElementById(chapter)?.scrollIntoView({ behavior: 'instant' }), 50);
+    if (chapter) {
+      markChapter(chapter);
+      setTimeout(() => document.getElementById(chapter)?.scrollIntoView({ behavior: 'instant' }), 50);
+    }
   };
 
   // Donate (text in js/donate.js): ranks, how to get them, every perk by group. #/donate/d-slayer opens a section.
@@ -864,10 +1041,10 @@
       <div class="crumbs"><a href="#/">Home</a> › Donate</div>
       <div class="guide donate">
         <header class="g-hero">
-          <div class="skull">👑</div>
-          <h1>Donator Ranks</h1>
-          <p>Every rank, what it costs, how to get it without spending a penny, and every perk sorted by type.</p>
+          <h1>Donate</h1>
+          <p>Support the realm · Explore donator ranks and rewards</p>
         </header>
+        ${window.DONATE_RANKS || ''}
         <div class="g-layout">
           <nav class="toc"><b>Contents</b>${window.DONATE_TOC || ''}</nav>
           <div class="g-main">${window.DONATE_HTML || '<p class="muted">This page could not be loaded.</p>'}</div>
@@ -889,15 +1066,15 @@
     setTitle('New Updates');
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › New Updates</div>
-      <div class="guide">
+      <div class="guide update-intro">
         <header class="g-hero">
-          <div class="skull">☠</div>
+          <img class="updates-crest" src="img/cinematic/updates-crest.png" alt="" width="156" height="156">
           <h1>New Updates</h1>
           <p>The biggest additions and improvements to Shadow of Death, newest first. Pick an update, filter by type or search.</p>
         </header>
       </div>
       <div id="pb-root"></div>`;
-    window.PatchBook.render($('#pb-root', view), window.UPDATES_HTML || '');
+    window.PatchBook.render($('#pb-root', view), window.UPDATES_HTML || '', { featured: true });
   };
 
   // Owner-only patch notes: every change, in the same format as the patch notes file. The text lives in the
@@ -911,9 +1088,9 @@
     catch (e) { console.warn('owner patch notes:', e); } // e.g. owner-patches.sql not run yet
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Owner patch notes</div>
-      <div class="guide">
+      <div class="guide update-intro owner-update-intro">
         <header class="g-hero">
-          <div class="skull">♛</div>
+          <img class="updates-crest" src="img/cinematic/owner-crowned-skull.png" alt="" width="156" height="156">
           <h1>Owner Patch Notes</h1>
           <p>Private: only the owner account can see this page. Every change, owner tools and Server Manager included.</p>
           ${doc?.updated_at ? `<p class="muted">Last updated ${esc(new Date(doc.updated_at).toLocaleString())}</p>` : ''}
@@ -921,7 +1098,7 @@
       </div>
       <div id="pb-root"></div>`;
     if (!doc) {
-      $('#pb-root', view).innerHTML = `<div class="panel pad center narrow muted">No owner patch notes yet${api.mode === 'demo' ? ' (demo mode only shows them on the live site)' : ''}.</div>`;
+      $('#pb-root', view).innerHTML = '<div class="panel realm-panel pad center narrow muted">No owner patch notes yet.</div>';
       return;
     }
     window.PatchBook.render($('#pb-root', view), doc.html);
@@ -948,7 +1125,7 @@
     [/^\/register$/, views.register],
     [/^\/forgot$/, views.forgot],
     [/^\/finish$/, views.finish],
-    [/^\/settings$/, views.settings],
+    [/^\/settings(?:\/(game))?$/, views.settings],
     [/^\/rules$/, views.rules],
     [/^\/guide(?:\/([\w-]+))?$/, views.guide],
     [/^\/donate(?:\/([\w-]+))?$/, views.donate],
@@ -1037,6 +1214,9 @@
     toast('Could not reach the database: ' + errText(e), 'error');
   }
   document.getElementById('year').textContent = new Date().getFullYear();
+  const footerPlay = document.getElementById('footer-play');
+  footerPlay.href = cfg.downloadUrl;
+  footerPlay.download = cfg.downloadName;
   window.Messenger.init({ api, S, bus, go });
   sessionFor = undefined;
   await syncSession();
