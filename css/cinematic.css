@@ -316,22 +316,47 @@ main.home-view, main.donation-view {
 }
 
 .hero .hero-play, .topbar #nav a.play, .footer-actions #footer-play {
-  --play-light: #a30a18;
-  border: 3px double #da8872;
+  --play-light: #790f20;
+  --play-edge: #c77f6d;
+  position: relative;
+  border: 3px double var(--play-edge);
   border-radius: 3px;
   color: #fff5e9;
-  background: radial-gradient(ellipse at center, var(--play-light), #570611 73%, #310810);
-  box-shadow: inset 0 1px 5px #ff5c6e66, inset 0 -5px 12px #1c0208a0, 0 3px 0 #24070c, 0 0 13px #db213661;
+  background:
+    repeating-linear-gradient(121deg, transparent 0 3px, #ffb0a309 4px, transparent 5px 8px),
+    repeating-linear-gradient(17deg, #13080e30 0 2px, transparent 3px 5px, #e2635120 6px, transparent 7px 11px),
+    radial-gradient(ellipse at center, var(--play-light), #350b15 71%, #170a10);
+  box-shadow: inset 0 1px 5px #dc564b57, inset 0 -5px 12px #13070da0, 0 3px 0 #17070e, 0 0 12px #b8213a61;
   text-shadow: 0 1px 3px #370410;
   letter-spacing: .09em;
   text-transform: uppercase;
 }
 
+.hero .hero-play::after, .topbar #nav a.play::after, .footer-actions #footer-play::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, var(--play-edge), #793e43) top left,
+    linear-gradient(225deg, var(--play-edge), #793e43) top right,
+    linear-gradient(45deg, var(--play-edge), #793e43) bottom left,
+    linear-gradient(315deg, var(--play-edge), #793e43) bottom right;
+  background-size: 12px 10px;
+  background-repeat: no-repeat;
+  clip-path: polygon(
+    0 0, 12px 0, 4px 4px, 0 10px,
+    0 calc(100% - 10px), 4px calc(100% - 4px), 12px 100%, 0 100%,
+    100% 100%, calc(100% - 12px) 100%, calc(100% - 4px) calc(100% - 4px), 100% calc(100% - 10px),
+    100% 10px, calc(100% - 4px) 4px, calc(100% - 12px) 0, 100% 0
+  );
+}
+
 .hero .hero-play:is(:hover, :focus-visible),
 .topbar #nav a.play:is(:hover, :focus-visible),
 .footer-actions #footer-play:is(:hover, :focus-visible) {
-  --play-light: #c61428;
-  border-color: #ffc1a2;
+  --play-light: #a8172b;
+  --play-edge: #ffc1a2;
   box-shadow: inset 0 1px 6px #ff758099, inset 0 -5px 12px #1c020880, 0 3px 0 #24070c, 0 0 16px #ed344b88;
 }
 
