@@ -98,6 +98,7 @@
   function renderHeader() {
     const path = location.hash.slice(1) || '/';
     view.classList.toggle('home-view', path === '/');
+    view.classList.toggle('login-view', path === '/login');
     view.classList.toggle('donation-view', /^\/donate(?:\/|$)/.test(path));
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
       ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],['#/updates', 'New Updates', /^\/updates/]];
@@ -632,7 +633,6 @@
     setTitle('Log in');
     view.innerHTML = `
       <div class="login-layout">
-        <div class="login-art" aria-hidden="true"></div>
         <div class="auth panel">
         <h1>Welcome back</h1>
         <p class="muted">Log in to post, add friends and chat.</p>
