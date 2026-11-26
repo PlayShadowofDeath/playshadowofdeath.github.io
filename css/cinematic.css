@@ -28,7 +28,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   background:
     radial-gradient(ellipse at 26% 39%, #6d272a72, transparent 53%),
     linear-gradient(160deg, #24151d, #100c11 72%);
-  padding: clamp(28px, 5vw, 55px) 0 60px;
+  padding: clamp(16px, 2.5vw, 30px) 0 44px;
 }
 
 .footer::before {
@@ -71,7 +71,12 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   filter: drop-shadow(0 6px 8px #0a0508);
 }
 
-.footer-nav { display: grid; gap: 19px; }
+.footer-nav {
+  display: grid;
+  align-self: start;
+  margin-top: clamp(30px, 6vw, 76px);
+  gap: 19px;
+}
 .footer-actions, .footer-directory {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -113,7 +118,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .footer-directory a:is(:hover, :focus-visible) { color: #ffd0a2; }
 
 .footer-bottom {
-  margin-top: 22px;
+  margin-top: 12px;
   padding-top: 13px;
   border-top: 1px solid #604049;
   color: #cbb4bb;
@@ -122,6 +127,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 @media (max-width: 700px) {
   .footer .footer-inner { grid-template-columns: minmax(0, 1fr); }
   .footer-brand { width: min(100%, 420px); }
+  .footer-nav { margin-top: 0; }
 }
 
 .topbar {
