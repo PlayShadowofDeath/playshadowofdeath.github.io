@@ -1123,7 +1123,7 @@
           <article class="client-platform client-windows">
             <h2>Windows</h2>
             <p>Installer with Java included.</p>
-            <a class="btn client-download" href="${esc(cfg.downloadUrl)}">Download for Windows <span>.exe · about 40 MB</span></a>
+            <a class="btn client-download" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">Download for Windows <span>.exe · about 40 MB</span></a>
           </article>
           <article class="client-platform client-mac" tabindex="0">
             <h2>Mac</h2>
@@ -1136,7 +1136,7 @@
         </div>
         <section class="guide panel realm-panel client-install">
           <div class="panel-head"><h2>Download &amp; install</h2></div>
-          <div class="client-install-body">${window.CLIENT_INSTALL_STEPS}</div>
+          <div class="client-install-body">${window.CLIENT_INSTALL_STEPS()}</div>
         </section>
       </section>`;
   };

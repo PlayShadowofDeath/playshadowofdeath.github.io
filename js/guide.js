@@ -21,9 +21,9 @@ window.GUIDE_TOC = `  <a href="#start">1. Getting in</a>
   <a href="#commands">19. Commands</a>
   <a href="#tips">20. Tips &amp; known issues</a>
 `;
-window.CLIENT_INSTALL_STEPS = `
+window.CLIENT_INSTALL_STEPS = (showClientLink = false) => `
     <ol class="steps">
-      <li>Download the installer: <a href="https://github.com/tjsmith95/Shadow-of-Death/releases/latest">github.com/tjsmith95/Shadow-of-Death/releases/latest</a>. Grab the <b>Shadow of Death Final Installer + Java</b> .exe. Java comes built in, so you don't need to install anything else.</li>
+      <li>Click <b>Download for Windows</b>${showClientLink ? ' on <a href="#/play">Get the Client</a>' : ' above'}. Java comes with the installer.</li>
       <li>Run it. You get a desktop shortcut and a Start menu entry, with no admin prompt.</li>
       <li>Open <b>Shadow of Death</b>. The launcher checks for updates every time and downloads them for you, so you never have to reinstall. It also shows whether the server is online and how many people are playing.</li>
       <li>Press <b>PLAY</b>.</li>
@@ -36,7 +36,7 @@ window.GUIDE_HTML = `
   <h2><span class="num">1</span>Getting in</h2>
   <div class="card">
     <h3>Download &amp; install</h3>
-    ${window.CLIENT_INSTALL_STEPS}
+    ${window.CLIENT_INSTALL_STEPS(true)}
   </div>
   <div class="card">
     <h3>Making your account</h3>
