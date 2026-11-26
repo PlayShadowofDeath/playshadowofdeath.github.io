@@ -757,6 +757,9 @@
     const m = S.me;
     const iconOptions = Object.entries(avatarIcons);
     if (donorArt(m)) iconOptions.push(['donator', `${m.game.donator_rank} emblem`]);
+    if (api.mode === 'demo') {
+      iconOptions.push(...window.U.demoRankIcons(m).map(([key, label]) => [key, `${label} (test)`]));
+    }
     const savedIcon = iconOptions.some(([key]) => key === m.avatar_icon) ? m.avatar_icon : 'initials';
     const colors = ['#b3131b', '#e0561b', '#d4a63a', '#2fb37a', '#2f7bb3', '#6b2fb3', '#b32f8c', '#555555'];
     view.innerHTML = `

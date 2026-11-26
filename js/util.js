@@ -68,6 +68,9 @@ window.U = (() => {
     portal: 'new-content.webp',
   };
   const donorRanks = new Set(['lost-soul', 'wraith', 'phantom', 'shade', 'revenant', 'reaper', 'death', 'eternal', 'oblivion']);
+  const demoRankIcons = (p) => p?.id === 'u-shadow'
+    ? [...donorRanks].map((key) => [`test-${key}`, key.split('-').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')])
+    : [];
   const donorArt = (p) => {
     const key = p?.game?.donator_rank?.trim().toLowerCase().replace(/\s+/g, '-');
     return donorRanks.has(key) ? `rank-${key}-reforged.png` : '';
@@ -76,8 +79,10 @@ window.U = (() => {
   function avatar(p, size = 40, online) {
     const name = p?.username || '?';
     const icon = p?.avatar_icon;
-    const art = icon === 'donator' ? donorArt(p) : Object.hasOwn(avatarArt, icon) ? avatarArt[icon] : '';
-    const face = art ? `<img class="avatar-icon avatar-icon-${icon}" src="img/cinematic/${art}" alt="">` : esc(name[0].toUpperCase());
+    const testRank = p?.id === 'u-shadow' && icon?.startsWith('test-') && donorRanks.has(icon.slice(5)) ? icon.slice(5) : '';
+    const rankArt = testRank ? `rank-${testRank}-reforged.png` : icon === 'donator' ? donorArt(p) : '';
+    const art = rankArt || (Object.hasOwn(avatarArt, icon) ? avatarArt[icon] : '');
+    const face = art ? `<img class="avatar-icon avatar-icon-${rankArt ? 'donator' : icon}" src="img/cinematic/${art}" alt="">` : esc(name[0].toUpperCase());
     return `<span class="avatar" style="--s:${size}px;--c:${esc(p?.avatar_color || '#555')}">${face}${
       online === undefined ? '' : `<i class="dot ${online ? 'on' : ''}" data-dot="${esc(p?.id || '')}"></i>`}</span>`;
   }
@@ -103,5 +108,5 @@ window.U = (() => {
 
   const errText = (e) => (e && (e.message || e.error_description)) || String(e);
 
-  return { esc, fmt, ago, date, time, full, rank, badge, donor, donorArt, serverUp, inGame, played, avatar, avatarIcons, userLink, toast, errText };
+  return { esc, fmt, ago, date, time, full, rank, badge, donor, donorArt, serverUp, inGame, played, avatar, avatarIcons, demoRankIcons, userLink, toast, errText };
 })();
