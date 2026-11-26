@@ -774,39 +774,18 @@ main.home-view, main.donation-view {
 }
 .member-search .search { width: 100%; border-color: #a57360; background: #1c111ce8; }
 .member-card.realm-panel:is(:hover, :focus-visible) { border-color: #d09172; }
-.avatar .avatar-image {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  border-radius: inherit;
-}
-.avatar .avatar-icon {
+.avatar .avatar-photo {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  border-radius: inherit;
   object-fit: cover;
 }
-.avatar .avatar-icon-knight { object-position: 44% 15%; }
-.avatar .avatar-icon-dragon { object-position: 72% center; }
-.avatar .avatar-icon-citadel { object-position: 76% center; }
-.avatar .avatar-icon-portal { object-position: 66% center; }
-.avatar .avatar-icon-donator { object-fit: contain; background: #1f151d; }
-.avatar .avatar-icon-staff { object-fit: contain; background: #201922; }
-.avatar .avatar-icon-mod { background: radial-gradient(#42434e, #232029 74%); }
-.avatar .avatar-icon-admin { background: radial-gradient(#503719, #241b20 74%); }
-.avatar-image:has(> .avatar-icon-owner) {
-  background: radial-gradient(#53276a, #241528 72%);
-}
-.avatar .avatar-icon-owner {
-  background: transparent;
-  filter: drop-shadow(0 0 3px #ba71f3a8);
-}
-.avatar:has(.avatar-icon-owner) {
-  box-shadow: 0 0 0 1px #b474dca8, 0 0 12px #a24fcb80;
-}
+.profile-photo-controls { flex: 1; min-width: min(100%, 210px); }
+.profile-photo-controls input { max-width: 100%; }
+.profile-photo-controls button:not([hidden]) { margin-top: 8px; }
 .rank:has(.staff-emblem) {
   display: inline-flex;
   align-items: center;
@@ -832,19 +811,6 @@ main.home-view, main.donation-view {
   box-shadow: 0 0 9px #a34cd57d;
 }
 .rank.owner .staff-emblem { filter: drop-shadow(0 0 3px #c888f8bd); }
-.avatar-closeup .avatar-icon {
-  transform: scale(var(--avatar-zoom));
-  transform-origin: 50% var(--avatar-focus);
-}
-.avatar-closeup-lost-soul { --avatar-zoom: 1.38; --avatar-focus: 49%; }
-.avatar-closeup-wraith { --avatar-zoom: 1.82; --avatar-focus: 33%; }
-.avatar-closeup-phantom { --avatar-zoom: 1.54; --avatar-focus: 47%; }
-.avatar-closeup-shade { --avatar-zoom: 1.68; --avatar-focus: 36%; }
-.avatar-closeup-revenant { --avatar-zoom: 1.72; --avatar-focus: 38%; }
-.avatar-closeup-reaper { --avatar-zoom: 1.76; --avatar-focus: 31%; }
-.avatar-closeup-death { --avatar-zoom: 1.65; --avatar-focus: 28%; }
-.avatar-closeup-eternal { --avatar-zoom: 1.56; --avatar-focus: 33%; }
-.avatar-closeup-oblivion { --avatar-zoom: 1.72; --avatar-focus: 39%; }
 .donor {
   display: inline-flex;
   align-items: center;
@@ -854,8 +820,6 @@ main.home-view, main.donation-view {
 .donor img { width: 20px; height: 20px; object-fit: contain; flex: none; }
 .profile-head .donor { gap: 6px; padding: 2px 8px 2px 4px; }
 .profile-head .donor img { width: 42px; height: 42px; }
-.avatar-previews { display: flex; align-items: flex-end; gap: 22px; }
-.avatar-previews > div { display: grid; justify-items: center; gap: 5px; }
 .member-info { display: grid; justify-items: start; gap: 3px; min-width: 0; }
 .member-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 7px; }
 .member-name .user { overflow-wrap: anywhere; }

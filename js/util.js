@@ -53,54 +53,32 @@ window.U = (() => {
   };
   const rank = (p) => RANKS[p?.role] || RANKS.member;
   const staffEmblems = Object.freeze({
-    owner: ['owner-crowned-skull.png', 'Crowned Skull (Owner)'],
-    admin: ['staff-admin-crown.png', 'Gold Crown (Admin)'],
-    moderator: ['staff-moderator-crown.png', 'Silver Crown (Moderator)'],
+    owner: 'owner-crowned-skull.png',
+    admin: 'staff-admin-crown.png',
+    moderator: 'staff-moderator-crown.png',
   });
   const staffEmblem = (p) => Object.hasOwn(staffEmblems, p?.role) ? staffEmblems[p.role] : null;
   const badge = (p) => {
     if (!p || p.role === 'member') return '';
     const emblem = staffEmblem(p);
-    return `<span class="rank ${rank(p).cls}">${emblem ? `<img class="staff-emblem" src="img/cinematic/${emblem[0]}" alt="">` : ''}${rank(p).label}</span>`;
+    return `<span class="rank ${rank(p).cls}">${emblem ? `<img class="staff-emblem" src="img/cinematic/${emblem}" alt="">` : ''}${rank(p).label}</span>`;
   };
 
-  const avatarIcons = Object.freeze({
-    initials: 'Initials',
-    knight: 'Shadow Knight',
-    dragon: 'Dragon',
-    citadel: 'Citadel',
-    portal: 'Crimson Portal',
-  });
-  const avatarArt = {
-    knight: 'shadow-knight-mobile.webp',
-    dragon: 'bossing.webp',
-    citadel: 'progression.webp',
-    portal: 'new-content.webp',
-  };
   const donorRanks = new Set(['lost-soul', 'wraith', 'phantom', 'shade', 'revenant', 'reaper', 'death', 'eternal', 'oblivion']);
-  const demoRankIcons = (p) => p?.id === 'u-shadow'
-    ? [...donorRanks].map((key) => [`test-${key}`, key.split('-').map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')])
-    : [];
   const donorArt = (p) => {
     const key = p?.game?.donator_rank?.trim().toLowerCase().replace(/\s+/g, '-');
     return donorRanks.has(key) ? `rank-${key}-reforged.png` : '';
   };
 
+  const validAvatarPhoto = (photo) => typeof photo === 'string' && photo.length <= 32768
+    && /^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(photo);
+
   function avatar(p, size = 40, online) {
-    const name = p?.username || '?';
-    const icon = p?.avatar_icon;
-    const staff = staffEmblem(p);
-    const testRank = p?.id === 'u-shadow' && icon?.startsWith('test-') && donorRanks.has(icon.slice(5)) ? icon.slice(5) : '';
-    const rankArt = testRank ? `rank-${testRank}-reforged.png` : icon === 'donator' ? donorArt(p) : '';
-    const art = rankArt || (Object.hasOwn(avatarArt, icon) ? avatarArt[icon] : '');
-    const closeup = size <= 48 && rankArt
-      ? ` avatar-closeup avatar-closeup-${rankArt.slice(5, -'-reforged.png'.length)}` : '';
-    const face = art
-      ? `<span class="avatar-image${closeup}"><img class="avatar-icon avatar-icon-${rankArt ? 'donator' : icon}" src="img/cinematic/${art}" alt=""></span>`
-      : staff
-        ? `<span class="avatar-image"><img class="avatar-icon avatar-icon-staff avatar-icon-${rank(p).cls}" src="img/cinematic/${staff[0]}" alt=""></span>`
-        : esc(name[0].toUpperCase());
-    return `<span class="avatar" style="--s:${size}px;--c:${esc(p?.avatar_color || '#555')}">${face}${
+    const initial = esc((p?.username || '?')[0].toUpperCase());
+    const photo = validAvatarPhoto(p?.avatar_photo)
+      ? `<img class="avatar-photo" src="${esc(p.avatar_photo)}" alt="">` : '';
+    const color = /^#[0-9a-f]{6}$/i.test(p?.avatar_color) ? p.avatar_color : '#555';
+    return `<span class="avatar" style="--s:${size}px;--c:${color}">${initial}${photo}${
       online === undefined ? '' : `<i class="dot ${online ? 'on' : ''}" data-dot="${esc(p?.id || '')}"></i>`}</span>`;
   }
   // Donator rank from the game ("Death", "Reaper", ...) in that rank's in-game colour.
@@ -125,5 +103,5 @@ window.U = (() => {
 
   const errText = (e) => (e && (e.message || e.error_description)) || String(e);
 
-  return { esc, fmt, ago, date, time, full, rank, badge, staffEmblem, donor, donorArt, serverUp, inGame, played, avatar, avatarIcons, demoRankIcons, userLink, toast, errText };
+  return { esc, fmt, ago, date, time, full, rank, badge, donor, serverUp, inGame, played, avatar, validAvatarPhoto, userLink, toast, errText };
 })();

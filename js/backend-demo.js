@@ -100,7 +100,6 @@ window.makeDemoBackend = () => {
     if (owner?.game?.donator_rank) {
       owner.game.donator_rank = '';
       owner.game.donator_color = '';
-      if (owner.avatar_icon === 'donator' || owner.avatar_icon?.startsWith('test-')) owner.avatar_icon = 'initials';
     }
     const ids = new Set(data.users.map((user) => user.id));
     const names = new Set(data.users.map((user) => user.username.toLowerCase()));
@@ -115,7 +114,7 @@ window.makeDemoBackend = () => {
       names.add(username.toLowerCase());
       const gameName = username.toLowerCase();
       data.users.push({
-        id, username, role: 'member', status: 'active', avatar_color: '#' + color, avatar_icon: 'donator',
+        id, username, role: 'member', status: 'active', avatar_color: '#' + color,
         bio: `Demo profile for the ${rank} rank.`, signature: '', game_username: gameName,
         created_at: new Date(Date.UTC(2024, 0, 9 - index)).toISOString(), last_seen: null,
         game: {
@@ -192,7 +191,7 @@ window.makeDemoBackend = () => {
 
   const api = {
     mode: 'demo',
-    supportsAvatarIcons: () => true,
+    supportsAvatarPhotos: () => true,
 
     async init() { return refreshMe(); },
     me: () => me,
@@ -246,7 +245,7 @@ window.makeDemoBackend = () => {
       if (fields.username && d.users.some((u) => u.id !== me.id && u.username.toLowerCase() === fields.username.toLowerCase()))
         throw new Error('That username is taken.');
       const u = d.users.find((x) => x.id === me.id);
-      ['username', 'bio', 'signature', 'avatar_color', 'avatar_icon'].forEach((k) => { if (k in fields) u[k] = fields[k]; });
+      ['username', 'bio', 'signature', 'avatar_color', 'avatar_photo'].forEach((k) => { if (k in fields) u[k] = fields[k]; });
       save(d); refreshMe();
       return pub(u);
     },

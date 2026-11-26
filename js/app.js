@@ -1,7 +1,7 @@
 // Shadow of Death website: pages + navigation.
 (async () => {
   const cfg = window.SOD_CONFIG;
-  const { esc, fmt, ago, date, full, badge, donor, donorArt, serverUp, inGame, played, avatar, avatarIcons, userLink, toast, errText } = window.U;
+  const { esc, fmt, ago, date, full, badge, donor, serverUp, inGame, played, avatar, validAvatarPhoto, userLink, toast, errText } = window.U;
   const view = document.getElementById('view');
   const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.min.js';
 
@@ -754,22 +754,32 @@
     };
   };
 
+  async function readProfilePhoto(file) {
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 8 * 1024 * 1024) {
+      throw new Error('Choose a JPG, PNG, or WebP image up to 8 MB.');
+    }
+    const image = await createImageBitmap(file);
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 128;
+      const ctx = canvas.getContext('2d', { alpha: false });
+      const side = Math.min(image.width, image.height);
+      ctx.fillStyle = '#231820';
+      ctx.fillRect(0, 0, 128, 128);
+      ctx.drawImage(image, (image.width - side) / 2, (image.height - side) / 2, side, side, 0, 0, 128, 128);
+      const photo = canvas.toDataURL('image/jpeg', .78);
+      if (!validAvatarPhoto(photo)) throw new Error('This image could not be saved as a profile photo.');
+      return photo;
+    } finally {
+      image.close();
+    }
+  }
+
   views.settings = async () => {
     if (!S.me) return needLogin();
     setTitle('Settings');
-    const iconsAvailable = api.supportsAvatarIcons();
+    const photosAvailable = api.supportsAvatarPhotos();
     const m = S.me;
-    const staff = window.U.staffEmblem(m);
-    const iconOptions = Object.entries(avatarIcons).map(([key, label]) =>
-      [key, key === 'initials' && staff ? staff[1] : label]);
-    if (donorArt(m)) iconOptions.push(['donator', `${m.game.donator_rank} emblem`]);
-    if (api.mode === 'demo') {
-      iconOptions.push(...window.U.demoRankIcons(m).map(([key, label]) => [key, `${label} (test)`]));
-    }
-    const savedIcon = iconOptions.some(([key]) => key === m.avatar_icon) ? m.avatar_icon : 'initials';
-    const iconPreview = (p) => `
-      <div><span class="meta">Profile</span>${avatar(p, 84)}</div>
-      <div><span class="meta">Chat</span>${avatar(p, 32)}</div>`;
     const colors = ['#b3131b', '#e0561b', '#d4a63a', '#2fb37a', '#2f7bb3', '#6b2fb3', '#b32f8c', '#555555'];
     view.innerHTML = `
       <div class="crumbs"><a href="#/">Home</a> › Settings</div>
@@ -777,9 +787,14 @@
       <div class="cols even">
         <form class="panel pad form" id="prof">
           <h2>Profile</h2>
-          <div id="avatar-preview" class="avatar-previews">${iconPreview(m)}</div>
+          <div class="row">
+            <div id="avatar-preview">${avatar(m, 84)}</div>
+            ${photosAvailable ? `<div class="profile-photo-controls">
+              <label>Profile photo<input id="avatar-upload" type="file" accept="image/jpeg,image/png,image/webp"></label>
+              <button type="button" class="btn ghost sm" id="remove-photo" ${validAvatarPhoto(m.avatar_photo) ? '' : 'hidden'}>Remove photo</button>
+            </div>` : ''}
+          </div>
           <div class="swatches" role="group" aria-label="Profile icon color">${colors.map((c) => `<button type="button" data-color="${c}" style="--c:${c}" class="${c === m.avatar_color ? 'on' : ''}" aria-label="Color ${c}" aria-pressed="${c === m.avatar_color}"></button>`).join('')}</div>
-          ${iconsAvailable ? `<label>Profile icon<select id="avatar-icon">${iconOptions.map(([key, label]) => `<option value="${key}"${key === savedIcon ? ' selected' : ''}>${esc(label)}</option>`).join('')}</select></label>` : ''}
           <label>Username<input id="name" maxlength="12" value="${esc(m.username)}"></label>
           <label>About me<textarea id="bio" rows="4" maxlength="500">${esc(m.bio)}</textarea></label>
           <label>Forum signature<textarea id="sig" rows="2" maxlength="200" placeholder="Shown under your forum posts">${esc(m.signature)}</textarea></label>
@@ -811,11 +826,45 @@
         </div>
       </div>`;
     let color = m.avatar_color;
-    const iconPicker = $('#avatar-icon');
+    let photo = validAvatarPhoto(m.avatar_photo) ? m.avatar_photo : null;
+    let photoRequest = 0, photoPending = false;
+    const photoInput = $('#avatar-upload');
+    const removePhoto = $('#remove-photo');
     const previewAvatar = () => {
-      $('#avatar-preview').innerHTML = iconPreview({ ...m, avatar_color: color, avatar_icon: iconPicker?.value ?? savedIcon });
+      const preview = $('#avatar-preview');
+      if (!preview) return;
+      preview.innerHTML = avatar({ username: $('#name')?.value.trim() || m.username, avatar_color: color, avatar_photo: photo }, 84);
+      if (removePhoto) removePhoto.hidden = !photo;
     };
-    iconPicker?.addEventListener('change', previewAvatar);
+    photoInput?.addEventListener('change', async () => {
+      const file = photoInput.files[0];
+      if (!file) return;
+      const request = ++photoRequest;
+      photoPending = true;
+      try {
+        const rendered = await readProfilePhoto(file);
+        if (request !== photoRequest || !photoInput.isConnected) return;
+        photo = rendered;
+        previewAvatar();
+      } catch (error) {
+        if (request === photoRequest && photoInput.isConnected) {
+          toast(error instanceof DOMException ? 'That image could not be opened.' : errText(error), 'error');
+        }
+      } finally {
+        if (request === photoRequest) {
+          photoPending = false;
+          photoInput.value = '';
+        }
+      }
+    });
+    removePhoto?.addEventListener('click', () => {
+      photoRequest++;
+      photoPending = false;
+      photoInput.value = '';
+      photo = null;
+      previewAvatar();
+    });
+    $('#name').addEventListener('input', previewAvatar);
     $$('[data-color]').forEach((b) => b.onclick = () => {
       color = b.dataset.color;
       $$('[data-color]').forEach((x) => {
@@ -826,11 +875,12 @@
     });
     $('#prof').onsubmit = (e) => {
       e.preventDefault();
+      if (photoPending) return toast('Wait for the photo preview before saving.', 'error');
       const username = $('#name').value.trim();
       if (!NAME_RE.test(username)) return toast('Usernames are 3–12 letters, numbers, spaces, - or _.', 'error');
       busy(e.submitter, async () => {
         const fields = { username, bio: $('#bio').value.trim(), signature: $('#sig').value.trim(), avatar_color: color };
-        if (iconPicker) fields.avatar_icon = iconPicker.value;
+        if (photosAvailable && photo !== (S.me.avatar_photo ?? null)) fields.avatar_photo = photo;
         await api.updateProfile(fields);
         S.me = api.me(); renderHeader(); toast('Profile saved.', 'ok');
       });

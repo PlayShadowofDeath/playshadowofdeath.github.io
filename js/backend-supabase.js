@@ -11,7 +11,7 @@ window.makeSupabaseBackend = (cfg) => {
   let me = null;           // my profile
   let live = null;         // realtime channel (presence + typing)
   let inbox = null;        // realtime channel (my messages / friend requests)
-  let avatarIconsAvailable = false;
+  let avatarPhotosAvailable = false;
   let P = profileColumns;
 
   const ok = ({ data, error }) => { if (error) throw error; return data; };
@@ -25,16 +25,16 @@ window.makeSupabaseBackend = (cfg) => {
 
   const api = {
     mode: 'live',
-    supportsAvatarIcons: () => avatarIconsAvailable,
+    supportsAvatarPhotos: () => avatarPhotosAvailable,
 
     // ---------- accounts ----------
     async init() {
       const [{ data }, avatarColumn] = await Promise.all([
         sb.auth.getSession(),
-        sb.from('profiles').select('avatar_icon').limit(0),
+        sb.from('profiles').select('avatar_photo').limit(0),
       ]);
-      avatarIconsAvailable = !avatarColumn.error;
-      P = avatarIconsAvailable ? 'avatar_icon,' + profileColumns : profileColumns;
+      avatarPhotosAvailable = !avatarColumn.error;
+      P = avatarPhotosAvailable ? 'avatar_photo,' + profileColumns : profileColumns;
       return loadMe(data.session);
     },
     me: () => me,
