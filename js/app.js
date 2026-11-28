@@ -1129,7 +1129,9 @@
       return;
     }
     const modes = [...new Map(rows.map((r) => [r.mode_key, r])).values()].sort((a, b) => a.mode_order - b.mode_order);
-    const mode = modes.find((m) => m.mode_key === modeArg) || modes[0];
+    const players = (key) => rows.filter((r) => r.mode_key === key).length;
+    const mode = modes.find((m) => m.mode_key === modeArg) // otherwise the mode most people play
+      || modes.reduce((best, m) => players(m.mode_key) > players(best.mode_key) ? m : best);
     const skill = Math.max(-1, SKILLS.findIndex((x) => x.toLowerCase() === (skillArg || '').toLowerCase()));
     const list = hsRanked(rows, mode.mode_key, skill);
     const size = 25, pages = Math.max(1, Math.ceil(list.length / size));
