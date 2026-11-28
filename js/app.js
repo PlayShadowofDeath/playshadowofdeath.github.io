@@ -1124,6 +1124,7 @@
             <h2>Windows</h2>
             <p>Installer with Java included.</p>
             <a class="btn client-download" href="${esc(cfg.downloadUrl)}" download="${esc(cfg.downloadName)}">Download for Windows <span>.exe · about 40 MB</span></a>
+            <p class="client-smartscreen">Windows says <b>"Windows protected your PC"</b>? Click <b>More info</b>, then <b>Run anyway</b>.</p>
           </article>
           <article class="client-platform client-mac" tabindex="0">
             <h2>Mac</h2>

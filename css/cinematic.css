@@ -411,6 +411,8 @@ main.home-view, main.donation-view {
 .client-mobile { grid-column: 1 / -1; justify-self: center; width: min(100%, 363px); }
 .client-download.btn { display: grid; gap: 2px; padding: 8px 13px; font-size: .82rem; }
 .client-download span { font-size: .73rem; letter-spacing: normal; text-transform: none; }
+.client-platform .client-smartscreen { max-width: 32ch; font-size: .82rem; line-height: 1.4; color: #cbb0b9; }
+.client-platform .client-smartscreen b { color: #ffe1c6; }
 .client-platform .client-soon {
   color: #cbb0b9;
   padding: 3px 8px;

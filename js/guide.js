@@ -24,7 +24,7 @@ window.GUIDE_TOC = `  <a href="#start">1. Getting in</a>
 window.CLIENT_INSTALL_STEPS = (showClientLink = false) => `
     <ol class="steps">
       <li>Click <b>Download for Windows</b>${showClientLink ? ' on <a href="#/play">Get the Client</a>' : ' above'}. Java comes with the installer.</li>
-      <li>Run it. You get a desktop shortcut and a Start menu entry, with no admin prompt.</li>
+      <li>Run it. If Windows shows a blue <b>"Windows protected your PC"</b> box, click <b>More info</b>, then <b>Run anyway</b>. It's safe: Windows shows that for any new game that isn't from a big company. You get a desktop shortcut and a Start menu entry, with no admin prompt.</li>
       <li>Open <b>Shadow of Death</b>. The launcher checks for updates every time and downloads them for you, so you never have to reinstall. It also shows whether the server is online and how many people are playing.</li>
       <li>Press <b>PLAY</b>.</li>
     </ol>
