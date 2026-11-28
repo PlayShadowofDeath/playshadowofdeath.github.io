@@ -103,7 +103,7 @@
     view.classList.toggle('account-view', /^\/(register|forgot|finish)$/.test(path));
     view.classList.toggle('donation-view', /^\/donate(?:\/|$)/.test(path));
     const nav = [['#/', 'Home', /^\/$/], ['#/forums', 'Forums', /^\/(forums|forum|thread|new)/], ['#/community', 'Community', /^\/community/],
-      ['#/members', 'Members', /^\/members/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],
+      ['#/members', 'Members', /^\/members/], ['#/highscores', 'High Scores', /^\/highscores/], ['#/guide', 'Guide', /^\/guide/], ['#/donate', 'Donate', /^\/donate/],
       ['#/updates', 'New Updates', /^\/updates/], ['#/rules', 'Rules', /^\/rules$/]];
     if (S.me?.role === 'owner') nav.push(['#/patches', 'Patches', /^\/patches/]);
     document.getElementById('nav').innerHTML = nav.map(([h, t, re]) => `<a href="${h}" class="${re.test(path) ? 'on' : ''}">${t}</a>`).join('')
@@ -1104,6 +1104,87 @@
     window.PatchBook.render($('#pb-root', view), doc.html);
   };
 
+  // ---------- High Scores ----------
+  // Filled by the game server every minute (supabase/highscores.sql). Tabs per game mode, Overall + 25 skills,
+  // and a player card with every skill (click a name, or look someone up).
+  const SKILLS = ['Attack', 'Defence', 'Strength', 'Constitution', 'Ranged', 'Prayer', 'Magic', 'Cooking', 'Woodcutting', 'Fletching',
+    'Fishing', 'Firemaking', 'Crafting', 'Smithing', 'Mining', 'Herblore', 'Agility', 'Thieving', 'Slayer', 'Farming',
+    'Runecrafting', 'Hunter', 'Construction', 'Summoning', 'Dungeoneering'];
+  const skillIcon = (s) => s < 0 ? '<img class="hs-icon" src="img/favicon.svg" alt="">' : `<img class="hs-icon" src="img/skills/${s}.png" alt="">`;
+  const skillSlug = (s) => s < 0 ? 'overall' : SKILLS[s].toLowerCase();
+  const n = (v) => Number(v || 0).toLocaleString('en-US');
+  const hsRanked = (rows, mode, s) => rows.filter((r) => r.mode_key === mode).sort((a, b) =>
+    (s < 0 ? (b.total_level - a.total_level) || (b.total_xp - a.total_xp) : (b.xp[s] - a.xp[s]) || (b.levels[s] - a.levels[s]))
+    || a.display_name.localeCompare(b.display_name));
+
+  views.highscores = async (modeArg, skillArg, pageArg) => {
+    setTitle('High Scores');
+    let rows = null;
+    try { rows = await api.highscores(); } catch (e) { console.warn('high scores:', e); }
+    const head = `<div class="crumbs"><a href="#/">Home</a> › High Scores</div>
+      <div class="page-head realm-banner hs-banner"><div><h1>High Scores</h1><p class="muted">Top players on every game mode. Updates every minute. Click a name to see all their skills.</p></div>
+        <form class="member-search" id="hs-find">Look up a player<input id="hs-q" class="search" type="search" placeholder="Player name…" autocomplete="off"></form></div>`;
+    if (!rows || !rows.length) {
+      view.innerHTML = head + `<div class="panel realm-panel pad center narrow muted">${rows ? 'Nobody is on the High Scores yet.' : 'The High Scores are not switched on yet. Check back soon!'}</div>`;
+      return;
+    }
+    const modes = [...new Map(rows.map((r) => [r.mode_key, r])).values()].sort((a, b) => a.mode_order - b.mode_order);
+    const mode = modes.find((m) => m.mode_key === modeArg) || modes[0];
+    const skill = Math.max(-1, SKILLS.findIndex((x) => x.toLowerCase() === (skillArg || '').toLowerCase()));
+    const list = hsRanked(rows, mode.mode_key, skill);
+    const size = 25, pages = Math.max(1, Math.ceil(list.length / size));
+    const pageNo = Math.min(pages, Math.max(1, +pageArg || 1));
+    const link = (m, s, p) => `#/highscores/${m}/${skillSlug(s)}${p > 1 ? '/' + p : ''}`;
+    const rowHtml = (r, i) => `<tr><td class="hs-rank">${i + 1}</td>
+      <td><button class="hs-name" data-player="${esc(r.game_username)}">${esc(r.display_name)}</button></td>
+      <td>${skill < 0 ? n(r.total_level) : r.levels[skill]}</td><td>${n(skill < 0 ? r.total_xp : r.xp[skill])}</td></tr>`;
+    view.innerHTML = head + `
+      <nav class="hs-modes" aria-label="Game modes">${modes.map((m) => `<a href="${link(m.mode_key, skill, 1)}" class="${m === mode ? 'on' : ''}">${esc(m.mode_name)}</a>`).join('')}</nav>
+      <div class="hs-layout">
+        <nav class="panel realm-panel hs-skills" aria-label="Skills">
+          ${[-1, ...SKILLS.keys()].map((s) => `<a href="${link(mode.mode_key, s, 1)}" class="${s === skill ? 'on' : ''}">${skillIcon(s)}<span>${s < 0 ? 'Overall' : SKILLS[s]}</span></a>`).join('')}
+        </nav>
+        <section class="panel realm-panel hs-board">
+          <div class="panel-head"><h2>${skillIcon(skill)} ${skill < 0 ? 'Overall' : SKILLS[skill]} <span>${esc(mode.mode_name)}</span></h2></div>
+          <table class="hs-table"><thead><tr><th>Rank</th><th>Player</th><th>${skill < 0 ? 'Total level' : 'Level'}</th><th>XP</th></tr></thead>
+            <tbody>${list.slice((pageNo - 1) * size, pageNo * size).map((r, i) => rowHtml(r, (pageNo - 1) * size + i)).join('')}</tbody></table>
+          ${pages > 1 ? `<nav class="pager">${Array.from({ length: pages }, (_, i) => `<a href="${link(mode.mode_key, skill, i + 1)}" class="${i + 1 === pageNo ? 'on' : ''}">${i + 1}</a>`).join('')}</nav>` : ''}
+        </section>
+      </div>
+      <dialog id="hs-player" class="hs-dialog"></dialog>`;
+
+    const dlg = $('#hs-player');
+    const openPlayer = (username) => {
+      const r = rows.find((x) => x.game_username === username);
+      if (!r) return;
+      const rankOf = (s) => hsRanked(rows, r.mode_key, s).indexOf(r) + 1;
+      const tile = (s) => {
+        const lvl = s < 0 ? n(r.total_level) : r.levels[s];
+        return `<a class="hs-tile${s >= 0 && r.levels[s] >= 99 ? ' maxed' : ''}${s < 0 ? ' overall' : ''}" href="${link(r.mode_key, s, Math.ceil(rankOf(s) / size))}" title="${n(s < 0 ? r.total_xp : r.xp[s])} XP">
+          ${skillIcon(s)}<b>${lvl}</b><span class="hs-tile-name">${s < 0 ? 'Overall' : SKILLS[s]}</span>
+          <span class="hs-tile-meta">Rank ${n(rankOf(s))} · ${n(s < 0 ? r.total_xp : r.xp[s])} XP</span></a>`;
+      };
+      dlg.innerHTML = `<div class="hs-card">
+        <header><div><h2>${esc(r.display_name)}</h2><p>${esc(r.mode_name)} · Total level ${n(r.total_level)} · ${n(r.total_xp)} XP · Overall rank ${n(rankOf(-1))}</p></div>
+          <button class="btn ghost sm" data-close aria-label="Close">✕</button></header>
+        <div class="hs-grid">${[...SKILLS.keys()].map(tile).join('')}${tile(-1)}</div>
+        <p class="hs-hint">Click a skill to jump to its list. Hover a skill for the exact XP.</p></div>`;
+      $('[data-close]', dlg).onclick = () => dlg.close();
+      $$('a', dlg).forEach((a) => a.addEventListener('click', () => dlg.close()));
+      dlg.showModal();
+    };
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); }); // click outside the card
+    $$('[data-player]').forEach((b) => b.onclick = () => openPlayer(b.dataset.player));
+    $('#hs-find').onsubmit = (e) => {
+      e.preventDefault();
+      const q = $('#hs-q').value.trim().toLowerCase();
+      if (!q) return;
+      const hit = rows.find((r) => r.display_name.toLowerCase() === q || r.game_username === q.replace(/ /g, '_'))
+        || rows.find((r) => r.display_name.toLowerCase().includes(q));
+      if (hit) openPlayer(hit.game_username); else toast('Nobody by that name is on the High Scores.');
+    };
+  };
+
   function notFound(msg = 'That page does not exist.') {
     setTitle('Not found');
     view.innerHTML = `<div class="panel pad center narrow"><h1>Not found</h1><p class="muted">${esc(msg)}</p><a class="btn" href="#/">Go home</a></div>`;
@@ -1164,6 +1245,7 @@
     [/^\/donate(?:\/([\w-]+))?$/, views.donate],
     [/^\/updates$/, views.updates],
     [/^\/patches$/, views.patches],
+    [/^\/highscores(?:\/([\w-]+)(?:\/(\w+)(?:\/(\d+))?)?)?$/, views.highscores],
   ];
   let routeToken = 0;
   async function route() {

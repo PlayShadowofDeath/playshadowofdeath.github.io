@@ -274,6 +274,16 @@ window.makeDemoBackend = () => {
     async usernameStatus(name) { return (await api.usernameAvailable(name)) ? 'free' : 'taken'; },
     async linkGame() { throw new Error('Demo mode: linking a game account works on the live site.'); },
     async unlinkGame() { throw new Error('Demo mode: linking a game account works on the live site.'); },
+    async highscores() {
+      const people = [['Kagemaru', 'normal', 'Normal', 0], ['Valorcall97', 'normal', 'Normal', 0], ['Redtester', 'normal', 'Normal', 0], ['Test1', 'normal', 'Normal', 0],
+        ['Ironclad', 'ironman', 'Ironman', 1], ['Lonewolf', 'ironman', 'Ironman', 1], ['Speedy', 'easy', 'Easy', 2]];
+      return people.map(([name, key, mode, order], n) => {
+        const levels = Array.from({ length: 25 }, (_, i) => Math.max(1, 99 - ((n * 13 + i * 7) % 60)));
+        const xp = levels.map((l) => Math.floor(Math.pow(1.105, l) * 80 + l * 300));
+        return { game_username: name.toLowerCase(), display_name: name, mode_key: key, mode_name: mode, mode_order: order,
+          total_level: levels.reduce((a, b) => a + b, 0), total_xp: xp.reduce((a, b) => a + b, 0), levels, xp, updated_at: now() };
+      });
+    },
     async serverStatus() { return { online: true, players: 3, uptime_min: 754, updated_at: now() }; },
     // Demo mode has no owner patch notes: they only live in the real database.
     async ownerDoc(key) {

@@ -130,6 +130,10 @@ window.makeSupabaseBackend = (cfg) => {
       const { data } = await sb.from('server_status').select('*').eq('id', 1).maybeSingle();
       return data;
     },
+    // High Scores (supabase/highscores.sql): every ranked account; the game server refreshes it every minute.
+    async highscores() {
+      return ok(await sb.from('highscores').select('game_username,display_name,mode_key,mode_name,mode_order,total_level,total_xp,levels,xp,updated_at').range(0, 9999));
+    },
     // Owner-only pages (supabase/owner-patches.sql): the database only hands them to the owner.
     async ownerDoc(key) {
       return ok(await sb.from('owner_docs').select('html, updated_at').eq('key', key).maybeSingle());
