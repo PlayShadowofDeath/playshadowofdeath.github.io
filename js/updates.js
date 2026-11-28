@@ -8,6 +8,27 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>High Scores</h2>
+  <div class="date">November 28, 2026</div>
+
+  <section id="highscores">
+    <h3><span class="icon">&#127942;</span>High Scores for every game mode</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>High Scores</b> in game: Menu Hub &rsaquo; My Account &rsaquo; High Scores, or <b>::highscores</b>. A tab for every game mode, Overall or any skill, the top 50 and your own rank.</li>
+      <li><span class="tag new">NEW</span> <b>Click a name</b> to see all of that player's skills, with their level and rank in each.</li>
+      <li><span class="tag new">NEW</span> <b>High Scores on the website</b>: the new <a href="#/highscores">High Scores</a> page in the top menu, with skill icons, a page per mode and a <b>Look up a player</b> box. Click a name for their full skills card.</li>
+      <li><span class="tag changed">CHANGED</span> Both update <b>every minute</b>.</li>
+    </ul>
+  </section>
+  <section id="website-button">
+    <h3><span class="icon">&#127760;</span>Website in game</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> <b>::website</b> or the <b>Website</b> tile in Menu Hub &rsaquo; Help opens this website in your browser. Thanks to Kagemaru for the idea!</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Bigger bank in your hub colour</h2>
   <div class="date">November 28, 2026</div>
 

@@ -189,6 +189,10 @@ window.GUIDE_HTML = `
       <p>Examine any item in your inventory, bank, worn gear or a trade and you also see what it's worth, e.g. "Price: 15,000,000 coins". For a stack you see the price of one and the total. It's the same price the Grand Exchange and Trading Post use.</p></div>
     <div class="card"><h3>Sort your bank <span class="how">bank ? button</span></h3>
       <p>Click the <b>?</b> button in your bank. After a warning, it puts every item into tabs by type: Weapons, Armour, Runes &amp; ammo, Food &amp; potions, Skilling, Boxes &amp; tickets and Pets, most valuable first. Everything else goes in the main tab. It replaces your current tabs, but nothing is lost.</p></div>
+    <div class="card"><h3>High Scores <span class="how">::highscores / Menu Hub &gt; My Account</span></h3>
+      <p>A tab for every game mode: <b>Overall</b> or any skill, the top 50 and your own rank. <b>Click a name</b> to see all of that player's skills (level and rank in each). Updates every minute. Also on the website: <a href="https://playshadowofdeath.github.io/#/highscores">High Scores</a>, with a player look-up box. Owner accounts aren't ranked.</p></div>
+    <div class="card"><h3>Website <span class="how">::website / Menu Hub &gt; Help</span></h3>
+      <p>Opens <a href="https://playshadowofdeath.github.io">playshadowofdeath.github.io</a> in your browser: guide, updates, forums and High Scores.</p></div>
     <div class="card"><h3>Forums link <span class="how">::forums</span></h3>
       <p>Gives a 6-letter code to link your game account on the website, <a href="https://playshadowofdeath.github.io">playshadowofdeath.github.io</a>. Your profile then shows your levels, rank and "In game now".</p></div>
   </div>
@@ -587,7 +591,7 @@ $LINE
     <div class="card"><h3>Blackjack <span class="how">::blackjack name amount</span></h3><p>Challenge a player, e.g. <code>::blackjack bob 5m</code>. Bets are 10K&ndash;2B from your pouch. Closest to 21 wins the pot. You get 30 seconds per turn. Not allowed in the Wilderness or for Ironmen. <code>::blackjack</code> on its own explains the rules.</p></div>
     <div class="card"><h3>Quests</h3><p>Nine quests are listed as playable (Cook's Assistant, Restless Ghost, Imp Catcher, Dwarf Cannon, Lost City, Ernest the Chicken, Gertrude's Cat, Threat of Kharzard, Nomad's Requiem), but see the note in <a href="#tips">known issues</a>.</p></div>
     <div class="card"><h3>Titles &amp; looks</h3><p><code>::title</code>, <code>::claimtitle</code>, <code>::makeover</code> and <code>::gender</code> change your look. <code>::yellcolor</code> sets your yell colour (donators).</p></div>
-    <div class="card"><h3>Forums &amp; community</h3><p><a href="https://playshadowofdeath.github.io">playshadowofdeath.github.io</a> has forums, a community feed, friends and instant chat. Link your game account with <code>::forums</code>.</p></div>
+    <div class="card"><h3>Forums &amp; community</h3><p><a href="https://playshadowofdeath.github.io">playshadowofdeath.github.io</a> has forums, High Scores, a community feed, friends and instant chat. Link your game account with <code>::forums</code>.</p></div>
   </div>
 </section>
 
@@ -621,6 +625,8 @@ $LINE
       <tr><td><code>::death</code></td><td>Death Recap (Death rank)</td></tr>
       <tr><td><code>::blackjack name amount</code></td><td>Challenge someone to Blackjack</td></tr>
       <tr><td><code>::forums</code></td><td>Code to link your forum account</td></tr>
+      <tr><td><code>::highscores</code> / <code>::hs</code></td><td>High Scores per game mode (click a name for all their skills)</td></tr>
+      <tr><td><code>::website</code></td><td>Open the website in your browser</td></tr>
       <tr><td><code>::yell message</code></td><td>Message the whole server (donators)</td></tr>
       <tr><td><code>::changepass</code></td><td>Change your password (opens Menu Hub Settings &gt; Account)</td></tr>
       <tr><td><code>::farmingstatus</code></td><td>Your farming patches</td></tr>
