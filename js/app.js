@@ -1110,7 +1110,7 @@
   const SKILLS = ['Attack', 'Defence', 'Strength', 'Constitution', 'Ranged', 'Prayer', 'Magic', 'Cooking', 'Woodcutting', 'Fletching',
     'Fishing', 'Firemaking', 'Crafting', 'Smithing', 'Mining', 'Herblore', 'Agility', 'Thieving', 'Slayer', 'Farming',
     'Runecrafting', 'Hunter', 'Construction', 'Summoning', 'Dungeoneering'];
-  const skillIcon = (s) => s < 0 ? '<img class="hs-icon" src="img/favicon.svg" alt="">' : `<img class="hs-icon" src="img/skills/${s}.png" alt="">`;
+  const skillIcon = (s) => s < 0 ? '<img class="hs-icon" src="img/favicon-crowned-32.png" alt="">' : `<img class="hs-icon" src="img/skills/${s}.png" alt="">`;
   const skillSlug = (s) => s < 0 ? 'overall' : SKILLS[s].toLowerCase();
   const n = (v) => Number(v || 0).toLocaleString('en-US');
   const hsRanked = (rows, mode, s) => rows.filter((r) => r.mode_key === mode).sort((a, b) =>
