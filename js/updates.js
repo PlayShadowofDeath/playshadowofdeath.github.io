@@ -8,6 +8,20 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>Bigger bank in your hub colour</h2>
+  <div class="date">November 28, 2026</div>
+
+  <section id="bank">
+    <h3><span class="icon">&#127974;</span>The bank</h3>
+    <ul>
+      <li><span class="tag changed">CHANGED</span> On a big game window the bank is <b>wider</b> and shows up to <b>16 items per row</b> instead of 10, so you scroll less. It stays in the middle of the screen. Items stay their normal size.</li>
+      <li><span class="tag changed">CHANGED</span> The bank's frame, tabs and buttons now use <b>your hub colour</b> (Menu Hub &rsaquo; Settings &rsaquo; Hub &rsaquo; Hub colour). Change your hub colour and the bank changes too.</li>
+      <li><span class="tag fixed">FIXED</span> The <b>Bank value / Total wealth</b> line at the top of the bank stays put.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>New game modes &amp; a new mode picker</h2>
   <div class="date">November 28, 2026</div>
 
