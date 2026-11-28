@@ -8,6 +8,29 @@
 window.UPDATES_HTML = `
 
 <div class="update">
+  <h2>New game modes &amp; a new mode picker</h2>
+  <div class="date">November 28, 2026</div>
+
+  <section id="game-modes">
+    <h3><span class="icon">&#9881;</span>Special game modes</h3>
+    <ul>
+      <li><span class="tag new">NEW</span> The owner can now add <b>new game modes</b> on top of the usual six. Each one plays like Normal or one of the Ironman modes, with its own XP rates, drop boost and starter kit. Idea from Kagemaru!</li>
+      <li><span class="tag new">NEW</span> A mode can make <b>rare drops 2x, 5x or 10x more often</b>, turn off <b>XP boosts</b> (weekend double XP, vote XP and XP items), or only let you <b>trade with players on the same mode</b>.</li>
+      <li><span class="tag new">NEW</span> Each mode can have its own <b>chat icon and tag</b>. The icon shows before your name in chat, and the tag in <code>::yell</code>.</li>
+      <li><span class="tag new">NEW</span> If a mode is ever removed, you keep all your items and levels and simply pick a new mode.</li>
+    </ul>
+  </section>
+
+  <section id="mode-picker">
+    <h3><span class="icon">&#127919;</span>New mode picker</h3>
+    <ul>
+      <li><span class="tag changed">CHANGED</span> New players pick their mode in a <b>hub-style window</b>: a card for every mode with its XP and drop rate. Click one to see everything about it, including the whole starter kit, then <b>Confirm</b>.</li>
+      <li><span class="tag new">NEW</span> Closed it before picking? Type <code>::pickmode</code>.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="update">
   <h2>Login Streak, Profiles &amp; Hub colours</h2>
   <div class="date">November 23, 2026</div>
 

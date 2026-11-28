@@ -62,6 +62,7 @@ window.GUIDE_HTML = `
   <h2><span class="num">2</span>Game modes</h2>
   <div class="card">
     <p>New accounts pick a mode before they can move. <b>You can't change it afterwards</b>, so choose carefully.</p>
+    <p><b>The mode picker:</b> every open mode is a card showing its XP and drop rate. Click a card to see everything about it (XP, drops, trading, rules and the whole starter kit with pictures), then click <b>Confirm</b>. Closed it by accident? Type <code>::pickmode</code> to open it again.</p>
     <div class="tbl"><table>
       <tr><th>Mode</th><th>Combat XP</th><th>Skilling XP</th><th>Bonus</th><th>Good for</th></tr>
       <tr><td><b>Easy</b></td><td class="v">125x</td><td class="v">50x</td><td>&mdash;</td><td>Getting maxed fast and going straight to bossing</td></tr>
@@ -73,6 +74,16 @@ window.GUIDE_HTML = `
     </table></div>
     <p>Every mode starts with a starter kit: gear, weapons, runes, arrows and coins (1M, or 100K for Ironmen).</p>
     <div class="tip"><b>Ironmen:</b> you can't trade, use the Trading Post, gamble or play Blackjack, and you only see the shops Ironmen are allowed to use, plus the two Ironman shops.</div>
+    <h3>Special modes</h3>
+    <p>The owner can add new game modes at any time, so the picker may show more than the six above. A special mode plays like one of the normal ones (its trading, Grand Exchange and bank rules) but can change things like:</p>
+    <ul>
+      <li><b>Rare drops</b> 2x, 5x or 10x more often.</li>
+      <li><b>No XP boosts</b>: weekend double XP, vote XP and XP items don't count.</li>
+      <li><b>Trading only with players on the same mode</b> (trades, duels and the Trading Post).</li>
+      <li>Its own <b>chat icon and tag</b>, shown before your name in chat and in <code>::yell</code>.</li>
+    </ul>
+    <p>The mode's card and page in the picker show exactly what it does.</p>
+    <div class="tip"><b>If a mode is removed:</b> you keep all your items and levels. You'll see "This game mode has been discontinued" and get the picker to choose a new one.</div>
   </div>
 </section>
 
@@ -587,6 +598,7 @@ $LINE
       <tr><th>Command</th><th>What it does</th></tr>
       <tr><td><code>::home</code></td><td>Teleport home</td></tr>
       <tr><td><code>::welcome</code></td><td>Welcome window (same as the M button)</td></tr>
+      <tr><td><code>::pickmode</code></td><td>Opens the game mode picker again (only before you've picked, or if your mode was removed)</td></tr>
       <tr><td><code>::guide</code></td><td>Money Making Guide</td></tr>
       <tr><td><code>::daily</code></td><td>Daily Tasks (same as the D button)</td></tr>
       <tr><td><code>::tpmanager</code></td><td>Teleport Manager (same as the T button)</td></tr>
